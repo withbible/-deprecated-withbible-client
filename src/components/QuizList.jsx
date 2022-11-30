@@ -5,10 +5,8 @@ import { ScrollMenu } from "react-horizontal-scrolling-menu";
 import { Box, Typography, Modal } from "@mui/material";
 
 import { RecordContext } from "../context/RecordContext";
-import chatImg from "../image/ul-comment-message.png";
 import rankImg from "../image/ranking.png";
 import "./QuizList.css";
-import { chatServerDomain } from "../../package.json";
 import { SUBJECT_CODE_RECORDS } from "../utils/quiz";
 import QuizItem from "./QuizItem";
 
@@ -70,16 +68,6 @@ const QuizList = ({ quizInfo }) => {
         <Modal open={open} onClose={handleClose}>
           <RankList />
         </Modal>
-
-        <a
-          href={`${chatServerDomain}/?name=${name}&room=${
-            SUBJECT_CODE_RECORDS[quizInfo.key]
-          }`}
-          target="_blank"
-          rel="noreferrer"
-        >
-          <img className="chat-img" src={chatImg} alt="" />
-        </a>
       </div>
 
       <ScrollMenu>{QuizMenu(chapters)}</ScrollMenu>

@@ -1,6 +1,6 @@
 # dependencies
-src/lib/
 node_modules/
+lib/
 package-lock.json
 
 # production
