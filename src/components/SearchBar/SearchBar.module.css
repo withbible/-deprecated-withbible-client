@@ -1,0 +1,28 @@
+.searchBarContainer {
+  width: 40%;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  margin-top: 8rem;
+  margin-bottom: 3rem;
+  box-shadow: var(--box-shadow);  
+  background-color: var(--primary-color);
+}
+
+.searchBarIcon{
+  color: var(--primary-color)
+}
+
+.searchBarContainer input{
+  width: 85%;
+  border: 0;
+  padding: 1rem;
+}
+
+@media (max-width: 35em) {
+  .searchBarContainer{
+      width: 90%;
+      margin-top: 2rem;
+      margin-bottom: 1rem;      
+  }
+}

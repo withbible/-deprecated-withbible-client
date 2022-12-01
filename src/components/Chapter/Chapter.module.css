@@ -1,8 +1,9 @@
 .chapterGrid {
-  margin-right: 20px;
+  margin-right: 1.4rem;
 }
 
 .chapterPaper {
-  width: 50px;
-  padding: 24px;
+  width: 3.125rem;
+  padding: 1.5rem;
+  background-color: var(--primary-color);
 }
