@@ -1,22 +1,42 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import { IconButton } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 
 //INTERNAL IMPORT
 import Style from "./SearchBar.module.css";
+import { ChapterSearchContext } from "../../context/ChapterSearchContext";
 
 const SearchBar = () => {
-  return (    
-    <div className={Style.searchBarContainer}>
-      <SearchIcon className={Style.searchBarIcon}/>
+  const { fetchChapterSearch, setSearchRecord } =
+    useContext(ChapterSearchContext);
+  const [searchKeyword, setSearchKeyword] = useState("");
 
-      <input placeholder="검색어를 입력하세요." />
+  const onSubmit = async (e) => {
+    e.preventDefault();
 
-      <IconButton type="submit">
-        <KeyboardArrowRightIcon />
-      </IconButton>      
-    </div>
+    if (!searchKeyword) return;
+
+    fetchChapterSearch(searchKeyword).then(({ data }) => {      
+      setSearchRecord(data.result);
+    });
+  };
+
+  return (
+    <form onSubmit={onSubmit}>
+      <div className={Style.searchBarContainer}>
+        <SearchIcon className={Style.searchBarIcon} />
+        <input
+          placeholder="검색어를 입력하세요."
+          onChange={(e) => setSearchKeyword(e.target.value)}
+          value={searchKeyword}
+        />
+
+        <IconButton type="submit">
+          <KeyboardArrowRightIcon />
+        </IconButton>
+      </div>
+    </form>
   );
 };
 

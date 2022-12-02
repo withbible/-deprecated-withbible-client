@@ -1,5 +1,7 @@
 import React from "react";
 import { Typography } from "@mui/material";
+
+//INTERNAL IMPORT
 import Category from "../components/Category/Category";
 import SearchBar from "../components/SearchBar/SearchBar";
 
