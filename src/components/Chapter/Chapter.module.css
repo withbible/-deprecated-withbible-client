@@ -1,8 +1,10 @@
-.chapterGrid {
-  margin-right: 1.4rem;
+.categoryTitle {
+  font-size: 1.2rem;
+  margin-top: 1rem;
 }
 
 .chapterPaper {
   width: 3.125rem;
   padding: 1.5rem;  
+  margin-right: 1.4rem;
 }

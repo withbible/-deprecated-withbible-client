@@ -1,45 +1,36 @@
-import React, { useContext, useState } from "react";
-import { Typography } from "@mui/material";
-import { ScrollMenu } from "react-horizontal-scrolling-menu";
+import React, { useContext, useEffect } from "react";
 
 //INTERNAL IMPORT
-import Style from "./Category.module.css";
-import Chapter from "../Chapter/Chapter";
+import ChapterList from "../Chapter/ChapterList";
 import { ChapterSearchContext } from "../../context/ChapterSearchContext";
 
 const Category = () => {
-  const { fetchChapter, searchRecord, searchKeyword } =
+  const { error, fetchMaxChapter, searchRecord } =
     useContext(ChapterSearchContext);
-  const [categories, setCategories] = useState([]);
 
-  fetchChapter().then(({ data }) => {
-    setCategories(data.result);
-  });
+  // TODO: dependency 넣으면 무한 fetching
+  useEffect(() => {
+    fetchMaxChapter();
+  }, []);
 
-  if (!categories) {
+  if (!searchRecord.maxChapter.length) {
     return <h3>데이터를 불러오는 중입니다...</h3>;
   }
 
-  if (searchKeyword && !searchRecord.length) {
-    return <h3>데이터가 존재하지 않습니다.</h3>;
+  if (error) {
+    return <h3>{error}</h3>;
   }
 
-  if (searchRecord.length) {
+  if (searchRecord.chapterSearch.length) {
     return (
       <>
-        {searchRecord.map((each, index) => {
+        {searchRecord.chapterSearch.map((each, index) => {
           return (
-            <div key={index}>
-              <Typography className={Style.categoryTitle}>
-                {each.category}
-              </Typography>
-
-              <ScrollMenu>
-                {each["chapter_seq_array"].map((each, index) => (
-                  <Chapter key={index} chapterSeq={each} />
-                ))}
-              </ScrollMenu>
-            </div>
+            <ChapterList
+              key={index}
+              iteratee={each["chapter_seq_array"]}
+              title={each.category}
+            />
           );
         })}
       </>
@@ -48,23 +39,17 @@ const Category = () => {
 
   return (
     <>
-      {categories.map((each, index) => {
+      {searchRecord.maxChapter.map((each, index) => {
         const chapterSeqArray = [...Array(each["max_chapter"]).keys()].map(
           (_, index) => index + 1
         );
 
         return (
-          <div key={index}>
-            <Typography className={Style.categoryTitle}>
-              {each.category}
-            </Typography>
-
-            <ScrollMenu>
-              {chapterSeqArray.map((each, index) => (
-                <Chapter key={index} chapterSeq={each} />
-              ))}
-            </ScrollMenu>
-          </div>
+          <ChapterList
+            key={index}
+            iteratee={chapterSeqArray}
+            title={each.category}
+          />
         );
       })}
     </>

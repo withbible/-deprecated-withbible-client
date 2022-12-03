@@ -8,18 +8,13 @@ import Style from "./SearchBar.module.css";
 import { ChapterSearchContext } from "../../context/ChapterSearchContext";
 
 const SearchBar = () => {
-  const { fetchChapterSearch, setSearchRecord } =
-    useContext(ChapterSearchContext);
-  const [searchKeyword, setSearchKeyword] = useState("");
-
+  const { fetchChapterSearch } = useContext(ChapterSearchContext);
+  const [searchKeyword, setSearchKeyword] = useState("");  
+  
   const onSubmit = async (e) => {
     e.preventDefault();
 
-    if (!searchKeyword) return;
-
-    fetchChapterSearch(searchKeyword).then(({ data }) => {      
-      setSearchRecord(data.result);
-    });
+    fetchChapterSearch(searchKeyword);
   };
 
   return (

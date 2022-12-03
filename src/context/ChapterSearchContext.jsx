@@ -4,14 +4,21 @@ import axios from "axios";
 export const ChapterSearchContext = React.createContext();
 
 export const ChapterSearchProvider = ({ children }) => {
+  const [error, setError] = useState("");
   const [searchKeyword, setSearchKeyword] = useState("");
-  const [searchRecord, setSearchRecord] = useState([]);
+  const [searchRecord, setSearchRecord] = useState({
+    maxChapter: [],
+    chapterSearch: [],
+  });
 
-  const fetchChapter = async () => {
+  const fetchMaxChapter = async () => {
     try {
       const uri = `/quiz/category/max-chapter`;
-      return await axios.get(uri);
+      const { data } = await axios.get(uri);
 
+      setSearchRecord((prevState) => {
+        return { ...prevState, maxChapter: data.result };
+      });
     } catch (error) {}
   };
 
@@ -20,19 +27,26 @@ export const ChapterSearchProvider = ({ children }) => {
 
     try {
       const uri = `/quiz/categories/chapter?keyword=${searchKeyword}`;
-      return await axios.get(uri);
+      const { data } = await axios.get(uri);
 
-    } catch (error) {}
+      setSearchRecord((prevState) => {
+        return { ...prevState, chapterSearch: data.result };
+      });
+      setError("");
+    } catch (err) {
+      setError(err.response.data.message);
+    }
   };
 
   return (
     <ChapterSearchContext.Provider
       value={{
-        fetchChapter,
+        error,
+        fetchMaxChapter,
         fetchChapterSearch,
         searchRecord,
         setSearchRecord,
-        searchKeyword
+        searchKeyword,
       }}
     >
       {children}

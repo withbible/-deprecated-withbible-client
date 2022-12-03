@@ -1,15 +1,15 @@
 import React from "react";
-import { Grid, Paper } from "@mui/material";
+import { Paper } from "@mui/material";
 
 //INTERNAL IMPORT
 import Style from "./Chapter.module.css";
 
-const Chapter = ({ chapterSeq }) => {
+function Chapter({ chapterSeq, itemId }) {
   return (
-    <Grid className={Style.chapterGrid}>
-      <Paper className={Style.chapterPaper}>{chapterSeq}</Paper>
-    </Grid>
+    <>
+      <Paper className={Style.chapterPaper}>ch.{chapterSeq}</Paper>
+    </>
   );
-};
+}
 
 export default Chapter;
