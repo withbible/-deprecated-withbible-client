@@ -1,0 +1,19 @@
+.pageContainer{
+  background-color: #efefef;  
+}
+
+.bodyContainer{      
+  background-color: var(--shadow-color);
+  box-shadow: 0px -4px 0px rgba(0, 0, 0, 0.2);  
+  border-radius: 1.2rem;
+  padding-top: 1rem;
+  margin-top: 8rem;
+  margin-bottom: 3rem;
+}
+
+@media (max-width: 35rem) {
+  .bodyContainer {    
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+  }
+}
