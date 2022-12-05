@@ -1,19 +1,30 @@
-.pageContainer{
-  background-color: #efefef;  
+.pageContainer {
+  height: inherit;
+  background-color: var(--primary-color);
 }
 
-.bodyContainer{      
-  background-color: var(--shadow-color);
-  box-shadow: 0px -4px 0px rgba(0, 0, 0, 0.2);  
-  border-radius: 1.2rem;
+.appBar {
+  display: flex;
+  align-items: center;
+  padding-top: 1rem;
+}
+
+.bodyContainer {
+  height: inherit;
   padding-top: 1rem;
   margin-top: 8rem;
-  margin-bottom: 3rem;
+  border-top-left-radius: 1.2rem;
+  border-top-right-radius: 1.2rem;
+  background-color: var(--shadow-color);
+  box-shadow: 0px -4px 0px rgba(0, 0, 0, 0.2);
 }
 
 @media (max-width: 35rem) {
-  .bodyContainer {    
+  .bodyContainer {
     margin-top: 2rem;
-    margin-bottom: 1rem;
   }
+}
+
+.searchBar{
+  margin-bottom: 1rem;
 }

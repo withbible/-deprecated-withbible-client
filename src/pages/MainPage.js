@@ -5,6 +5,7 @@ import { Typography, Avatar } from "@mui/material";
 import Style from "./MainPage.module.css";
 import Category from "../components/Category/Category";
 import SearchBar from "../components/SearchBar/SearchBar";
+import BottomBar from "../components/BottomBar/BottomBar";
 
 const MainPage = (_) => {
   const [userID, setUserID] = useState("");
@@ -17,23 +18,27 @@ const MainPage = (_) => {
 
   return (
     <div className={Style.pageContainer}>
-      <Avatar
-        src={userID && `https://avatars.dicebear.com/api/micah/${userID}.svg`}
-      />
+      <div className={Style.appBar}>
+        <Avatar
+          src={userID && `https://avatars.dicebear.com/api/micah/${userID}.svg`}
+        />
 
-      {userID ? (
-        <Typography>{userID}님</Typography>
-      ) : (
-        <Typography>환영합니다</Typography>
-      )}
+        {userID ? (
+          <Typography>{userID}님</Typography>
+        ) : (
+          <Typography>환영합니다</Typography>
+        )}
+      </div>
 
       <Typography>성경졸업고사 패스를 기원합니다!</Typography>
 
       <div className={Style.bodyContainer}>
-        <SearchBar className={Style.searchBarComponent}/>
+        <SearchBar className={Style.searchBar} />
 
         <Category />
       </div>
+
+      <BottomBar />
     </div>
   );
 };

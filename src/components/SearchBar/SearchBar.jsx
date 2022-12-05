@@ -7,10 +7,10 @@ import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import Style from "./SearchBar.module.css";
 import { ChapterSearchContext } from "../../context/ChapterSearchContext";
 
-const SearchBar = () => {
+const SearchBar = ({ className }) => {
   const { fetchChapterSearch } = useContext(ChapterSearchContext);
-  const [searchKeyword, setSearchKeyword] = useState("");  
-  
+  const [searchKeyword, setSearchKeyword] = useState("");
+
   const onSubmit = async (e) => {
     e.preventDefault();
 
@@ -18,7 +18,7 @@ const SearchBar = () => {
   };
 
   return (
-    <form onSubmit={onSubmit}>
+    <form onSubmit={onSubmit} className={className}>
       <div className={Style.searchBarContainer}>
         <SearchIcon className={Style.searchBarIcon} />
         <input
