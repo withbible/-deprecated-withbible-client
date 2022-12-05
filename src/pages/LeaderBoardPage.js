@@ -10,7 +10,6 @@ import axios from "axios";
 import { format } from "timeago.js";
 
 //INTERNAL IMPORT
-import Style from "./LeaderBoardPage.module.css";
 import Wrapper from "../components/Wrapper/Wrapper";
 
 const LeaderBoardPage = () => {
@@ -27,9 +26,9 @@ const LeaderBoardPage = () => {
   }
 
   return (
-    <div className={Style.pageContainer}>
+    <Wrapper>
       리더보드
-      <Wrapper>
+      <Wrapper.Body>
         <List>
           {leaderBoards.map((each, index) => (
             <ListItem
@@ -47,8 +46,8 @@ const LeaderBoardPage = () => {
             </ListItem>
           ))}
         </List>
-      </Wrapper>
-    </div>
+      </Wrapper.Body>
+    </Wrapper>
   );
 };
 

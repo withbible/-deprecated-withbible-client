@@ -1,6 +1,11 @@
+.pageContainer {
+  height: inherit;
+  background-color: var(--primary-color);
+}
+
 .bodyContainer {
   height: inherit;
-  padding-top: 1rem;
+  padding: 1rem 0.5rem 0;
   margin-top: 3rem;
   border-top-left-radius: 1.2rem;
   border-top-right-radius: 1.2rem;

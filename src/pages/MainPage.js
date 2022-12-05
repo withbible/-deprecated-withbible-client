@@ -10,17 +10,19 @@ import AppBar from "../components/AppBar/AppBar";
 
 const MainPage = (_) => {
   return (
-    <div className={Style.pageContainer}>
-      <AppBar />
+    <Wrapper>
+      <Wrapper.Header>
+        <AppBar />
 
-      <Typography>성경졸업고사 패스를 기원합니다!</Typography>
+        <Typography>성경졸업고사 패스를 기원합니다!</Typography>
+      </Wrapper.Header>
 
-      <Wrapper>
+      <Wrapper.Body>
         <SearchBar className={Style.searchBar} />
 
         <Category />
-      </Wrapper>      
-    </div>
+      </Wrapper.Body>
+    </Wrapper>
   );
 };
 
