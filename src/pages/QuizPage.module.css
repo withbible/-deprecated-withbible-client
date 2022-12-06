@@ -14,3 +14,16 @@
   background-color: #efefef;
   text-align: center;
 }
+
+.buttonContainer{
+  display: flex;
+  justify-content: space-between;
+}
+
+.step{
+  color: inherit;
+}
+
+.buttonContainer Button{
+  color: inherit;
+}
