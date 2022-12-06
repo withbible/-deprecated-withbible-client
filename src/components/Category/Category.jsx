@@ -30,6 +30,7 @@ const Category = () => {
               key={index}
               iteratee={each["chapter_seq_array"]}
               title={each.category}
+              categorySeq={each["category_seq"]}
             />
           );
         })}
@@ -49,6 +50,7 @@ const Category = () => {
             key={index}
             iteratee={chapterSeqArray}
             title={each.category}
+            categorySeq={each["category_seq"]}
           />
         );
       })}

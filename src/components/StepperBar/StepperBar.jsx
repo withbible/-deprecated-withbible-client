@@ -5,7 +5,6 @@ import { Stepper, Step, StepButton } from "@mui/material";
 import "./StepperBar.css";
 
 const StepperBar = ({ iteratee, activeStep, setActiveStep }) => {
-  // TODO: 스탭바에서 조작시 버튼바와 싱크가 맞지 않음
   const handleStep = (step) => {
     setActiveStep(step);
   };

@@ -2,7 +2,6 @@ import React, { useState, useEffect, useCallback } from "react";
 import { Typography } from "@mui/material";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import { StyledEngineProvider } from "@mui/material/styles";
 
 //INTERNAL IMPORT
 import Wrapper from "../components/Wrapper/Wrapper";
@@ -23,7 +22,7 @@ const QuizPage = () => {
   const fetchOptionHistoryUri = `/history/chapter/user-option?categorySeq=${categorySeq}&chapterSeq=${chapterSeq}&userSeq=1`;
 
   const totalStep = () => {
-    return Object.keys(userOption).length - 1;
+    return Object.keys(data.questionSeqArray).length - 1;
   };
 
   const fetchQuiz = async () => {
@@ -54,33 +53,41 @@ const QuizPage = () => {
 
   // ERROR HANDLE
   if (!data.questionSeqArray.length || !data.optionHistoryArray.length) {
-    return <h3>데이터를 불러오는 중입니다...</h3>;
-  }
-
-  return (
-    <StyledEngineProvider injectFirst>
+    return (
       <Wrapper>
         <Typography>
           카테고리: {categorySeq} (ch. {chapterSeq})
         </Typography>
 
-        <StepperBar
-          iteratee={data.questionSeqArray}
-          activeStep={activeStep}
-          setActiveStep={setActiveStep}
-        />
-
         <Wrapper.Body>
-          <QuestionBox question={data.questionSeqArray[activeStep]["question"]} />
-
-          <ButtonBox
-            isFirst={activeStep === 0}
-            isLast={activeStep && activeStep === totalStep()}
-            setActiveStep={setActiveStep}
-          />
+          <h3>데이터를 불러오는 중입니다...</h3>
         </Wrapper.Body>
       </Wrapper>
-    </StyledEngineProvider>
+    );
+  }
+
+  return (
+    <Wrapper>
+      <Typography>
+        카테고리: {categorySeq} (ch. {chapterSeq})
+      </Typography>
+
+      <StepperBar
+        iteratee={data.questionSeqArray}
+        activeStep={activeStep}
+        setActiveStep={setActiveStep}
+      />
+
+      <Wrapper.Body>
+        <QuestionBox question={data.questionSeqArray[activeStep]["question"]} />
+
+        <ButtonBox
+          isFirst={activeStep === 0}
+          isLast={activeStep && activeStep === totalStep()}
+          setActiveStep={setActiveStep}
+        />
+      </Wrapper.Body>
+    </Wrapper>
   );
 };
 

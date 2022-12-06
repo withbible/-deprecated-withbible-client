@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter } from "react-router-dom";
+import { StyledEngineProvider } from "@mui/material/styles";
 
 //INTERNAL IMPORT
 import "./index.css";
@@ -11,7 +12,9 @@ ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
       <ChapterSearchProvider>
-        <App />
+        <StyledEngineProvider injectFirst>
+          <App />
+        </StyledEngineProvider>
       </ChapterSearchProvider>
     </BrowserRouter>
   </React.StrictMode>,

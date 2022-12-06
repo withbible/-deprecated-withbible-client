@@ -4,19 +4,24 @@ import { ScrollMenu } from "react-horizontal-scrolling-menu";
 //INTERNAL IMPORT
 import Chapter from "./Chapter";
 
-function ChapterList({ iteratee, title }) {
+const ChapterList = ({ iteratee, title, categorySeq }) => {
   return (
     <>
       {/* TODO: ScrollMenu Header not working */}
       {title}
       <ScrollMenu onWheel={onWheel}>
         {iteratee.map((each, index) => (
-          <Chapter key={index} itemId={index} chapterSeq={each} />
+          <Chapter
+            key={index}
+            itemId={index}
+            categorySeq={categorySeq}
+            chapterSeq={each}
+          />
         ))}
       </ScrollMenu>
     </>
   );
-}
+};
 
 export default ChapterList;
 
