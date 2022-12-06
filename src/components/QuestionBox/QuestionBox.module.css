@@ -1,0 +1,19 @@
+.illust {
+  width: 30%;
+  margin: 0 auto;
+  display: block;
+}
+
+@media (max-width: 35rem) {
+  .illust {
+    width: 60%;
+  }
+}
+
+.questionContainer {
+  text-align: center;
+}
+
+.question {
+  font-family: 'Do Hyeon', sans-serif;
+}
