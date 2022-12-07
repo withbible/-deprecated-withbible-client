@@ -8,16 +8,18 @@ import Wrapper from "../components/Wrapper/Wrapper";
 import StepperBar from "../components/StepperBar/StepperBar";
 import ButtonBox from "../components/ButtonBox/ButtonBox";
 import QuestionBox from "../components/QuestionBox/QuestionBox";
-import OptionBox from "../components/OptionList/OptionList";
+import OptionList from "../components/OptionList/OptionList";
 
 const QuizPage = () => {
   const { categorySeq, chapterSeq } = useParams();
   const [quiz, setQuiz] = useState([]);
   const [activeStep, setActiveStep] = useState(0);
   const [userOption, setUserOption] = useState({});
+  const [isNewUserOption, setIsNewUserOption] = useState(true);
 
   const fetchQuizUri = `/quiz/chapter?categorySeq=${categorySeq}&chapterSeq=${chapterSeq}`;
-  const fetchOptionHistoryUri = `/history/chapter/user-option?categorySeq=${categorySeq}&chapterSeq=${chapterSeq}&userSeq=1`;
+  const optionHistoryUri = "/history/chapter/user-option";
+  const fetchOptionHistoryUri = `${optionHistoryUri}?categorySeq=${categorySeq}&chapterSeq=${chapterSeq}`;
 
   const totalStep = () => {
     return Object.keys(quiz).length - 1;
@@ -33,6 +35,7 @@ const QuizPage = () => {
 
     setQuiz(quizResult);
 
+    // TODO: for-of는 비동기인 이유
     if (!optionHistoryState.value) {
       for (const each of quizResult) {
         setUserOption((prevState) => {
@@ -49,6 +52,7 @@ const QuizPage = () => {
     const optionHistoryResult = optionHistoryState.value.data.result;
 
     for (const each of optionHistoryResult) {
+      setIsNewUserOption(false);
       setUserOption((prevState) => {
         return {
           ...prevState,
@@ -65,6 +69,21 @@ const QuizPage = () => {
   useEffect(() => {
     memoizeQuizPageState();
   }, []);
+
+  const handleSubmit = () => {
+    const payload = {
+      categorySeq,
+      chapterSeq,
+      bulk: userOption,
+    };
+
+    if (isNewUserOption) {
+      axios.post(optionHistoryUri, payload);
+      return;
+    }
+
+    axios.put(optionHistoryUri, payload);
+  };
 
   // ERROR HANDLE
   if (!quiz.length || !Object.keys(userOption).length) {
@@ -96,7 +115,7 @@ const QuizPage = () => {
       <Wrapper.Body>
         <QuestionBox question={quiz[activeStep]["question"]} />
 
-        <OptionBox
+        <OptionList
           questionSeq={quiz[activeStep]["question_seq"]}
           iteratee={quiz[activeStep]["option_array"]}
           userOption={userOption}
@@ -107,6 +126,7 @@ const QuizPage = () => {
           isFirst={activeStep === 0}
           isLast={activeStep && activeStep === totalStep()}
           setActiveStep={setActiveStep}
+          handleSubmit={handleSubmit}
         />
       </Wrapper.Body>
     </Wrapper>

@@ -1,10 +1,10 @@
 import React from "react";
-import { Button } from "@mui/material";
+import { Button, Box } from "@mui/material";
 
 //INTERNAL IMPORT
 import Style from "./ButtonBox.module.css";
 
-const ButtonBox = ({ isFirst, isLast, setActiveStep }) => {
+const ButtonBox = ({ isFirst, isLast, setActiveStep, handleSubmit }) => {
   const handleBack = () => {
     setActiveStep((prevState) => prevState - 1);
   };
@@ -14,17 +14,17 @@ const ButtonBox = ({ isFirst, isLast, setActiveStep }) => {
   };
 
   return (
-    <div className={Style.buttonContainer}>
+    <Box className={Style.buttonContainer}>
       <Button disabled={isFirst} onClick={() => handleBack()}>
-        Back
+        이전
       </Button>
 
-      {isLast? (
-        <Button onClick={() => handleSubmit()}>SUBMIT</Button>
+      {isLast ? (
+        <Button onClick={() => handleSubmit()}>제출</Button>
       ) : (
-        <Button onClick={() => handleNext()}>Next</Button>
+        <Button onClick={() => handleNext()}>다음</Button>
       )}
-    </div>
+    </Box>
   );
 };
 
