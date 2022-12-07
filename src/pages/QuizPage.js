@@ -8,37 +8,52 @@ import Wrapper from "../components/Wrapper/Wrapper";
 import StepperBar from "../components/StepperBar/StepperBar";
 import ButtonBox from "../components/ButtonBox/ButtonBox";
 import QuestionBox from "../components/QuestionBox/QuestionBox";
+import OptionBox from "../components/OptionList/OptionList";
 
 const QuizPage = () => {
   const { categorySeq, chapterSeq } = useParams();
-  const [data, setData] = useState({
-    questionSeqArray: [],
-    optionHistoryArray: [],
-  });
+  const [quiz, setQuiz] = useState([]);
   const [activeStep, setActiveStep] = useState(0);
   const [userOption, setUserOption] = useState({});
 
-  const fetchQuestionSeqUri = `/quiz/chapter/questions?categorySeq=${categorySeq}&chapterSeq=${chapterSeq}`;
+  const fetchQuizUri = `/quiz/chapter?categorySeq=${categorySeq}&chapterSeq=${chapterSeq}`;
   const fetchOptionHistoryUri = `/history/chapter/user-option?categorySeq=${categorySeq}&chapterSeq=${chapterSeq}&userSeq=1`;
 
   const totalStep = () => {
-    return Object.keys(data.questionSeqArray).length - 1;
+    return Object.keys(quiz).length - 1;
   };
 
   const fetchQuiz = async () => {
-    const [questionSeqResult, optionHistoryResult] = await Promise.all([
-      axios.get(fetchQuestionSeqUri),
+    const [quizState, optionHistoryState] = await Promise.allSettled([
+      axios.get(fetchQuizUri),
       axios.get(fetchOptionHistoryUri),
     ]);
 
-    setData({
-      questionSeqArray: questionSeqResult.data.result,
-      optionHistoryArray: optionHistoryResult.data.result,
-    });
+    const quizResult = quizState.value.data.result;
 
-    for (const each of data.questionSeqArray) {
+    setQuiz(quizResult);
+
+    if (!optionHistoryState.value) {
+      for (const each of quizResult) {
+        setUserOption((prevState) => {
+          return {
+            ...prevState,
+            [each["question_seq"]]: null,
+          };
+        });
+      }
+
+      return;
+    }
+
+    const optionHistoryResult = optionHistoryState.value.data.result;
+
+    for (const each of optionHistoryResult) {
       setUserOption((prevState) => {
-        return { ...prevState, [each["question_seq"]]: null };
+        return {
+          ...prevState,
+          [each["question_seq"]]: each["question_option_seq"],
+        };
       });
     }
   };
@@ -52,7 +67,7 @@ const QuizPage = () => {
   }, []);
 
   // ERROR HANDLE
-  if (!data.questionSeqArray.length || !data.optionHistoryArray.length) {
+  if (!quiz.length || !Object.keys(userOption).length) {
     return (
       <Wrapper>
         <Typography>
@@ -73,13 +88,20 @@ const QuizPage = () => {
       </Typography>
 
       <StepperBar
-        iteratee={data.questionSeqArray}
+        iteratee={quiz}
         activeStep={activeStep}
         setActiveStep={setActiveStep}
       />
 
       <Wrapper.Body>
-        <QuestionBox question={data.questionSeqArray[activeStep]["question"]} />
+        <QuestionBox question={quiz[activeStep]["question"]} />
+
+        <OptionBox
+          questionSeq={quiz[activeStep]["question_seq"]}
+          iteratee={quiz[activeStep]["option_array"]}
+          userOption={userOption}
+          setUserOption={setUserOption}
+        />
 
         <ButtonBox
           isFirst={activeStep === 0}

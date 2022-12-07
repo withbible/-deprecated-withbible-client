@@ -1,0 +1,12 @@
+.optionContainer {
+  display: flex;
+}
+
+.option {
+  padding: 0.5rem;
+}
+
+/* TODO: 왜 override가 되지 않나 */
+.optionHistory {
+  background-color: var(--primary-color) !important
+}
