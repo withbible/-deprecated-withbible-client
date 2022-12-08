@@ -37,8 +37,8 @@ const QuizPage = () => {
       axios.get(`${OPTION_HISTORY_URI}${queryParameter}`),
     ]);
 
-    const quizResponse = quizState.value.data.result;
-    const shuffleQuiz = shuffleArray(quizResponse).map((each) => {
+    const quiz = quizState.value.data.result;
+    const shuffleQuiz = shuffleArray(quiz).map((each) => {
       return {
         ...each,
         ["option_array"]: shuffleArray(each["option_array"]),

@@ -16,22 +16,30 @@ import axios from "axios";
 //INTERNAL IMPORT
 import Style from "./QuizResultPage.module.css";
 import { Wrapper } from "../components";
-import { QUIZ_URI, HIT_COUNT_URI } from "../constants/api";
+import { QUIZ_URI, HIT_COUNT_URI, ACTIVE_COUNT_URI } from "../constants/api";
 
 const QuizResultPage = () => {
-  const [quizResult, setQuizResult] = useState({});
+  const [quizResult, setQuizResult] = useState({
+    hitCount: {},
+    activeCount: {},
+  });
   const [activeState, setActiveState] = useState(false);
 
   // ROUTING
   const queryParameter = useLocation().search;
-  const { categorySeq, chapterSeq } = queryString.parse(queryParameter);  
+  const { categorySeq, chapterSeq } = queryString.parse(queryParameter);
 
   // RELATED HOOK
   const fetchQuizResult = async () => {
-    const { data } = await axios.get(`${HIT_COUNT_URI}${queryParameter}`);
-    const quizResultResponse = data.result;
+    const [hitCountState, activeCountState] = await Promise.all([
+      axios.get(`${HIT_COUNT_URI}${queryParameter}`),
+      axios.get(`${ACTIVE_COUNT_URI}?categorySeq=${categorySeq}`),
+    ]);
 
-    setQuizResult({ ...quizResultResponse });
+    const hitCount = hitCountState.data.result;
+    const activeCount = activeCountState.data.result;
+
+    setQuizResult({ hitCount, activeCount });
   };
 
   useEffect(() => {
@@ -41,6 +49,19 @@ const QuizResultPage = () => {
   useEffect(() => {
     setActiveState(true);
   }, []);
+
+  // LOADING UI
+  if (!Object.keys(quizResult).length) {
+    return (
+      <Wrapper>
+        <Typography>퀴즈결과</Typography>
+
+        <Wrapper.Body>
+          <h3>데이터를 불러오는 중입니다...</h3>
+        </Wrapper.Body>
+      </Wrapper>
+    );
+  }
 
   return (
     <Wrapper>
@@ -56,7 +77,8 @@ const QuizResultPage = () => {
                   ch.{chapterSeq} 맞힌 갯수
                 </Typography>
                 <Typography variant="h5">
-                  {quizResult["hit_count"]}/{quizResult["question_count"]}
+                  {quizResult.hitCount["hit_count"]}/
+                  {quizResult.hitCount["question_count"]}
                 </Typography>
               </CardContent>
             </Card>
@@ -68,7 +90,13 @@ const QuizResultPage = () => {
                 <Typography variant="inherit" color="text.secondary">
                   카테고리{categorySeq} 진행률
                 </Typography>
-                <Typography variant="h5">20%</Typography>
+                <Typography variant="h5">
+                  {getPercent(
+                    quizResult.activeCount["active_chapter_count"],
+                    quizResult.activeCount["max_chapter"]
+                  )}
+                  %
+                </Typography>
               </CardContent>
             </Card>
           </Grid>
@@ -105,3 +133,7 @@ const confettiConfig = {
     "var(--shadow-color)",
   ],
 };
+
+function getPercent(part, total) {
+  return (part / total) * 100;
+}
