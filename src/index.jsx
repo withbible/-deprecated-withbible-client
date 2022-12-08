@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter } from "react-router-dom";
 import { StyledEngineProvider } from "@mui/material/styles";
+import { SnackbarProvider } from "notistack";
 
 //INTERNAL IMPORT
 import "./index.css";
@@ -13,7 +14,11 @@ ReactDOM.render(
     <BrowserRouter>
       <ChapterSearchProvider>
         <StyledEngineProvider injectFirst>
-          <App />
+          <SnackbarProvider
+            autoHideDuration={2000}
+          >
+            <App />
+          </SnackbarProvider>
         </StyledEngineProvider>
       </ChapterSearchProvider>
     </BrowserRouter>

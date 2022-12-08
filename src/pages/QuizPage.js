@@ -1,39 +1,52 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import { Typography } from "@mui/material";
-import { useParams } from "react-router-dom";
+import { useLocation, useHistory } from "react-router-dom";
 import axios from "axios";
+import { useSnackbar } from "notistack";
+import queryString from "query-string";
 
 //INTERNAL IMPORT
-import Wrapper from "../components/Wrapper/Wrapper";
-import StepperBar from "../components/StepperBar/StepperBar";
-import ButtonBox from "../components/ButtonBox/ButtonBox";
-import QuestionBox from "../components/QuestionBox/QuestionBox";
-import OptionList from "../components/OptionList/OptionList";
+import {
+  ButtonBox,
+  OptionList,
+  QuestionBox,
+  StepperBar,
+  Wrapper,
+} from "../components";
+import { QUIZ_URI, OPTION_HISTORY_URI } from "../constants/api";
+import { QUIZ_RESULT_PAGE_PATH } from "../constants/route";
 
 const QuizPage = () => {
-  const { categorySeq, chapterSeq } = useParams();
   const [quiz, setQuiz] = useState([]);
   const [activeStep, setActiveStep] = useState(0);
-  const [userOption, setUserOption] = useState({});
+
+  // RELATED PAYLOAD
+  const [userOption, setUserOption] = useState({}); 
   const [isNewUserOption, setIsNewUserOption] = useState(true);
 
-  const fetchQuizUri = `/quiz/chapter?categorySeq=${categorySeq}&chapterSeq=${chapterSeq}`;
-  const optionHistoryUri = "/history/chapter/user-option";
-  const fetchOptionHistoryUri = `${optionHistoryUri}?categorySeq=${categorySeq}&chapterSeq=${chapterSeq}`;
+  // ROUTING
+  const { categorySeq, chapterSeq } = queryString.parse(useLocation().search);
+  const queryParameter = `?categorySeq=${categorySeq}&chapterSeq=${chapterSeq}`;
+  const history = useHistory();
+  const { enqueueSnackbar } = useSnackbar();
 
-  const totalStep = () => {
-    return Object.keys(quiz).length - 1;
-  };
 
+  // RELATED HOOK
   const fetchQuiz = async () => {
     const [quizState, optionHistoryState] = await Promise.allSettled([
-      axios.get(fetchQuizUri),
-      axios.get(fetchOptionHistoryUri),
+      axios.get(`${QUIZ_URI}${queryParameter}`),
+      axios.get(`${OPTION_HISTORY_URI}${queryParameter}`),
     ]);
 
     const quizResult = quizState.value.data.result;
+    const shuffleQuiz = shuffleArray(quizResult).map((each) => {
+      return {
+        ...each,
+        ["option_array"]: shuffleArray(each["option_array"]),
+      };
+    });
 
-    setQuiz(quizResult);
+    setQuiz(shuffleQuiz);
 
     // TODO: for-of는 비동기인 이유
     if (!optionHistoryState.value) {
@@ -62,27 +75,35 @@ const QuizPage = () => {
     }
   };
 
-  const memoizeQuizPageState = useCallback(() => {
+  useEffect(() => {
     fetchQuiz();
   }, [categorySeq, chapterSeq]);
 
-  useEffect(() => {
-    memoizeQuizPageState();
-  }, []);
+  // RELATED PROPS
+  const totalStep = () => {
+    return Object.keys(quiz).length - 1;
+  };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const payload = {
       categorySeq,
       chapterSeq,
       bulk: userOption,
     };
 
-    if (isNewUserOption) {
-      axios.post(optionHistoryUri, payload);
-      return;
-    }
+    try {
+      if (isNewUserOption) {
+        await axios.post(OPTION_HISTORY_URI, payload);
+      } else {
+        await axios.put(OPTION_HISTORY_URI, payload);
+      }
 
-    axios.put(optionHistoryUri, payload);
+      history.push(`${QUIZ_RESULT_PAGE_PATH}${queryParameter}`);
+    } catch (error) {
+      console.log(error);
+      const message = error.response.data.message;
+      enqueueSnackbar(message, { variant: "error" });
+    }
   };
 
   // ERROR HANDLE
@@ -134,3 +155,12 @@ const QuizPage = () => {
 };
 
 export default QuizPage;
+
+const shuffleArray = (array) => {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+
+  return [...array];
+};
