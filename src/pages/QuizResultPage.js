@@ -11,18 +11,35 @@ import {
 import Confetti from "react-dom-confetti";
 import { useLocation } from "react-router-dom";
 import queryString from "query-string";
+import axios from "axios";
 
 //INTERNAL IMPORT
 import Style from "./QuizResultPage.module.css";
 import { Wrapper } from "../components";
-import { QUIZ_URI } from "../constants/api";
+import { QUIZ_URI, HIT_COUNT_URI } from "../constants/api";
 
 const QuizResultPage = () => {
-  const { categorySeq, chapterSeq } = queryString.parse(useLocation().search);
-  const [activeState, setActiveStep] = useState(false);  
+  const [quizResult, setQuizResult] = useState({});
+  const [activeState, setActiveState] = useState(false);
+
+  // ROUTING
+  const queryParameter = useLocation().search;
+  const { categorySeq, chapterSeq } = queryString.parse(queryParameter);  
+
+  // RELATED HOOK
+  const fetchQuizResult = async () => {
+    const { data } = await axios.get(`${HIT_COUNT_URI}${queryParameter}`);
+    const quizResultResponse = data.result;
+
+    setQuizResult({ ...quizResultResponse });
+  };
 
   useEffect(() => {
-    setActiveStep(true);
+    fetchQuizResult();
+  }, []);
+
+  useEffect(() => {
+    setActiveState(true);
   }, []);
 
   return (
@@ -38,7 +55,9 @@ const QuizResultPage = () => {
                 <Typography variant="inherit" color="text.secondary">
                   ch.{chapterSeq} 맞힌 갯수
                 </Typography>
-                <Typography variant="h5">1/3</Typography>
+                <Typography variant="h5">
+                  {quizResult["hit_count"]}/{quizResult["question_count"]}
+                </Typography>
               </CardContent>
             </Card>
           </Grid>

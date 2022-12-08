@@ -25,11 +25,10 @@ const QuizPage = () => {
   const [isNewUserOption, setIsNewUserOption] = useState(true);
 
   // ROUTING
-  const { categorySeq, chapterSeq } = queryString.parse(useLocation().search);
-  const queryParameter = `?categorySeq=${categorySeq}&chapterSeq=${chapterSeq}`;
+  const queryParameter = useLocation().search;
+  const { categorySeq, chapterSeq } = queryString.parse(queryParameter);
   const history = useHistory();
   const { enqueueSnackbar } = useSnackbar();
-
 
   // RELATED HOOK
   const fetchQuiz = async () => {
@@ -38,19 +37,19 @@ const QuizPage = () => {
       axios.get(`${OPTION_HISTORY_URI}${queryParameter}`),
     ]);
 
-    const quizResult = quizState.value.data.result;
-    const shuffleQuiz = shuffleArray(quizResult).map((each) => {
+    const quizResponse = quizState.value.data.result;
+    const shuffleQuiz = shuffleArray(quizResponse).map((each) => {
       return {
         ...each,
         ["option_array"]: shuffleArray(each["option_array"]),
       };
     });
 
-    setQuiz(shuffleQuiz);
+    setQuiz(shuffleQuiz);    
 
     // TODO: for-of는 비동기인 이유
     if (!optionHistoryState.value) {
-      for (const each of quizResult) {
+      for (const each of quizResponse) {
         setUserOption((prevState) => {
           return {
             ...prevState,
@@ -62,9 +61,9 @@ const QuizPage = () => {
       return;
     }
 
-    const optionHistoryResult = optionHistoryState.value.data.result;
+    const optionHistoryResponse = optionHistoryState.value.data.result;
 
-    for (const each of optionHistoryResult) {
+    for (const each of optionHistoryResponse) {
       setIsNewUserOption(false);
       setUserOption((prevState) => {
         return {
@@ -106,7 +105,7 @@ const QuizPage = () => {
     }
   };
 
-  // ERROR HANDLE
+  // LOADING UI
   if (!quiz.length || !Object.keys(userOption).length) {
     return (
       <Wrapper>
