@@ -7,6 +7,10 @@ import { Link } from "react-router-dom";
 
 //INTERNAL IMPORT
 import Style from "./BottomBar.module.css";
+import {
+  LEADER_BOARD_PAGE_PATH,
+  HISTORY_PAGE_PATH,
+} from "../../constants/route";
 
 const BottomBar = () => {
   return (
@@ -21,14 +25,14 @@ const BottomBar = () => {
         />
         <BottomNavigationAction
           component={Link}
-          to="/leaderBoard"
+          to={LEADER_BOARD_PAGE_PATH}
           label="리더보드"
           value="leaderBoard"
           icon={<LeaderboardIcon />}
         />
         <BottomNavigationAction
           component={Link}
-          to="/history"
+          to={HISTORY_PAGE_PATH}
           label="기록"
           value="history"
           icon={<HistoryIcon />}

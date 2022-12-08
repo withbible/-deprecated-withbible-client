@@ -3,10 +3,7 @@ import { Typography } from "@mui/material";
 
 //INTERNAL IMPORT
 import Style from "./MainPage.module.css";
-import Category from "../components/Category/Category";
-import SearchBar from "../components/SearchBar/SearchBar";
-import Wrapper from "../components/Wrapper/Wrapper";
-import AppBar from "../components/AppBar/AppBar";
+import { AppBar, Category, SearchBar, Wrapper } from "../components";
 
 const MainPage = (_) => {
   return (

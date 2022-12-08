@@ -9,16 +9,17 @@ import {
   Link,
 } from "@mui/material";
 import Confetti from "react-dom-confetti";
-import { useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import queryString from "query-string";
 
 //INTERNAL IMPORT
 import Style from "./QuizResultPage.module.css";
-import Wrapper from "../components/Wrapper/Wrapper";
+import { Wrapper } from "../components";
+import { QUIZ_URI } from "../constants/api";
 
 const QuizResultPage = () => {
-  const { categorySeq, chapterSeq } = useParams();
-  const [activeState, setActiveStep] = useState(false);
-  const uri = `/quiz/${categorySeq}/${chapterSeq}`;
+  const { categorySeq, chapterSeq } = queryString.parse(useLocation().search);
+  const [activeState, setActiveStep] = useState(false);  
 
   useEffect(() => {
     setActiveStep(true);
@@ -56,7 +57,7 @@ const QuizResultPage = () => {
 
         <Box className={Style.buttonContainer}>
           <Button>
-            <Link href={uri}>다시풀기</Link>
+            <Link href={`${QUIZ_URI}${useLocation().search}`}>다시풀기</Link>
           </Button>
           <Button>
             <Link>리뷰</Link>

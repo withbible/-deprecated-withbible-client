@@ -10,15 +10,16 @@ import axios from "axios";
 import { format } from "timeago.js";
 
 //INTERNAL IMPORT
-import Wrapper from "../components/Wrapper/Wrapper";
+import { Wrapper } from "../components";
+import { LEADER_BOARD_URI } from "../constants/api";
 
 const LeaderBoardPage = () => {
   const [leaderBoards, setLeaderBoards] = useState([]);
 
-  const uri = `/leaderBoard`;
-
   useEffect(() => {
-    axios.get(uri).then(({ data }) => setLeaderBoards(data.result));
+    axios
+      .get(LEADER_BOARD_URI)
+      .then(({ data }) => setLeaderBoards(data.result));
   }, []);
 
   if (!leaderBoards.length) {
@@ -41,7 +42,7 @@ const LeaderBoardPage = () => {
 
               <ListItemText
                 primary={each["user_id"]}
-                secondary={format(each["updated_at"], "ko")}
+                secondary={format(each["updated_at"], "ko_KR")}
               />
             </ListItem>
           ))}
