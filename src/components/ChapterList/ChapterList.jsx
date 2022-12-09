@@ -1,5 +1,6 @@
 import React from "react";
 import { ScrollMenu } from "react-horizontal-scrolling-menu";
+import { Typography } from "@mui/material";
 
 //INTERNAL IMPORT
 import Chapter from "./Chapter";
@@ -8,7 +9,7 @@ const ChapterList = ({ iteratee, title, categorySeq }) => {
   return (
     <>
       {/* TODO: ScrollMenu Header not working */}
-      {title}
+      <Typography>{title}</Typography>
       <ScrollMenu onWheel={onWheel}>
         {iteratee.map((each, index) => (
           <Chapter

@@ -1,3 +1,7 @@
+export const MAX_CHAPTER_URI = "/quiz/category/max-chapter";
+
+export const CHAPTER_SEARCH_URI = "/quiz/categories/chapter";
+
 export const QUIZ_URI = "/quiz/chapter";
 
 export const HIT_COUNT_URI = "/history/chapter/hit-count";

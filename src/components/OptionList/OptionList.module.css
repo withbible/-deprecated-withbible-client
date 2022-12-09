@@ -1,5 +1,5 @@
 .optionContainer {
-  display: flex;
+  display: flex;  
 }
 
 .option {
@@ -9,4 +9,8 @@
 /* TODO: 왜 override가 되지 않나 */
 .optionHistory {
   background-color: var(--primary-color) !important
+}
+
+.optionCorrect {
+  background-color: #4caf50 !important
 }

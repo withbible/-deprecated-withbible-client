@@ -1,51 +1,56 @@
 import React, { useState } from "react";
+import { useSnackbar } from "notistack";
 import axios from "axios";
+
+//INTERNAL IMPORT
+import { MAX_CHAPTER_URI, CHAPTER_SEARCH_URI } from "../constants/api";
 
 export const ChapterSearchContext = React.createContext();
 
 export const ChapterSearchProvider = ({ children }) => {
-  const [error, setError] = useState("");
   const [searchKeyword, setSearchKeyword] = useState("");
   const [searchRecord, setSearchRecord] = useState({
     maxChapter: [],
     chapterSearch: [],
   });
+  const { enqueueSnackbar } = useSnackbar();
 
   const fetchMaxChapter = async () => {
     try {
-      const uri = `/quiz/category/max-chapter`;
-      const { data } = await axios.get(uri);
+      const { data } = await axios.get(`${MAX_CHAPTER_URI}`);
 
       setSearchRecord((prevState) => {
         return { ...prevState, maxChapter: data.result };
       });
-    } catch (error) {}
+    } catch (error) {
+      const message = error.response.data.message;
+      enqueueSnackbar(message, { variant: "error" });
+    }
   };
 
   const fetchChapterSearch = async (searchKeyword) => {
     setSearchKeyword(searchKeyword);
 
     try {
-      const uri = `/quiz/categories/chapter?keyword=${searchKeyword}`;
-      const { data } = await axios.get(uri);
+      const { data } = await axios.get(
+        `${CHAPTER_SEARCH_URI}?keyword=${searchKeyword}`
+      );
 
       setSearchRecord((prevState) => {
         return { ...prevState, chapterSearch: data.result };
       });
-      setError("");
-    } catch (err) {
-      setError(err.response.data.message);
+    } catch (error) {
+      const message = error.response.data.message;
+      enqueueSnackbar(message, { variant: "error" });
     }
   };
 
   return (
     <ChapterSearchContext.Provider
       value={{
-        error,
         fetchMaxChapter,
         fetchChapterSearch,
         searchRecord,
-        setSearchRecord,
         searchKeyword,
       }}
     >

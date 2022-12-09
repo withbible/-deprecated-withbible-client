@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from "react";
 
 //INTERNAL IMPORT
-import ChapterList from "../Chapter/ChapterList";
+import ChapterList from "../ChapterList/ChapterList";
 import { ChapterSearchContext } from "../../context/ChapterSearchContext";
 
 const Category = () => {

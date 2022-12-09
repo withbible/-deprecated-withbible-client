@@ -6,29 +6,30 @@ import queryString from "query-string";
 //INTERNAL IMPORT
 import {
   ButtonBox,
-  OptionList,
+  ReviewOptionList,
   QuestionBox,
   StepperBar,
   Wrapper,
 } from "../components";
 import { QuizContext } from "../context/QuizContext";
 
-const QuizPage = () => {
+const ReviewPage = () => {
   const { quiz, fetchQuiz, totalStep } = useContext(QuizContext);
   const [activeStep, setActiveStep] = useState(0);
   const queryParameter = useLocation().search;
   const { categorySeq, chapterSeq } = queryString.parse(queryParameter);
 
+  // TODO: 이전 퀴즈가 잠깐 보이는 이슈
   useEffect(() => {
-    fetchQuiz({});
+    fetchQuiz({ shuffle: false });
   }, [categorySeq, chapterSeq]);
-
+  
   // LOADING UI
   if (!quiz.length) {
     return (
       <Wrapper>
         <Typography>
-          카테고리{categorySeq} ch. {chapterSeq}
+          카테고리{categorySeq} ch. {chapterSeq} 리뷰
         </Typography>
 
         <Wrapper.Body>
@@ -41,7 +42,7 @@ const QuizPage = () => {
   return (
     <Wrapper>
       <Typography>
-        카테고리{categorySeq} ch. {chapterSeq}
+        카테고리{categorySeq} ch. {chapterSeq} 리뷰
       </Typography>
 
       <StepperBar
@@ -53,7 +54,7 @@ const QuizPage = () => {
       <Wrapper.Body>
         <QuestionBox question={quiz[activeStep]["question"]} />
 
-        <OptionList
+        <ReviewOptionList
           questionSeq={quiz[activeStep]["question_seq"]}
           iteratee={quiz[activeStep]["option_array"]}
         />
@@ -68,4 +69,4 @@ const QuizPage = () => {
   );
 };
 
-export default QuizPage;
+export default ReviewPage;

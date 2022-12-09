@@ -1,18 +1,11 @@
 import React, { useState, useEffect } from "react";
-import {
-  List,
-  ListSubheader,
-  ListItem,
-  ListItemButton,
-  ListItemText,
-} from "@mui/material";
-import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
+import { List } from "@mui/material";
 import axios from "axios";
 
 //INTERNAL IMPORT
-import Style from "./ReviewListPage.module.css";
 import { Wrapper } from "../components";
 import { ACTIVE_CHAPTER_URI } from "../constants/api";
+import { ActiveChapterList } from "../components";
 
 const ReviewListPage = () => {
   const [reviewList, setReviewList] = useState([]);
@@ -31,25 +24,15 @@ const ReviewListPage = () => {
     <Wrapper>
       리뷰목록
       <Wrapper.Body>
-        <List className={Style.reviewListContainer}>
-          {reviewList.map((each, index) => {
-            const category = each["category"];
-
-            return (
-              <div key={index}>
-                <ListSubheader className={Style.listSubHeader}>{category}</ListSubheader>
-
-                {each["chapter_seq_array"].map((each, index) => (
-                  <ListItem key={index}>
-                    <ListItemButton>
-                      <ListItemText primary={`${category} ch.${each}`} />
-                      <KeyboardArrowRightIcon/>
-                    </ListItemButton>
-                  </ListItem>
-                ))}
-              </div>
-            );
-          })}
+        <List>
+          {reviewList.map((each, index) => (
+            <ActiveChapterList
+              key={index}
+              iteratee={each["chapter_seq_array"]}
+              category={each["category"]}
+              categorySeq={each["category_seq"]}
+            />
+          ))}
         </List>
       </Wrapper.Body>
     </Wrapper>

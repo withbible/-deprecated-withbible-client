@@ -6,7 +6,6 @@ import {
   CardContent,
   Box,
   Button,
-  Link,
 } from "@mui/material";
 import Confetti from "react-dom-confetti";
 import { useLocation } from "react-router-dom";
@@ -16,7 +15,8 @@ import axios from "axios";
 //INTERNAL IMPORT
 import Style from "./QuizResultPage.module.css";
 import { Wrapper } from "../components";
-import { QUIZ_URI, HIT_COUNT_URI, ACTIVE_CHAPTER_COUNT_URI } from "../constants/api";
+import { HIT_COUNT_URI, ACTIVE_CHAPTER_COUNT_URI } from "../constants/api";
+import { QUIZ_PAGE_PATH, REVIEW_PAGE_PATH } from "../constants/route";
 
 const QuizResultPage = () => {
   const [quizResult, setQuizResult] = useState({
@@ -103,12 +103,8 @@ const QuizResultPage = () => {
         </Grid>
 
         <Box className={Style.buttonContainer}>
-          <Button>
-            <Link href={`${QUIZ_URI}${useLocation().search}`}>다시풀기</Link>
-          </Button>
-          <Button>
-            <Link>리뷰</Link>
-          </Button>
+          <Button href={`${QUIZ_PAGE_PATH}${queryParameter}`}>다시풀기</Button>
+          <Button href={`${REVIEW_PAGE_PATH}${queryParameter}`}>리뷰</Button>
         </Box>
       </Wrapper.Body>
     </Wrapper>

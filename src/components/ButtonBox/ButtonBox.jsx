@@ -1,11 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Button, Box } from "@mui/material";
 import { debounce } from "lodash";
 
 //INTERNAL IMPORT
 import Style from "./ButtonBox.module.css";
+import { QuizContext } from "../../context/QuizContext";
 
-const ButtonBox = ({ isFirst, isLast, setActiveStep, handleSubmit }) => {
+const ButtonBox = ({ isFirst, isLast, setActiveStep }) => {
+  const { handleSubmit } = useContext(QuizContext);
+
   const handleBack = () => {
     setActiveStep((prevState) => prevState - 1);
   };

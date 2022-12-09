@@ -8,19 +8,20 @@ import { SnackbarProvider } from "notistack";
 import "./index.css";
 import App from "./App";
 import { ChapterSearchProvider } from "./context/ChapterSearchContext";
+import { QuizProvider } from "./context/QuizContext";
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
-      <ChapterSearchProvider>
-        <StyledEngineProvider injectFirst>
-          <SnackbarProvider
-            autoHideDuration={2000}
-          >
-            <App />
-          </SnackbarProvider>
-        </StyledEngineProvider>
-      </ChapterSearchProvider>
+      <SnackbarProvider autoHideDuration={2000}>
+        <ChapterSearchProvider>
+          <QuizProvider>
+            <StyledEngineProvider injectFirst>
+              <App />
+            </StyledEngineProvider>
+          </QuizProvider>
+        </ChapterSearchProvider>
+      </SnackbarProvider>
     </BrowserRouter>
   </React.StrictMode>,
   document.getElementById("root")
