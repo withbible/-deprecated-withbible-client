@@ -1,9 +1,11 @@
-.MuiStepIcon-root.Mui-active{
-  color: var(--shadow-color);  
+.MuiStepIcon-root.Mui-active {
+  color: var(--shadow-color);
 }
 
-/* TODO: StepIcon text는 별도의 css 적용 필요 */
+.MuiStepIcon-root.Mui-active text {
+  fill: rgba(0, 0, 0, 0.38);
+}
 
-.MuiStepConnector-line{
+.MuiStepConnector-line {
   border-color: var(--shadow-color);
 }

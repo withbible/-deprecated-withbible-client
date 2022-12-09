@@ -62,6 +62,7 @@ const ReviewPage = () => {
         <ButtonBox
           isFirst={activeStep === 0}
           isLast={activeStep && activeStep === totalStep()}
+          isReview={true}
           setActiveStep={setActiveStep}
         />
       </Wrapper.Body>
