@@ -2,7 +2,9 @@ export const QUIZ_URI = "/quiz/chapter";
 
 export const HIT_COUNT_URI = "/history/chapter/hit-count";
 
-export const ACTIVE_COUNT_URI = "/history/category/active-count";
+export const ACTIVE_CHAPTER_COUNT_URI = "/history/category/active-chapter-count";
+
+export const ACTIVE_CHAPTER_URI = "/history/categories/active-chapter";
 
 export const OPTION_HISTORY_URI = "/history/chapter/user-option";
 

@@ -16,7 +16,7 @@ import axios from "axios";
 //INTERNAL IMPORT
 import Style from "./QuizResultPage.module.css";
 import { Wrapper } from "../components";
-import { QUIZ_URI, HIT_COUNT_URI, ACTIVE_COUNT_URI } from "../constants/api";
+import { QUIZ_URI, HIT_COUNT_URI, ACTIVE_CHAPTER_COUNT_URI } from "../constants/api";
 
 const QuizResultPage = () => {
   const [quizResult, setQuizResult] = useState({
@@ -33,7 +33,7 @@ const QuizResultPage = () => {
   const fetchQuizResult = async () => {
     const [hitCountState, activeCountState] = await Promise.all([
       axios.get(`${HIT_COUNT_URI}${queryParameter}`),
-      axios.get(`${ACTIVE_COUNT_URI}?categorySeq=${categorySeq}`),
+      axios.get(`${ACTIVE_CHAPTER_COUNT_URI}?categorySeq=${categorySeq}`),
     ]);
 
     const hitCount = hitCountState.data.result;

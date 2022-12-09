@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 import Style from "./BottomBar.module.css";
 import {
   LEADER_BOARD_PAGE_PATH,
-  HISTORY_PAGE_PATH,
+  REVIEW_LIST_PAGE_PATH,
 } from "../../constants/route";
 
 const BottomBar = () => {
@@ -32,9 +32,9 @@ const BottomBar = () => {
         />
         <BottomNavigationAction
           component={Link}
-          to={HISTORY_PAGE_PATH}
-          label="기록"
-          value="history"
+          to={REVIEW_LIST_PAGE_PATH}
+          label="리뷰목록"
+          value="reviewList"
           icon={<HistoryIcon />}
         />
       </BottomNavigation>

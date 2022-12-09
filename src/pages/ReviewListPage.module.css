@@ -1,0 +1,5 @@
+.listSubHeader {
+  font-family: inherit;
+  background-color: transparent;
+  box-shadow: var(--box-shadow);
+}

@@ -7,8 +7,7 @@
   color: inherit;
 }
 
-.gridItem {
-  font-family: 'Do Hyeon', sans-serif;
+.gridItem {  
   background-color: inherit;
   box-shadow: var(--box-shadow);
 }
