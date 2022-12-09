@@ -2,6 +2,7 @@
 
 html {  
   font-size: 16px;    
+  font-family: 'Do Hyeon', sans-serif;
   --primary-color: #FBCE7B;
   --accent-color: #8D5AC4;
   --shadow-color: #FBFADD;
@@ -18,4 +19,8 @@ body {
   height: 100%;
   position: absolute;
   background-color: var(--shadow-color);
+}
+
+.MuiTypography-root{
+  font-family: inherit;
 }

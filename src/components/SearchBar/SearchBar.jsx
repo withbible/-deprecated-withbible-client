@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { IconButton } from "@mui/material";
+import { IconButton, InputBase, InputAdornment, Paper } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 
@@ -7,7 +7,7 @@ import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import Style from "./SearchBar.module.css";
 import { ChapterSearchContext } from "../../context/ChapterSearchContext";
 
-const SearchBar = ({ className }) => {
+const SearchBar = () => {
   const { fetchChapterSearch } = useContext(ChapterSearchContext);
   const [searchKeyword, setSearchKeyword] = useState("");
 
@@ -18,19 +18,28 @@ const SearchBar = ({ className }) => {
   };
 
   return (
-    <form onSubmit={onSubmit} className={className}>
-      <div className={Style.searchBarContainer}>
-        <SearchIcon className={Style.searchBarIcon} />
-        <input
+    <form onSubmit={onSubmit}>
+      <Paper className={Style.searchBarContainer}>
+        <InputBase
+          startAdornment={
+            <InputAdornment position="start">
+              <SearchIcon />
+            </InputAdornment>
+          }
+          endAdornment={
+            <InputAdornment position="end" className={Style.searchButton}>
+              <IconButton type="submit">
+                <KeyboardArrowRightIcon />
+              </IconButton>
+            </InputAdornment>
+          }
+          className={Style.searchBar}
+          // TODO: placeholder 커스텀 필요
           placeholder="검색어를 입력하세요."
           onChange={(e) => setSearchKeyword(e.target.value)}
           value={searchKeyword}
         />
-
-        <IconButton type="submit">
-          <KeyboardArrowRightIcon />
-        </IconButton>
-      </div>
+      </Paper>
     </form>
   );
 };
