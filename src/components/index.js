@@ -4,6 +4,7 @@ import BottomBar from "./BottomBar/BottomBar";
 import ButtonBox from "./ButtonBox/ButtonBox";
 import Category from "./Category/Category";
 import OptionList from "./OptionList/OptionList";
+import PasswordInput from "./PasswordInput/PasswordInput";
 import QuestionBox from "./QuestionBox/QuestionBox";
 import ReviewOptionList from "./OptionList/ReviewOptionList";
 import SearchBar from "./SearchBar/SearchBar";
@@ -17,6 +18,7 @@ export {
   ButtonBox,
   Category,
   OptionList,
+  PasswordInput,
   QuestionBox,
   ReviewOptionList,
   SearchBar,

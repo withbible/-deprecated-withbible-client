@@ -1,6 +1,6 @@
-export const SIGN_IN_PATH = "/auth/signIn";
-
 export const SIGN_UP_PATH = "/auth/signUp";
+
+export const LOG_IN_PATH = "/auth/logIn";
 
 export const QUIZ_PAGE_PATH = "/quiz";
 
