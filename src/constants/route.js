@@ -1,3 +1,7 @@
+export const SIGN_IN_PATH = "/auth/signIn";
+
+export const SIGN_UP_PATH = "/auth/signUp";
+
 export const QUIZ_PAGE_PATH = "/quiz";
 
 export const QUIZ_RESULT_PAGE_PATH = "/quiz/result";

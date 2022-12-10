@@ -1,10 +1,6 @@
 .buttonContainer {
   display: flex;
-  flex-direction: column;
-}
-
-.buttonContainer Button {
-  color: inherit;
+  flex-direction: column;  
 }
 
 .gridItem {  

@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap');
 
-html {  
-  font-size: 16px;    
+html {
+  font-size: 16px;
   font-family: 'Do Hyeon', sans-serif;
   --primary-color: #FBCE7B;
   --accent-color: #8D5AC4;
@@ -11,7 +11,7 @@ html {
 }
 
 body {
-  margin: 0;  
+  margin: 0;
 }
 
 #root {
@@ -21,6 +21,22 @@ body {
   background-color: var(--shadow-color);
 }
 
-.MuiTypography-root{
+.MuiTypography-root {
   font-family: inherit;
+}
+
+.MuiButton-root {
+  color: inherit;
+}
+
+.MuiInputLabel-root.Mui-focused{
+  color: inherit;
+}
+
+.MuiInput-root:after{
+  border-bottom: 2px solid #444;
+}
+
+.MuiCheckbox-root.Mui-checked{  
+  color: var(--primary-color);  
 }
