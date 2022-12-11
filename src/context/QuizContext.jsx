@@ -21,31 +21,7 @@ export const QuizProvider = ({ children }) => {
   const { categorySeq, chapterSeq } = queryString.parse(queryParameter);
   const history = useHistory();
 
-  const fetchQuiz = async ({shuffle = true}) => {
-    const [quizState, optionHistoryState] = await Promise.allSettled([
-      axios.get(`${QUIZ_URI}${queryParameter}`),
-      axios.get(`${OPTION_HISTORY_URI}${queryParameter}`),
-    ]);
-
-    const quiz = quizState.value.data.result;
-    setQuiz(shuffle ? shuffleQuiz(quiz) : quiz);
-
-    // TODO: for-of는 비동기인 이유
-    if (!optionHistoryState.value) {
-      for (const each of quizResponse) {
-        setUserOption((prevState) => {
-          return {
-            ...prevState,
-            [each["question_seq"]]: null,
-          };
-        });
-      }
-
-      return;
-    }
-
-    const optionHistoryResponse = optionHistoryState.value.data.result;
-
+  const setUserOptionWithHistory = (optionHistoryResponse) => {
     for (const each of optionHistoryResponse) {
       setIsNewUserOption(false);
       setUserOption((prevState) => {
@@ -55,6 +31,34 @@ export const QuizProvider = ({ children }) => {
         };
       });
     }
+  };
+  
+  const setUserOptionWithNull = () => {
+    for (const each of quiz) {
+      setUserOption((prevState) => {
+        return {
+          ...prevState,
+          [each["question_seq"]]: null,
+        };
+      });
+    }
+  };
+
+  const fetchQuiz = async ({ shuffle = true }) => {
+    const [quizState, optionHistoryState] = await Promise.allSettled([
+      axios.get(`${QUIZ_URI}${queryParameter}`),
+      axios.get(`${OPTION_HISTORY_URI}${queryParameter}`),
+    ]);
+
+    const quiz = quizState.value.data.result;
+    setQuiz(shuffle ? await shuffleQuiz(quiz) : quiz);
+    
+    if (!optionHistoryState.value) {
+      return setUserOptionWithNull();      
+    }
+
+    const optionHistoryResponse = optionHistoryState.value.data.result;
+    return setUserOptionWithHistory(optionHistoryResponse);
   };
 
   const handleSubmit = async () => {
@@ -91,6 +95,7 @@ export const QuizProvider = ({ children }) => {
         setUserOption,
         handleSubmit,
         totalStep,
+        queryParameter,
       }}
     >
       {children}
@@ -98,7 +103,7 @@ export const QuizProvider = ({ children }) => {
   );
 };
 
-function shuffleQuiz(quiz) {
+async function shuffleQuiz(quiz) {
   return shuffleArray(quiz).map((each) => {
     return {
       ...each,

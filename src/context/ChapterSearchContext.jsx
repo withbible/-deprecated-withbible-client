@@ -19,9 +19,7 @@ export const ChapterSearchProvider = ({ children }) => {
     try {
       const { data } = await axios.get(`${MAX_CHAPTER_URI}`);
 
-      setSearchRecord((prevState) => {
-        return { ...prevState, maxChapter: data.result };
-      });
+      setSearchRecord({ ...searchRecord, maxChapter: data.result });
     } catch (error) {
       const message = error.response.data.message;
       enqueueSnackbar(message, { variant: "error" });
@@ -36,9 +34,7 @@ export const ChapterSearchProvider = ({ children }) => {
         `${CHAPTER_SEARCH_URI}?keyword=${searchKeyword}`
       );
 
-      setSearchRecord((prevState) => {
-        return { ...prevState, chapterSearch: data.result };
-      });
+      setSearchRecord({ ...searchRecord, chapterSearch: data.result });
     } catch (error) {
       const message = error.response.data.message;
       enqueueSnackbar(message, { variant: "error" });

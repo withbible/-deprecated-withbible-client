@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   Typography,
   Grid,
@@ -8,15 +8,15 @@ import {
   Button,
 } from "@mui/material";
 import Confetti from "react-dom-confetti";
-import { useLocation } from "react-router-dom";
 import queryString from "query-string";
 import axios from "axios";
 
 //INTERNAL IMPORT
 import Style from "./QuizResultPage.module.css";
-import { Wrapper } from "../components";
 import { HIT_COUNT_URI, ACTIVE_CHAPTER_COUNT_URI } from "../constants/api";
 import { QUIZ_PAGE_PATH, REVIEW_PAGE_PATH } from "../constants/route";
+import { QuizContext } from "../context/QuizContext";
+import { Wrapper } from "../components";
 
 const QuizResultPage = () => {
   const [quizResult, setQuizResult] = useState({
@@ -24,9 +24,9 @@ const QuizResultPage = () => {
     activeCount: {},
   });
   const [activeState, setActiveState] = useState(false);
+  const { queryParameter } = useContext(QuizContext);
 
   // ROUTING
-  const queryParameter = useLocation().search;
   const { categorySeq, chapterSeq } = queryString.parse(queryParameter);
 
   // RELATED HOOK
