@@ -11,7 +11,9 @@ const Chapter = ({ itemId, categorySeq, chapterSeq }) => {
   return (
     <>
       <Button href={`${QUIZ_PAGE_PATH}${queryParameter}`}>
-        <Paper className={Style.chapterPaper}>ch.{chapterSeq}</Paper>
+        <Paper className={Style.chapterPaper} elevation={3}>
+          ch.{chapterSeq}
+        </Paper>
       </Button>
     </>
   );

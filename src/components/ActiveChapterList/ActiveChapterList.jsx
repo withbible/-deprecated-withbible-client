@@ -8,13 +8,12 @@ import {
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 
 //INTERNAL IMPORT
-import Style from "./ActiveChapterList.module.css";
 import { REVIEW_PAGE_PATH } from "../../constants/route";
 
 const ActiveChapterList = ({ iteratee, category, categorySeq }) => {  
   return (
     <>
-      <ListSubheader className={Style.listSubHeader}>{category}</ListSubheader>
+      <ListSubheader>{category}</ListSubheader>
 
       {iteratee.map((each, index) => {
         const queryParameter = `?categorySeq=${categorySeq}&chapterSeq=${each}`;

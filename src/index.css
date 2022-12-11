@@ -21,22 +21,33 @@ body {
   background-color: var(--shadow-color);
 }
 
-.MuiTypography-root {
+.MuiInput-root,
+.MuiInputBase-root,
+.MuiInputLabel-root,
+.MuiTypography-root,
+.MuiListSubheader-root,
+.react-horizontal-scrolling-menu--item {
   font-family: inherit;
 }
 
-.MuiButton-root {
+.MuiButton-root,
+.MuiInputLabel-root.Mui-focused {
   color: inherit;
 }
 
-.MuiInputLabel-root.Mui-focused{
-  color: inherit;
-}
-
-.MuiInput-root:after{
+.MuiInput-root:after {
   border-bottom: 2px solid #444;
 }
 
-.MuiCheckbox-root.Mui-checked{  
-  color: var(--primary-color);  
+.MuiCheckbox-root.Mui-checked {
+  color: var(--primary-color);
+}
+
+.MuiPaper-root,
+.MuiListSubheader-root {
+  background-color: inherit;
+}
+
+.MuiListSubheader-root {
+  box-shadow: var(--box-shadow);
 }

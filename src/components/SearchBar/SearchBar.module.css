@@ -8,9 +8,6 @@
 
 .searchBar {
   width: 100%;
-}
-
-.searchBar input {
   border: 3px solid var(--primary-color);
   background-color: var(--shadow-color);
 }

@@ -1,5 +1,11 @@
 import React, { useContext, useState } from "react";
-import { IconButton, InputBase, InputAdornment, Paper } from "@mui/material";
+import {
+  IconButton,
+  InputBase,
+  InputAdornment,
+  Paper,
+  Box,
+} from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 
@@ -11,14 +17,14 @@ const SearchBar = () => {
   const { fetchChapterSearch } = useContext(ChapterSearchContext);
   const [searchKeyword, setSearchKeyword] = useState("");
 
-  const onSubmit = async (e) => {
-    e.preventDefault();
+  const hanldeSubmit = async (event) => {
+    event.preventDefault();
 
     fetchChapterSearch(searchKeyword);
   };
 
   return (
-    <form onSubmit={onSubmit}>
+    <Box component="form" onSubmit={hanldeSubmit}>
       <Paper className={Style.searchBarContainer}>
         <InputBase
           startAdornment={
@@ -34,13 +40,12 @@ const SearchBar = () => {
             </InputAdornment>
           }
           className={Style.searchBar}
-          // TODO: placeholder 커스텀 필요
           placeholder="검색어를 입력하세요."
-          onChange={(e) => setSearchKeyword(e.target.value)}
+          onChange={(event) => setSearchKeyword(event.target.value)}
           value={searchKeyword}
         />
       </Paper>
-    </form>
+    </Box>
   );
 };
 

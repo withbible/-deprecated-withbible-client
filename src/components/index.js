@@ -1,4 +1,4 @@
-import ActiveChapterList from "./ActiveChapterList.jsx/ActiveChapterList";
+import ActiveChapterList from "./ActiveChapterList/ActiveChapterList";
 import AppBar from "./AppBar/AppBar";
 import BottomBar from "./BottomBar/BottomBar";
 import ButtonBox from "./ButtonBox/ButtonBox";

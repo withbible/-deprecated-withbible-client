@@ -3,7 +3,8 @@
   margin-top: 1rem;
 }
 
+/* 부모 <ScrollMenu/>에 의해 다른 폰트스타일을 상속받기 때문에 별도로 지정합니다. */
 .chapterPaper {
-  width: 3.125rem;
-  padding: 1.5rem;  
+  font-family: 'Do Hyeon', sans-serif;
+  padding: 1.5rem;
 }
