@@ -1,0 +1,4 @@
+.listHistory{
+  background-color: var(--primary-color) !important;  
+  border-radius: var(--border-radius);
+}

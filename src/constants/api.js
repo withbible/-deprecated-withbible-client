@@ -2,6 +2,8 @@ export const SIGN_UP_URI = "/user";
 
 export const LOG_IN_URI = "/user/login";
 
+export const LOGIN_CHECK_URI = "/user/login-check";
+
 export const MAX_CHAPTER_URI = "/quiz/category/max-chapter";
 
 export const CHAPTER_SEARCH_URI = "/quiz/categories/chapter";

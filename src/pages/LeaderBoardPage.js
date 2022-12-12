@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   List,
   ListItem,
@@ -10,11 +10,14 @@ import axios from "axios";
 import { format } from "timeago.js";
 
 //INTERNAL IMPORT
+import Style from "./LeaderBoardPage.module.css";
 import { Wrapper } from "../components";
 import { LEADER_BOARD_URI } from "../constants/api";
+import { AuthContext } from "../context/AuthContext";
 
 const LeaderBoardPage = () => {
   const [leaderBoards, setLeaderBoards] = useState([]);
+  const { userID } = useContext(AuthContext);
 
   useEffect(() => {
     axios
@@ -31,21 +34,30 @@ const LeaderBoardPage = () => {
       리더보드
       <Wrapper.Body>
         <List>
-          {leaderBoards.map((each, index) => (
-            <ListItem
-              key={index}
-              secondaryAction={<ListItemText secondary={each["quiz_score"]} />}
-            >
-              <ListItemAvatar>
-                <Avatar src={each.image} />
-              </ListItemAvatar>
+          {leaderBoards.map((each, index) => {
+            const isHistory = userID === each["user_id"];
+            
+            console.log(isHistory);
 
-              <ListItemText
-                primary={each["user_id"]}
-                secondary={format(each["updated_at"], "ko_KR")}
-              />
-            </ListItem>
-          ))}
+            return (
+              <ListItem
+                key={index}
+                className={`${isHistory && Style.listHistory}`}
+                secondaryAction={
+                  <ListItemText secondary={each["quiz_score"]} />
+                }
+              >
+                <ListItemAvatar>
+                  <Avatar src={each.image} />
+                </ListItemAvatar>
+
+                <ListItemText
+                  primary={each["user_id"]}
+                  secondary={format(each["updated_at"], "ko_KR")}
+                />
+              </ListItem>
+            );
+          })}
         </List>
       </Wrapper.Body>
     </Wrapper>
