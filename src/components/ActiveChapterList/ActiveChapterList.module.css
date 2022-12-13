@@ -1,0 +1,15 @@
+.listItemButton{
+  position: relative;
+}
+
+.listItemChip{
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.listItemIcon{
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
