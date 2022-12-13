@@ -17,18 +17,18 @@ const QuizPage = () => {
   const { quiz, fetchQuiz, totalStep } = useContext(QuizContext);
   const [activeStep, setActiveStep] = useState(0);
   const queryParameter = useLocation().search;
-  const { categorySeq, chapterSeq } = queryString.parse(queryParameter);
+  const { categorySeq, chapterNum } = queryString.parse(queryParameter);
 
   useEffect(() => {
     fetchQuiz({});
-  }, [categorySeq, chapterSeq]);
+  }, [categorySeq, chapterNum]);
 
   // LOADING UI
   if (!quiz.length) {
     return (
       <Wrapper>
         <Typography>
-          카테고리{categorySeq} ch. {chapterSeq}
+          카테고리{categorySeq} ch. {chapterNum}
         </Typography>
 
         <Wrapper.Body>
@@ -41,7 +41,7 @@ const QuizPage = () => {
   return (
     <Wrapper>
       <Typography>
-        카테고리{categorySeq} ch. {chapterSeq}
+        카테고리{categorySeq} ch. {chapterNum}
       </Typography>
 
       <StepperBar
@@ -60,7 +60,7 @@ const QuizPage = () => {
 
         <ButtonBox
           isFirst={activeStep === 0}
-          isLast={activeStep && activeStep === totalStep()}
+          isLast={activeStep === totalStep()}
           setActiveStep={setActiveStep}
         />
       </Wrapper.Body>

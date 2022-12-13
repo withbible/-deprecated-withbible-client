@@ -18,7 +18,7 @@ export const QuizProvider = ({ children }) => {
 
   // ROUTING
   const queryParameter = useLocation().search;
-  const { categorySeq, chapterSeq } = queryString.parse(queryParameter);
+  const { categorySeq, chapterNum } = queryString.parse(queryParameter);
   const history = useHistory();
 
   const setUserOptionWithHistory = (optionHistoryResponse) => {
@@ -32,7 +32,7 @@ export const QuizProvider = ({ children }) => {
       });
     }
   };
-  
+
   const setUserOptionWithNull = () => {
     for (const each of quiz) {
       setUserOption((prevState) => {
@@ -50,23 +50,35 @@ export const QuizProvider = ({ children }) => {
       axios.get(`${OPTION_HISTORY_URI}${queryParameter}`),
     ]);
 
+    try {
+      if (quizState.status === "rejected") {
+        const message = quizState.reason.response.data.message;
+        throw new Error(message);
+      }
+    } catch (error) {      
+      const message = error.message;
+      enqueueSnackbar(message, { variant: "error" });
+      return;
+    }
+
     const quiz = quizState.value.data.result;
     setQuiz(shuffle ? await shuffleQuiz(quiz) : quiz);
-    
+
     if (!optionHistoryState.value) {
-      return setUserOptionWithNull();      
+      setUserOptionWithNull();
+      return;
     }
 
     const optionHistoryResponse = optionHistoryState.value.data.result;
-    return setUserOptionWithHistory(optionHistoryResponse);
+    setUserOptionWithHistory(optionHistoryResponse);
   };
 
   const handleSubmit = async () => {
     const payload = {
       categorySeq,
-      chapterSeq,
+      chapterNum,
       bulk: userOption,
-    };
+    };    
 
     try {
       if (isNewUserOption) {

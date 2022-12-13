@@ -17,19 +17,19 @@ const ReviewPage = () => {
   const { quiz, fetchQuiz, totalStep } = useContext(QuizContext);
   const [activeStep, setActiveStep] = useState(0);
   const queryParameter = useLocation().search;
-  const { categorySeq, chapterSeq } = queryString.parse(queryParameter);
+  const { categorySeq, chapterNum } = queryString.parse(queryParameter);
 
   // TODO: 이전 퀴즈가 잠깐 보이는 이슈
   useEffect(() => {
     fetchQuiz({ shuffle: false });
-  }, [categorySeq, chapterSeq]);
-  
+  }, [categorySeq, chapterNum]);
+
   // LOADING UI
   if (!quiz.length) {
     return (
       <Wrapper>
         <Typography>
-          카테고리{categorySeq} ch. {chapterSeq} 리뷰
+          카테고리{categorySeq} ch. {chapterNum} 리뷰
         </Typography>
 
         <Wrapper.Body>
@@ -42,7 +42,7 @@ const ReviewPage = () => {
   return (
     <Wrapper>
       <Typography>
-        카테고리{categorySeq} ch. {chapterSeq} 리뷰
+        카테고리{categorySeq} ch. {chapterNum} 리뷰
       </Typography>
 
       <StepperBar
@@ -61,7 +61,7 @@ const ReviewPage = () => {
 
         <ButtonBox
           isFirst={activeStep === 0}
-          isLast={activeStep && activeStep === totalStep()}
+          isLast={activeStep === totalStep()}
           isReview={true}
           setActiveStep={setActiveStep}
         />

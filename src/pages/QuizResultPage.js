@@ -27,7 +27,7 @@ const QuizResultPage = () => {
   const { queryParameter } = useContext(QuizContext);
 
   // ROUTING
-  const { categorySeq, chapterSeq } = queryString.parse(queryParameter);
+  const { categorySeq, chapterNum } = queryString.parse(queryParameter);
 
   // RELATED HOOK
   const fetchQuizResult = async () => {
@@ -74,10 +74,10 @@ const QuizResultPage = () => {
             <Card className={Style.gridItem}>
               <CardContent>
                 <Typography variant="inherit" color="text.secondary">
-                  ch.{chapterSeq} 맞힌 갯수
+                  ch.{chapterNum} 맞힌 갯수
                 </Typography>
                 <Typography variant="h5">
-                  {quizResult.hitCount["hit_count"]}/
+                  {quizResult.hitCount["hit_question_count"]}/
                   {quizResult.hitCount["question_count"]}
                 </Typography>
               </CardContent>

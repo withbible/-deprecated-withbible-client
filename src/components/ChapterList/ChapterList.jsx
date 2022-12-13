@@ -8,7 +8,8 @@ import Chapter from "./Chapter";
 const ChapterList = ({ iteratee, title, categorySeq }) => {
   return (
     <>
-      {/* TODO: ScrollMenu Header not working */}
+      {/* TODO: viewport 스크롤과 구분할 수 있나
+       */}
       <Typography>{title}</Typography>
       <ScrollMenu onWheel={onWheel}>
         {iteratee.map((each, index) => (
@@ -16,7 +17,7 @@ const ChapterList = ({ iteratee, title, categorySeq }) => {
             key={index}
             itemId={index}
             categorySeq={categorySeq}
-            chapterSeq={each}
+            chapterNum={each}
           />
         ))}
       </ScrollMenu>

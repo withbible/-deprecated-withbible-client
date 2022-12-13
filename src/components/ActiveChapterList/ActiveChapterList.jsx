@@ -16,7 +16,7 @@ const ActiveChapterList = ({ iteratee, category, categorySeq }) => {
       <ListSubheader>{category}</ListSubheader>
 
       {iteratee.map((each, index) => {
-        const queryParameter = `?categorySeq=${categorySeq}&chapterSeq=${each}`;
+        const queryParameter = `?categorySeq=${categorySeq}&chapterNum=${each}`;
 
         return (
           <ListItem key={index}>
