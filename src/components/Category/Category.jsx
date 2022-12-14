@@ -1,78 +1,39 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
+import { Typography } from "@mui/material";
 
 //INTERNAL IMPORT
 import ChapterList from "../ChapterList/ChapterList";
 import { ChapterContext } from "../../context/ChapterContext";
 
+const ChapterListWrapper = ({ iteratee, activeChapter, children }) => {
+  return iteratee.map((each, index) => {
+    const isHistory = activeChapter[index];
+
+    return React.cloneElement(children, {
+      key: index,
+      title: each.category,
+      categorySeq: each["category_seq"],
+      iteratee: each["chapter_num_array"],
+      histories: isHistory && activeChapter[index]["chapter_num_array"],
+    });
+  });
+};
+
 const Category = () => {
-  const { fetchMaxChapter, maxChapter, chapterSearch, activeChapter } =
-    useContext(ChapterContext);
+  const { chapterSearch, activeChapter, error } = useContext(ChapterContext);
 
-  /**
-   * TODO: 검색기능 이후 렌더링은 다른 API 사용
-   * 빈문자 검색시 본 API 유지하고 싶으나
-   * searchKeyword 또는 searchRecord를 dependencty에 추가할 시 무한 fetching
-   */
-
-  useEffect(() => {
-    fetchMaxChapter();
-  }, []);
-
-  if (!maxChapter.length) {
-    return <h3>데이터를 불러오는 중입니다...</h3>;
-  }
-
-  if (!activeChapter.length) {
-    return (
-      <>
-        {maxChapter.map((each, index) => (
-          <ChapterList
-            key={index}
-            iteratee={makeSequence(each["max_chapter"])}
-            title={each.category}
-            categorySeq={each["category_seq"]}
-          />
-        ))}
-      </>
-    );
-  }
-
-  if (chapterSearch.length) {
-    return (
-      <>
-        {chapterSearch.map((each, index) => {
-          return (
-            <ChapterList
-              key={index}
-              iteratee={each["chapter_num_array"]}
-              title={each.category}
-              categorySeq={each["category_seq"]}
-            />
-          );
-        })}
-      </>
-    );
+  if (error) {
+    return <Typography variant="h4">{error}</Typography>;
   }
 
   return (
-    <>
-      {maxChapter.map((each, index) => (
-        <ChapterList
-          key={index}
-          iteratee={makeSequence(each["max_chapter"])}
-          histories={
-            activeChapter[index] && activeChapter[index]["chapter_num_array"]
-          }
-          title={each.category}
-          categorySeq={each["category_seq"]}
-        />
-      ))}
-    </>
+    <ChapterListWrapper
+      iteratee={chapterSearch}
+      activeChapter={activeChapter.length && activeChapter}
+    >
+      <ChapterList />
+    </ChapterListWrapper>
   );
 };
 
 export default Category;
-
-function makeSequence(iteratee) {
-  return [...Array(iteratee).keys()].map((_, index) => index + 1);
-}

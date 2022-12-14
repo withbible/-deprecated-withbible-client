@@ -4,8 +4,6 @@ export const LOG_IN_URI = "/user/login";
 
 export const LOGIN_CHECK_URI = "/user/login-check";
 
-export const MAX_CHAPTER_URI = "/quiz/categories/max-chapter";
-
 export const CHAPTER_SEARCH_URI = "/quiz/categories/chapter";
 
 export const QUIZ_URI = "/quiz/chapter";

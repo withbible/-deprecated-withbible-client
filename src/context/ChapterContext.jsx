@@ -1,35 +1,22 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import { useSnackbar } from "notistack";
 import axios from "axios";
 
 //INTERNAL IMPORT
-import {
-  MAX_CHAPTER_URI,
-  CHAPTER_SEARCH_URI,
-  ACTIVE_CHAPTER_URI,
-} from "../constants/api";
+import { CHAPTER_SEARCH_URI, ACTIVE_CHAPTER_URI } from "../constants/api";
 
 export const ChapterContext = React.createContext();
 
 export const ChapterProvider = ({ children }) => {
+  const [error, setError] = useState("");
   const [searchKeyword, setSearchKeyword] = useState("");
-  const [maxChapter, setMaxChapter] = useState([]);
-  const [chapterSearch, setChapterSearch] = useState([]);  
+  const [chapterSearch, setChapterSearch] = useState([]);
   const [activeChapter, setActiveChapter] = useState([]);
-  const { enqueueSnackbar } = useSnackbar();  
-
-  const fetchMaxChapter = useCallback(async () => {
-    try {
-      const { data } = await axios.get(MAX_CHAPTER_URI);      
-      setMaxChapter(data.result);
-    } catch (error) {
-      const message = error.response.data.message;
-      enqueueSnackbar(message, { variant: "error" });
-    }
-  }, []);
+  const { enqueueSnackbar } = useSnackbar();
 
   const fetchChapterSearch = async (searchKeyword) => {
     setSearchKeyword(searchKeyword);
+    setError("");
 
     try {
       const { data } = await axios.get(
@@ -38,7 +25,7 @@ export const ChapterProvider = ({ children }) => {
       setChapterSearch(data.result);
     } catch (error) {
       const message = error.response.data.message;
-      enqueueSnackbar(message, { variant: "error" });
+      setError(message);
     }
   };
 
@@ -60,13 +47,12 @@ export const ChapterProvider = ({ children }) => {
   return (
     <ChapterContext.Provider
       value={{
-        fetchMaxChapter,
-        fetchChapterSearch,        
-        searchKeyword,
-        setSearchKeyword,       
-        maxChapter, 
         chapterSearch,
+        fetchChapterSearch,
+        searchKeyword,
+        setSearchKeyword,
         activeChapter,
+        error,
       }}
     >
       {children}
