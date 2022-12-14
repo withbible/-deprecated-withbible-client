@@ -7,9 +7,8 @@ import {
   FormControlLabel,
   Checkbox,
   Button,
-  Link,
 } from "@mui/material";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import { useSnackbar } from "notistack";
 import axios from "axios";
 
@@ -73,8 +72,8 @@ const LogInPage = () => {
         <Button type="submit">제출</Button>
       </Box>
 
-      <Box>
-        <Link href={SIGN_UP_PATH}>계정이 없으신가요?</Link>
+      <Box component={Link} to={SIGN_UP_PATH}>
+        계정이 없으신가요?
       </Box>
     </Container>
   );

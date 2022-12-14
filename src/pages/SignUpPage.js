@@ -1,13 +1,6 @@
 import React, { useState } from "react";
-import {
-  Container,
-  Typography,
-  Box,
-  TextField,
-  Button,
-  Link,
-} from "@mui/material";
-import { useHistory } from "react-router-dom";
+import { Container, Typography, Box, TextField, Button } from "@mui/material";
+import { useHistory, Link } from "react-router-dom";
 import { useSnackbar } from "notistack";
 import axios from "axios";
 
@@ -74,8 +67,8 @@ const SignUpPage = () => {
         <Button type="submit">제출</Button>
       </Box>
 
-      <Box>
-        <Link href={LOG_IN_PATH}>계정이 있으신가요?</Link>
+      <Box component={Link} to={LOG_IN_PATH}>
+        계정이 있으신가요?
       </Box>
     </Container>
   );

@@ -8,6 +8,7 @@ import {
   Chip,
 } from "@mui/material";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
+import { Link } from "react-router-dom";
 
 //INTERNAL IMPORT
 import Style from "./ActiveChapterList.module.css";
@@ -21,20 +22,20 @@ const ActiveChapterList = ({ iteratee, category, categorySeq }) => {
       {iteratee.map((each, index) => {
         const chapterNum = each["chapter_num"];
         const queryParameter = `?categorySeq=${categorySeq}&chapterNum=${chapterNum}`;
+        const chipLabel = `맞힌갯수 ${each["hit_question_count"]}/${each["question_count"]}`;
 
         return (
           <div key={index}>
             <ListItem>
               <ListItemButton
-                href={`${REVIEW_PAGE_PATH}${queryParameter}`}
+                component={Link}
+                to={`${REVIEW_PAGE_PATH}${queryParameter}`}
                 className={Style.listItemButton}
               >
                 <ListItemText primary={`Ch.${chapterNum}`} />
                 <KeyboardArrowRightIcon className={Style.listItemIcon} />
                 <Chip
-                  label={`
-                  맞힌갯수 ${each["hit_question_count"]}/${each["question_count"]}
-                `}
+                  label={chipLabel}
                   size="small"
                   className={Style.listItemChip}
                 />

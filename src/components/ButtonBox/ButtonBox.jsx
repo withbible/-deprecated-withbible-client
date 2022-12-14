@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { Button, Box } from "@mui/material";
 import { debounce } from "lodash";
+import { Link } from "react-router-dom";
 
 //INTERNAL IMPORT
 import Style from "./ButtonBox.module.css";
@@ -25,9 +26,13 @@ const ButtonBox = ({ isFirst, isLast, isReview, setActiveStep }) => {
       </Button>
 
       {isReview && isLast ? (
-        <Button href={`${QUIZ_RESULT_PAGE_PATH}${queryParameter}`}>결과</Button>
+        <Button
+          component={Link}
+          to={`${QUIZ_RESULT_PAGE_PATH}${queryParameter}`}
+        >
+          결과
+        </Button>
       ) : isLast ? (
-        // TODO: 서버 모니터링에 따른 적절한 wait time 부여 필요
         <Button onClick={debounce(() => handleSubmit(), 250)}>제출</Button>
       ) : (
         <Button onClick={() => handleNext()}>다음</Button>

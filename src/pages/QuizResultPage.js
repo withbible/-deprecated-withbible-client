@@ -10,6 +10,7 @@ import {
 import Confetti from "react-dom-confetti";
 import queryString from "query-string";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 //INTERNAL IMPORT
 import Style from "./QuizResultPage.module.css";
@@ -103,8 +104,12 @@ const QuizResultPage = () => {
         </Grid>
 
         <Box className={Style.buttonContainer}>
-          <Button href={`${QUIZ_PAGE_PATH}${queryParameter}`}>다시풀기</Button>
-          <Button href={`${REVIEW_PAGE_PATH}${queryParameter}`}>리뷰</Button>
+          <Button component={Link} to={`${QUIZ_PAGE_PATH}${queryParameter}`}>
+            다시풀기
+          </Button>
+          <Button component={Link} to={`${REVIEW_PAGE_PATH}${queryParameter}`}>
+            리뷰
+          </Button>
         </Box>
       </Wrapper.Body>
     </Wrapper>
@@ -131,5 +136,5 @@ const confettiConfig = {
 };
 
 function getPercent(part, total) {
-  return (part / total) * 100;
+  return Math.round((part / total) * 100);
 }
