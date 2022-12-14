@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import {
   IconButton,
   InputBase,
@@ -11,11 +11,11 @@ import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 
 //INTERNAL IMPORT
 import Style from "./SearchBar.module.css";
-import { ChapterSearchContext } from "../../context/ChapterSearchContext";
+import { ChapterContext } from "../../context/ChapterContext";
 
 const SearchBar = () => {
-  const { fetchChapterSearch } = useContext(ChapterSearchContext);
-  const [searchKeyword, setSearchKeyword] = useState("");
+  const { fetchChapterSearch, searchKeyword, setSearchKeyword } =
+    useContext(ChapterContext);
 
   const hanldeSubmit = async (event) => {
     event.preventDefault();

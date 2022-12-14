@@ -5,21 +5,31 @@ import { Typography } from "@mui/material";
 //INTERNAL IMPORT
 import Chapter from "./Chapter";
 
-const ChapterList = ({ iteratee, title, categorySeq }) => {
+const ChapterList = ({ iteratee, histories, title, categorySeq }) => {
   return (
     <>
-      {/* TODO: viewport 스크롤과 구분할 수 있나
+      {/* TODO: viewport 스크롤과 구분되는 것인가
        */}
       <Typography>{title}</Typography>
       <ScrollMenu onWheel={onWheel}>
-        {iteratee.map((each, index) => (
-          <Chapter
-            key={index}
-            itemId={index}
-            categorySeq={categorySeq}
-            chapterNum={each}
-          />
-        ))}
+        {iteratee.map((each, index) =>
+          histories ? (
+            <Chapter
+              key={index}
+              itemId={index}
+              isHistory={histories[index]}
+              categorySeq={categorySeq}
+              chapterNum={each}
+            />
+          ) : (
+            <Chapter
+              key={index}
+              itemId={index}
+              categorySeq={categorySeq}
+              chapterNum={each}
+            />
+          )
+        )}
       </ScrollMenu>
     </>
   );

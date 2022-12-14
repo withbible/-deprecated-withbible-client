@@ -1,22 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useContext } from "react";
 import { List } from "@mui/material";
-import axios from "axios";
 
 //INTERNAL IMPORT
 import { Wrapper } from "../components";
-import { ACTIVE_CHAPTER_URI } from "../constants/api";
 import { ActiveChapterList } from "../components";
+import { ChapterContext } from "../context/ChapterContext";
+ChapterContext;
 
 const ReviewListPage = () => {
-  const [reviewList, setReviewList] = useState([]);
+  const { activeChapter } = useContext(ChapterContext);
 
-  useEffect(() => {
-    axios
-      .get(ACTIVE_CHAPTER_URI)
-      .then(({ data }) => setReviewList(data.result));
-  }, []);
-
-  if (!reviewList.length) {
+  if (!activeChapter.length) {
     return <h3>데이터를 불러오는 중입니다...</h3>;
   }
 
@@ -25,10 +19,10 @@ const ReviewListPage = () => {
       리뷰목록
       <Wrapper.Body>
         <List>
-          {reviewList.map((each, index) => (
+          {activeChapter.map((each, index) => (
             <ActiveChapterList
               key={index}
-              iteratee={each["chapter_seq_array"]}
+              iteratee={each["chapter_num_array"]}
               category={each["category"]}
               categorySeq={each["category_seq"]}
             />
