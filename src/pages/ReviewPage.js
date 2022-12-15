@@ -12,6 +12,7 @@ import {
   Wrapper,
 } from "../components";
 import { QuizContext } from "../context/QuizContext";
+import NotFoundPage from "./NotFoundPage";
 
 const ReviewPage = () => {
   const { quiz, fetchQuiz, totalStep } = useContext(QuizContext);
@@ -27,15 +28,10 @@ const ReviewPage = () => {
   // LOADING UI
   if (!quiz.length) {
     return (
-      <Wrapper>
-        <Typography>
-          카테고리{categorySeq} ch. {chapterNum} 리뷰
-        </Typography>
-
-        <Wrapper.Body>
-          <h3>데이터를 불러오는 중입니다...</h3>
-        </Wrapper.Body>
-      </Wrapper>
+      <NotFoundPage
+        title={`카테고리${categorySeq} ch. ${chapterNum} 리뷰`}
+        message="데이터를 불러오는 중입니다..."
+      />
     );
   }
 

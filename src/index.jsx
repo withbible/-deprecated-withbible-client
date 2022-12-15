@@ -13,19 +13,19 @@ import { AuthProvider } from "./context/AuthContext";
 
 ReactDOM.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <SnackbarProvider autoHideDuration={2000}>
-        <AuthProvider>
-          <ChapterProvider>
+    <SnackbarProvider autoHideDuration={2000}>
+      <AuthProvider>
+        <ChapterProvider>
+          <BrowserRouter>
             <QuizProvider>
               <StyledEngineProvider injectFirst>
                 <App />
               </StyledEngineProvider>
             </QuizProvider>
-          </ChapterProvider>
-        </AuthProvider>
-      </SnackbarProvider>
-    </BrowserRouter>
+          </BrowserRouter>
+        </ChapterProvider>
+      </AuthProvider>
+    </SnackbarProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );

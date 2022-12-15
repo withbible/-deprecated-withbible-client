@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { List } from "@mui/material";
 
 //INTERNAL IMPORT
@@ -6,12 +6,19 @@ import { Wrapper } from "../components";
 import { ActiveChapterList } from "../components";
 import { ChapterContext } from "../context/ChapterContext";
 ChapterContext;
+import NotFoundPage from "./NotFoundPage";
 
 const ReviewListPage = () => {
-  const { activeChapter } = useContext(ChapterContext);
+  const { fetchActiveChapter, activeChapter } = useContext(ChapterContext);
+
+  useEffect(() => {
+    fetchActiveChapter();
+  }, []);
 
   if (!activeChapter.length) {
-    return <h3>데이터를 불러오는 중입니다...</h3>;
+    return (
+      <NotFoundPage title="리뷰목록" message="데이터를 불러오는 중입니다..." />
+    );
   }
 
   return (

@@ -5,20 +5,6 @@ import { Typography } from "@mui/material";
 import ChapterList from "../ChapterList/ChapterList";
 import { ChapterContext } from "../../context/ChapterContext";
 
-const ChapterListWrapper = ({ iteratee, activeChapter, children }) => {
-  return iteratee.map((each, index) => {
-    const isHistory = activeChapter[index];
-
-    return React.cloneElement(children, {
-      key: index,
-      title: each.category,
-      categorySeq: each["category_seq"],
-      iteratee: each["chapter_num_array"],
-      histories: isHistory && activeChapter[index]["chapter_num_array"],
-    });
-  });
-};
-
 const Category = () => {
   const { chapterSearch, activeChapter, error } = useContext(ChapterContext);
 
@@ -27,13 +13,26 @@ const Category = () => {
   }
 
   return (
-    <ChapterListWrapper
-      iteratee={chapterSearch}
-      activeChapter={activeChapter.length && activeChapter}
-    >
-      <ChapterList />
-    </ChapterListWrapper>
+    <>
+      {chapterSearch.map((each, index) => {
+        const history = findHistory(activeChapter, each["category_seq"]);        
+
+        return (
+          <ChapterList
+            key={index}
+            title={each.category}
+            categorySeq={each["category_seq"]}
+            iteratee={each["chapter_num_array"]}
+            histories={history && history["chapter_num_array"]}
+          />
+        );
+      })}
+    </>
   );
 };
 
 export default Category;
+
+function findHistory(iteratee, target) {
+  return iteratee.find((each) => each["category_seq"] === target);
+}

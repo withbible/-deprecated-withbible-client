@@ -51,16 +51,9 @@ const QuizResultPage = () => {
     setActiveState(true);
   }, []);
 
-  // LOADING UI
   if (!Object.keys(quizResult).length) {
     return (
-      <Wrapper>
-        <Typography>퀴즈결과</Typography>
-
-        <Wrapper.Body>
-          <h3>데이터를 불러오는 중입니다...</h3>
-        </Wrapper.Body>
-      </Wrapper>
+      <NotFoundPage title="퀴즈결과" message="데이터를 불러오는 중입니다..." />
     );
   }
 

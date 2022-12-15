@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useLocation } from "react-router-dom";
-import { Typography } from "@mui/material";
 import queryString from "query-string";
 
 //INTERNAL IMPORT
@@ -12,6 +11,7 @@ import {
   Wrapper,
 } from "../components";
 import { QuizContext } from "../context/QuizContext";
+import NotFoundPage from "./NotFoundPage";
 
 const QuizPage = () => {
   const { quiz, fetchQuiz, totalStep } = useContext(QuizContext);
@@ -26,30 +26,21 @@ const QuizPage = () => {
   // LOADING UI
   if (!quiz.length) {
     return (
-      <Wrapper>
-        <Typography>
-          카테고리{categorySeq} ch. {chapterNum}
-        </Typography>
-
-        <Wrapper.Body>
-          <h3>데이터를 불러오는 중입니다...</h3>
-        </Wrapper.Body>
-      </Wrapper>
+      <NotFoundPage
+        title={`카테고리${categorySeq} ch. ${chapterNum}`}
+        message="데이터를 불러오는 중입니다..."
+      />
     );
   }
 
   return (
     <Wrapper>
-      <Typography>
-        카테고리{categorySeq} ch. {chapterNum}
-      </Typography>
-
+      카테고리{categorySeq} ch. {chapterNum}
       <StepperBar
         iteratee={quiz}
         activeStep={activeStep}
         setActiveStep={setActiveStep}
       />
-
       <Wrapper.Body>
         <QuestionBox question={quiz[activeStep]["question"]} />
 

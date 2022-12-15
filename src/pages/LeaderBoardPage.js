@@ -4,7 +4,7 @@ import {
   ListItem,
   ListItemText,
   ListItemAvatar,
-  Avatar,
+  Avatar,  
 } from "@mui/material";
 import axios from "axios";
 import { format } from "timeago.js";
@@ -14,6 +14,7 @@ import Style from "./LeaderBoardPage.module.css";
 import { Wrapper } from "../components";
 import { LEADER_BOARD_URI } from "../constants/api";
 import { AuthContext } from "../context/AuthContext";
+import NotFoundPage from "./NotFoundPage";
 
 const LeaderBoardPage = () => {
   const [leaderBoards, setLeaderBoards] = useState([]);
@@ -26,7 +27,9 @@ const LeaderBoardPage = () => {
   }, []);
 
   if (!leaderBoards.length) {
-    return <h3>데이터를 불러오는 중입니다...</h3>;
+    return (
+      <NotFoundPage title="리더보드" message="데이터를 불러오는 중입니다..." />
+    );
   }
 
   return (
@@ -36,8 +39,6 @@ const LeaderBoardPage = () => {
         <List>
           {leaderBoards.map((each, index) => {
             const isHistory = userID === each["user_id"];
-            
-            console.log(isHistory);
 
             return (
               <ListItem
