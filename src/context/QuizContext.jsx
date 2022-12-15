@@ -8,6 +8,8 @@ import queryString from "query-string";
 import { QUIZ_URI, OPTION_HISTORY_URI } from "../constants/api";
 import { QUIZ_RESULT_PAGE_PATH } from "../constants/route";
 
+const MAX_QUESTION_COUNT = 3;
+
 export const QuizContext = React.createContext();
 
 export const QuizProvider = ({ children }) => {
@@ -21,24 +23,14 @@ export const QuizProvider = ({ children }) => {
   const { categorySeq, chapterNum } = queryString.parse(queryParameter);
   const history = useHistory();
 
-  const setUserOptionWithHistory = (optionHistoryResponse) => {
-    for (const each of optionHistoryResponse) {
-      setIsNewUserOption(false);
-      setUserOption((prevState) => {
-        return {
-          ...prevState,
-          [each["question_seq"]]: each["question_option_seq"],
-        };
-      });
-    }
-  };
+  const setUserOptionFunc = ({ iteratee, value }) => {
+    setUserOption({});
 
-  const setUserOptionWithNull = () => {
-    for (const each of quiz) {
+    for (const each of iteratee) {
       setUserOption((prevState) => {
         return {
           ...prevState,
-          [each["question_seq"]]: null,
+          [each["question_seq"]]: each[value] ?? value,
         };
       });
     }
@@ -55,9 +47,10 @@ export const QuizProvider = ({ children }) => {
         const message = quizState.reason.response.data.message;
         throw new Error(message);
       }
-    } catch (error) {      
+    } catch (error) {
       const message = error.message;
       enqueueSnackbar(message, { variant: "error" });
+      history.goBack();
       return;
     }
 
@@ -65,12 +58,20 @@ export const QuizProvider = ({ children }) => {
     setQuiz(shuffle ? await shuffleQuiz(quiz) : quiz);
 
     if (!optionHistoryState.value) {
-      setUserOptionWithNull();
+      setIsNewUserOption(true);
+      setUserOptionFunc({
+        iteratee: quiz,
+        value: null,
+      });
       return;
     }
 
     const optionHistoryResponse = optionHistoryState.value.data.result;
-    setUserOptionWithHistory(optionHistoryResponse);
+    setIsNewUserOption(false);
+    setUserOptionFunc({
+      iteratee: optionHistoryResponse,
+      value: "question_option_seq",
+    });
   };
 
   const handleSubmit = async () => {
@@ -78,7 +79,15 @@ export const QuizProvider = ({ children }) => {
       categorySeq,
       chapterNum,
       bulk: userOption,
-    };    
+    };
+
+    // TODO: 이전 상태값 유지된 에러 핸들링. 삭제 예정
+    if (Object.keys(payload.bulk).length > MAX_QUESTION_COUNT) {
+      enqueueSnackbar("에러가 발생했습니다. 새로고침해주세요.", {
+        variant: "error",
+      });
+      return;
+    }
 
     try {
       if (isNewUserOption) {

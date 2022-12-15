@@ -11,8 +11,9 @@ const OptionList = ({ questionSeq, iteratee }) => {
 
   const handleOption = (_, option) => {
     setOptionState(option);
-
-    setUserOption({ ...userOption, [questionSeq]: option });
+    setUserOption((prevState) => {
+      return { ...prevState, [questionSeq]: option };
+    });    
   };
 
   return (
