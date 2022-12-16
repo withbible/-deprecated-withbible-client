@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useSnackbar } from "notistack";
 import axios from "axios";
 
@@ -29,7 +29,6 @@ export const ChapterProvider = ({ children }) => {
     }
   };
 
-  // TODO: 메인페이지와 리뷰목록페이지를 구분짓는 매개체가 필요
   const fetchActiveChapter = async () => {
     try {
       const { data } = await axios.get(ACTIVE_CHAPTER_URI);
@@ -40,10 +39,6 @@ export const ChapterProvider = ({ children }) => {
     }
   };
 
-  useEffect(() => {
-    fetchActiveChapter();
-  }, []);
-
   return (
     <ChapterContext.Provider
       value={{
@@ -52,6 +47,7 @@ export const ChapterProvider = ({ children }) => {
         searchKeyword,
         setSearchKeyword,
         activeChapter,
+        fetchActiveChapter,
         error,
       }}
     >

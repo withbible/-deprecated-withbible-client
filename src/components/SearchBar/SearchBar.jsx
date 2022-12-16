@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useState, useContext } from "react";
 import {
   IconButton,
   InputBase,
@@ -14,13 +14,13 @@ import Style from "./SearchBar.module.css";
 import { ChapterContext } from "../../context/ChapterContext";
 
 const SearchBar = () => {
-  const { fetchChapterSearch, searchKeyword, setSearchKeyword } =
-    useContext(ChapterContext);
+  const [searchInputValue, setSearchInputValue] = useState("");
+  const { fetchChapterSearch } = useContext(ChapterContext);
 
   const hanldeSubmit = async (event) => {
     event.preventDefault();
 
-    fetchChapterSearch(searchKeyword);
+    fetchChapterSearch(searchInputValue);
   };
 
   return (
@@ -41,8 +41,8 @@ const SearchBar = () => {
           }
           className={Style.searchBar}
           placeholder="검색어를 입력하세요."
-          onChange={(event) => setSearchKeyword(event.target.value)}
-          value={searchKeyword}
+          onChange={(event) => setSearchInputValue(event.target.value)}
+          value={searchInputValue}
         />
       </Paper>
     </Box>
