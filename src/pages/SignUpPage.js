@@ -5,7 +5,7 @@ import { useSnackbar } from "notistack";
 import axios from "axios";
 
 //INTERNAL IMPORT
-import Style from "./LogInPage.module.css";
+import Style from "./page.module.css";
 import { SIGN_UP_URI } from "../constants/api";
 import { LOG_IN_PATH } from "../constants/route";
 import { PasswordInput } from "../components";
@@ -35,8 +35,14 @@ const SignUpPage = () => {
     setPayload({ ...payload, [prop]: event.target.value });
   };
 
+  const isUserNameError =
+    payload.userName.length &&
+    !payload.userName.match(/^[ㄱ-ㅎ가-힇A-Z-a-z]+$/);
+  const isUserIDError =
+    payload.userID.length && !payload.userID.match(/^[a-zA-Z0-9]+$/);
+
   return (
-    <Container className={Style.authContainer}>
+    <Container className={Style.container}>
       <Typography variant="h5">회원가입</Typography>
 
       <Box
@@ -47,6 +53,8 @@ const SignUpPage = () => {
         <TextField
           required
           autoFocus
+          error={isUserNameError}
+          helperText={isUserNameError ? "한글 또는 영어만 허용합니다." : ""}
           variant="standard"
           label="이름"
           name="userName"
@@ -55,6 +63,8 @@ const SignUpPage = () => {
         />
         <TextField
           required
+          error={isUserIDError}
+          helperText={isUserIDError ? "숫자와 문자 조합만 허용합니다." : ""}
           variant="standard"
           label="아이디"
           name="userID"

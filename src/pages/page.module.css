@@ -1,4 +1,4 @@
-.authContainer {
+.container {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -12,4 +12,19 @@
   flex-direction: column;
   row-gap: 0.8rem;
   padding: 0.5rem;
+}
+
+.listHistory {
+  background-color: var(--primary-color) !important;
+  border-radius: var(--border-radius);
+}
+
+.buttonContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.gridItem {
+  background-color: inherit;
+  box-shadow: var(--box-shadow);
 }

@@ -2,8 +2,7 @@ import React, { useContext, useEffect } from "react";
 import { List } from "@mui/material";
 
 //INTERNAL IMPORT
-import { Wrapper } from "../components";
-import { ActiveChapterList } from "../components";
+import { Wrapper, ActiveChapterList } from "../components";
 import { ChapterContext } from "../context/ChapterContext";
 ChapterContext;
 import NotFoundPage from "./NotFoundPage";
@@ -17,7 +16,7 @@ const ReviewListPage = () => {
 
   if (!activeChapter.length) {
     return (
-      <NotFoundPage title="리뷰목록" message="데이터를 불러오는 중입니다..." />
+      <NotFoundPage title="리뷰목록" message="데이터가 존재하지 않습니다." />
     );
   }
 

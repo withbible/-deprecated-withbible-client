@@ -11,15 +11,17 @@ import {
   REVIEW_LIST_PAGE_PATH,
   REVIEW_PAGE_PATH,
 } from "./constants/route";
-import MainPage from "./pages/MainPage";
-import LeaderBoardPage from "./pages/LeaderBoardPage";
-import QuizPage from "./pages/QuizPage";
-import QuizResultPage from "./pages/QuizResultPage";
-import ReviewListPage from "./pages/ReviewListPage";
-import ReviewPage from "./pages/ReviewPage";
-import LogInPage from "./pages/LogInPage";
-import SignUpPage from "./pages/SignUpPage";
-import NotFoundPage from "./pages/NotFoundPage";
+import {
+  LeaderBoardPage,
+  LogInPage,
+  MainPage,
+  NotFoundPage,
+  QuizPage,
+  QuizResultPage,
+  ReviewListPage,
+  ReviewPage,
+  SignUpPage,
+} from "./pages";
 
 const App = () => {
   return (

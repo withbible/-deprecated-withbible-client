@@ -10,7 +10,7 @@ import axios from "axios";
 import { format } from "timeago.js";
 
 //INTERNAL IMPORT
-import Style from "./LeaderBoardPage.module.css";
+import Style from "./page.module.css";
 import { Wrapper } from "../components";
 import { LEADER_BOARD_URI } from "../constants/api";
 import { AuthContext } from "../context/AuthContext";

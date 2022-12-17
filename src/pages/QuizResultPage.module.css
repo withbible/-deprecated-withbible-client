@@ -1,9 +1,0 @@
-.buttonContainer {
-  display: flex;
-  flex-direction: column;  
-}
-
-.gridItem {  
-  background-color: inherit;
-  box-shadow: var(--box-shadow);
-}

@@ -13,7 +13,7 @@ import { useSnackbar } from "notistack";
 import axios from "axios";
 
 //INTERNAL IMPORT
-import Style from "./LogInPage.module.css";
+import Style from "./page.module.css";
 import { LOG_IN_URI } from "../constants/api";
 import { SIGN_UP_PATH } from "../constants/route";
 import { PasswordInput } from "../components";
@@ -26,6 +26,7 @@ const LogInPage = () => {
   const { enqueueSnackbar } = useSnackbar();
   const history = useHistory();
 
+  // TODO: validation 이상있을시 return. 비밀번호 상태는 어떻게 가져오나
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -42,8 +43,11 @@ const LogInPage = () => {
     setPayload({ ...payload, [prop]: event.target.value });
   };
 
+  const isUserIDError =
+    payload.userID.length && !payload.userID.match(/^[a-zA-Z0-9]+$/);
+
   return (
-    <Container className={Style.authContainer}>
+    <Container className={Style.container}>
       <Typography variant="h5">로그인</Typography>
 
       <Box
@@ -54,6 +58,8 @@ const LogInPage = () => {
         <TextField
           required
           autoFocus
+          error={isUserIDError}
+          helperText={isUserIDError ? "숫자와 문자 조합만 허용합니다." : ""}
           variant="standard"
           label="아이디"
           name="userID"

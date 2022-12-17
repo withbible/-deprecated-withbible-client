@@ -4,21 +4,24 @@ html {
   font-size: 16px;
   font-family: 'Do Hyeon', sans-serif;
   --primary-color: #FBCE7B;
-  --accent-color: #8D5AC4;
   --shadow-color: #FBFADD;
+  --text-color: #444;
+  --correct-color: #4caf50;
+  --error-color: #d32f2f;
   --box-shadow: 1px 1px 2px #FBCE7B,
     -1px -1px 2px #FBCE7B;
   --border-radius: 1.2rem;
 }
 
+/* TODO: height: 100% 적용 */
 body {
   margin: 0;
   background-color: var(--shadow-color);
 }
 
 #root {
-  width: 100%;  
-  padding-bottom: 75px;  
+  width: 100%;
+  padding-bottom: 75px;
 }
 
 .MuiInput-root,
@@ -36,12 +39,16 @@ body {
   color: inherit;
 }
 
-.MuiButton-root{
-  text-transform: inherit; 
+.MuiInputLabel-root.Mui-error {
+  color: var(--error-color);
+}
+
+.MuiButton-root {
+  text-transform: inherit;
 }
 
 .MuiInput-root:after {
-  border-bottom: 2px solid #444;
+  border-bottom: 2px solid var(--text-color);
 }
 
 .MuiCheckbox-root.Mui-checked {

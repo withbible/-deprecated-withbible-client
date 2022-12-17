@@ -13,7 +13,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 
 //INTERNAL IMPORT
-import Style from "./QuizResultPage.module.css";
+import Style from "./page.module.css";
 import { HIT_COUNT_URI, ACTIVE_CHAPTER_COUNT_URI } from "../constants/api";
 import { QUIZ_PAGE_PATH, REVIEW_PAGE_PATH } from "../constants/route";
 import { QuizContext } from "../context/QuizContext";

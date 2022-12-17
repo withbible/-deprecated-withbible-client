@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import {
   FormControl,
+  FormHelperText,
   InputLabel,
   Input,
   InputAdornment,
@@ -15,8 +16,10 @@ const PasswordInput = ({ payload, handleChange }) => {
     setShowPassword(!showPassword);
   };
 
+  const isError = payload.password.length < 6 && payload.password.length > 0;
+
   return (
-    <FormControl required variant="standard">
+    <FormControl required error={isError} variant="standard">
       <InputLabel>비밀번호</InputLabel>
       <Input
         type={showPassword ? "text" : "password"}
@@ -31,6 +34,9 @@ const PasswordInput = ({ payload, handleChange }) => {
           </InputAdornment>
         }
       />
+      <FormHelperText hidden={!isError} error={isError}>
+        6자 이상 입력해주세요.
+      </FormHelperText>
     </FormControl>
   );
 };
