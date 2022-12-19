@@ -9,14 +9,17 @@ import {
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 
-const PasswordInput = ({ payload, handleChange }) => {
+const PasswordInput = ({
+  payload,
+  setPayload,
+  setPayloadValidity,
+  isError,
+}) => {
   const [showPassword, setShowPassword] = useState(false);
 
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
-  };
-
-  const isError = payload.password.length < 6 && payload.password.length > 0;
+  };  
 
   return (
     <FormControl required error={isError} variant="standard">
@@ -24,8 +27,14 @@ const PasswordInput = ({ payload, handleChange }) => {
       <Input
         type={showPassword ? "text" : "password"}
         name="password"
-        value={payload.password}
-        onChange={handleChange("password")}
+        inputProps={{
+          onBlur: () =>
+            setPayloadValidity({
+              type: "VALIDATE_PASSWORD",
+              payload,
+            }),
+        }}
+        onChange={(event) => setPayload({ type: event.target })}
         endAdornment={
           <InputAdornment position="end">
             <IconButton onClick={handleClickShowPassword}>

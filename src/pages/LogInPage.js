@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useReducer, useState, useEffect } from "react";
 import {
   Container,
   Typography,
@@ -17,16 +17,24 @@ import Style from "./page.module.css";
 import { LOG_IN_URI } from "../constants/api";
 import { SIGN_UP_PATH } from "../constants/route";
 import { PasswordInput } from "../components";
+import { AuthContext } from "../context/AuthContext";
 
 const LogInPage = () => {
-  const [payload, setPayload] = useState({
-    userID: "",
-    password: "",
-  });
+  const { payLoadReducer, payLoadValidityReducer, isAllValid } =
+    useContext(AuthContext);
+  const [payload, setPayload] = useReducer(payLoadReducer, initialState);
+  const [payloadValidity, setPayloadValidity] = useReducer(
+    payLoadValidityReducer,
+    initialValidityState
+  );
+  const [isValid, setIsValid] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
   const history = useHistory();
 
-  // TODO: validation 이상있을시 return. 비밀번호 상태는 어떻게 가져오나
+  useEffect(() => {
+    setIsValid(isAllValid(payloadValidity));
+  }, [payloadValidity]);
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -39,13 +47,6 @@ const LogInPage = () => {
     }
   };
 
-  const handleChange = (prop) => (event) => {
-    setPayload({ ...payload, [prop]: event.target.value });
-  };
-
-  const isUserIDError =
-    payload.userID.length && !payload.userID.match(/^[a-zA-Z0-9]+$/);
-
   return (
     <Container className={Style.container}>
       <Typography variant="h5">로그인</Typography>
@@ -56,18 +57,32 @@ const LogInPage = () => {
         onSubmit={handleSubmit}
       >
         <TextField
-          required
-          autoFocus
-          error={isUserIDError}
-          helperText={isUserIDError ? "숫자와 문자 조합만 허용합니다." : ""}
+          required          
+          error={payloadValidity.userIDError}
+          helperText={
+            payloadValidity.userIDError ? "숫자와 문자 조합만 허용합니다." : ""
+          }
           variant="standard"
           label="아이디"
           name="userID"
-          value={payload.userID}
-          onChange={handleChange("userID")}
+          inputProps={{
+            onBlur: () => {
+              setPayloadValidity({
+                type: "VALIDATE_USER_ID",
+                payload,
+              });
+              setIsValid(isAllValid(payloadValidity));
+            },
+          }}
+          onChange={(event) => setPayload({ type: event.target })}
         />
 
-        <PasswordInput payload={payload} handleChange={handleChange} />
+        <PasswordInput
+          payload={payload}
+          setPayload={setPayload}
+          setPayloadValidity={setPayloadValidity}
+          isError={payloadValidity.passwordError}
+        />
 
         {/* TODO: 세션 재발급으로 차후 구현 필요 */}
         <FormControlLabel
@@ -75,7 +90,9 @@ const LogInPage = () => {
           control={<Checkbox defaultChecked />}
           label="자동로그인"
         />
-        <Button type="submit">제출</Button>
+        <Button disabled={!isValid} type="submit">
+          제출
+        </Button>
       </Box>
 
       <Box component={Link} to={SIGN_UP_PATH}>
@@ -86,3 +103,13 @@ const LogInPage = () => {
 };
 
 export default LogInPage;
+
+const initialState = {
+  userID: "",
+  password: "",
+};
+
+const initialValidityState = {
+  userIDError: null,
+  passwordError: null,
+};

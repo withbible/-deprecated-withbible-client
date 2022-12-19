@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useReducer, useState, useEffect } from "react";
 import { Container, Typography, Box, TextField, Button } from "@mui/material";
 import { useHistory, Link } from "react-router-dom";
 import { useSnackbar } from "notistack";
@@ -9,15 +9,23 @@ import Style from "./page.module.css";
 import { SIGN_UP_URI } from "../constants/api";
 import { LOG_IN_PATH } from "../constants/route";
 import { PasswordInput } from "../components";
+import { AuthContext } from "../context/AuthContext";
 
 const SignUpPage = () => {
-  const [payload, setPayload] = useState({
-    userName: "",
-    userID: "",
-    password: "",
-  });
+  const { payLoadReducer, payLoadValidityReducer, isAllValid } =
+    useContext(AuthContext);
+  const [payload, setPayload] = useReducer(payLoadReducer, initialState);
+  const [payloadValidity, setPayloadValidity] = useReducer(
+    payLoadValidityReducer,
+    initialValidityState
+  );
+  const [isValid, setIsValid] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
   const history = useHistory();
+
+  useEffect(() => {
+    setIsValid(isAllValid(payloadValidity));
+  }, [payloadValidity]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -31,16 +39,6 @@ const SignUpPage = () => {
     }
   };
 
-  const handleChange = (prop) => (event) => {
-    setPayload({ ...payload, [prop]: event.target.value });
-  };
-
-  const isUserNameError =
-    payload.userName.length &&
-    !payload.userName.match(/^[ㄱ-ㅎ가-힇A-Z-a-z]+$/);
-  const isUserIDError =
-    payload.userID.length && !payload.userID.match(/^[a-zA-Z0-9]+$/);
-
   return (
     <Container className={Style.container}>
       <Typography variant="h5">회원가입</Typography>
@@ -51,30 +49,53 @@ const SignUpPage = () => {
         onSubmit={handleSubmit}
       >
         <TextField
-          required
-          autoFocus
-          error={isUserNameError}
-          helperText={isUserNameError ? "한글 또는 영어만 허용합니다." : ""}
+          required          
+          error={payloadValidity.userNameError}
+          helperText={
+            payloadValidity.userNameError ? "한글 또는 영어만 허용합니다." : ""
+          }
           variant="standard"
           label="이름"
           name="userName"
-          value={payload.userName}
-          onChange={handleChange("userName")}
+          inputProps={{
+            onBlur: () =>
+              setPayloadValidity({
+                type: "VALIDATE_USER_NAME",
+                payload,
+              }),
+          }}
+          onChange={(event) => setPayload({ type: event.target })}
         />
+
         <TextField
           required
-          error={isUserIDError}
-          helperText={isUserIDError ? "숫자와 문자 조합만 허용합니다." : ""}
+          error={payloadValidity.userIDError}
+          helperText={
+            payloadValidity.userIDError ? "숫자와 문자 조합만 허용합니다." : ""
+          }
           variant="standard"
           label="아이디"
           name="userID"
-          value={payload.userID}
-          onChange={handleChange("userID")}
+          inputProps={{
+            onBlur: () =>
+              setPayloadValidity({
+                type: "VALIDATE_USER_ID",
+                payload,
+              }),
+          }}
+          onChange={(event) => setPayload({ type: event.target })}
         />
 
-        <PasswordInput payload={payload} handleChange={handleChange} />
+        <PasswordInput
+          payload={payload}
+          setPayload={setPayload}
+          setPayloadValidity={setPayloadValidity}
+          isError={payloadValidity.passwordError}
+        />
 
-        <Button type="submit">제출</Button>
+        <Button disabled={!isValid} type="submit">
+          제출
+        </Button>
       </Box>
 
       <Box component={Link} to={LOG_IN_PATH}>
@@ -85,3 +106,15 @@ const SignUpPage = () => {
 };
 
 export default SignUpPage;
+
+const initialState = {
+  userName: "",
+  userID: "",
+  password: "",
+};
+
+const initialValidityState = {
+  userNameError: null,
+  userIDError: null,
+  passwordError: null,
+};
