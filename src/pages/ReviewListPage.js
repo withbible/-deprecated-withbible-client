@@ -1,31 +1,83 @@
-import React, { useContext, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { List } from "@mui/material";
+import axios from "axios";
+import { useSnackbar } from "notistack";
 
 //INTERNAL IMPORT
 import { Wrapper, ActiveChapterList } from "../components";
-import { ChapterContext } from "../context/ChapterContext";
-ChapterContext;
-import NotFoundPage from "./NotFoundPage";
+import { ACTIVE_CHAPTER_URI } from "../constants/api";
 
 const ReviewListPage = () => {
-  const { fetchActiveChapter, activeChapter } = useContext(ChapterContext);
+  const [activeCategory, setActiveCategory] = useState([]);
+  const [activeChapter, setActiveChapter] = useState([]);
+  const [hasNextCategory, setHasNextCategory] = useState(true);
+  const activeCategoryIndex = useRef(0);
+  const observerTarget = useRef(null);
+  const { enqueueSnackbar } = useSnackbar();
+
+  const fetchActiveCategory = async () => {
+    try {
+      const { data } = await axios.get("/history/categories/active");
+
+      setActiveCategory(data.result);
+    } catch (error) {
+      const message = error.response.data.message;
+      enqueueSnackbar(message, { variant: "error" });
+    }
+  };
+
+  const fetchActiveChapter = async () => {
+    let isNext;
+
+    try {
+      const categorySeq =
+        activeCategory[activeCategoryIndex.current]["category_seq"];
+      const queryParameter = `?categorySeq=${categorySeq}`;
+
+      const { data } = await axios.get(
+        `${ACTIVE_CHAPTER_URI}${queryParameter}`
+      );
+
+      isNext = activeCategoryIndex.current < activeCategory.length - 1;
+
+      setActiveChapter((prevState) => [...prevState, ...data.result]);
+      setHasNextCategory(isNext);
+    } catch (error) {
+      const message = error.response.data.message;
+      enqueueSnackbar(message, { variant: "error" });
+    } finally {
+      if (isNext) {
+        activeCategoryIndex.current += 1;
+      }
+    }
+  };
 
   useEffect(() => {
-    fetchActiveChapter();
+    fetchActiveCategory();
   }, []);
 
-  if (!activeChapter.length) {
-    return (
-      <NotFoundPage title="리뷰목록" message="데이터가 존재하지 않습니다." />
-    );
-  }
+  useEffect(() => {
+    if (!observerTarget.current || !hasNextCategory) return;
+
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        fetchActiveChapter();
+      }
+    });
+
+    observer.observe(observerTarget.current);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [hasNextCategory]);
 
   return (
     <Wrapper>
       리뷰목록
       <Wrapper.Body>
         <List>
-          {activeChapter.map((each, index) => (
+          {activeChapter?.map((each, index) => (
             <ActiveChapterList
               key={index}
               iteratee={each["chapter_num_array"]}
@@ -33,6 +85,7 @@ const ReviewListPage = () => {
               categorySeq={each["category_seq"]}
             />
           ))}
+          <div ref={observerTarget} />
         </List>
       </Wrapper.Body>
     </Wrapper>
