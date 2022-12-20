@@ -1,64 +1,69 @@
-import React, { useState, useEffect, useContext } from "react";
-import {
-  List,
-  ListItem,
-  ListItemText,
-  ListItemAvatar,
-  Avatar,  
-} from "@mui/material";
+import React, { useState, useEffect, useContext, useRef } from "react";
+import { List } from "@mui/material";
 import axios from "axios";
-import { format } from "timeago.js";
+import { useSnackbar } from "notistack";
 
 //INTERNAL IMPORT
 import Style from "./page.module.css";
-import { Wrapper } from "../components";
+import { LeaderBoard, Wrapper } from "../components";
 import { LEADER_BOARD_URI } from "../constants/api";
 import { AuthContext } from "../context/AuthContext";
-import NotFoundPage from "./NotFoundPage";
+
+const LIMIT = 7;
 
 const LeaderBoardPage = () => {
-  const [leaderBoards, setLeaderBoards] = useState([]);
   const { userID } = useContext(AuthContext);
+  const [leaderBoards, setLeaderBoards] = useState([]);
+  const [hasNextPage, setHasNextPage] = useState(true);
+  const page = useRef(1);
+  const observerTarget = useRef(null);
+  const { enqueueSnackbar } = useSnackbar();
+
+  const fetchLeadrBoard = async () => {
+    try {
+      const queryParameter = `?limit=${LIMIT}&page=${page.current}`;
+      const { data } = await axios.get(`${LEADER_BOARD_URI}${queryParameter}`);
+      setLeaderBoards((prevState) => [...prevState, ...data.result]);
+      setHasNextPage(data.result.length === LIMIT);
+
+      if (data.result.length) {
+        page.current += 1;
+      }
+    } catch (error) {
+      const message = error.response.data.message;
+      enqueueSnackbar(message, { variant: "error" });
+    }
+  };
 
   useEffect(() => {
-    axios
-      .get(LEADER_BOARD_URI)
-      .then(({ data }) => setLeaderBoards(data.result));
-  }, []);
+    if (!observerTarget.current || !hasNextPage) return;
 
-  if (!leaderBoards.length) {
-    return (
-      <NotFoundPage title="리더보드" message="데이터를 불러오는 중입니다..." />
-    );
-  }
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        fetchLeadrBoard();
+      }
+    });
+
+    observer.observe(observerTarget.current);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [hasNextPage]);
 
   return (
     <Wrapper>
       리더보드
       <Wrapper.Body>
         <List>
-          {leaderBoards.map((each, index) => {
-            const isHistory = userID === each["user_id"];
-
-            return (
-              <ListItem
-                key={index}
-                className={`${isHistory && Style.listHistory}`}
-                secondaryAction={
-                  <ListItemText secondary={each["quiz_score"]} />
-                }
-              >
-                <ListItemAvatar>
-                  <Avatar src={each.image} />
-                </ListItemAvatar>
-
-                <ListItemText
-                  primary={each["user_id"]}
-                  secondary={format(each["updated_at"], "ko_KR")}
-                />
-              </ListItem>
-            );
-          })}
+          {leaderBoards?.map((each, index) => (
+            <LeaderBoard
+              key={index}
+              isHistory={userID === each["user_id"]}
+              each={each}
+            />
+          ))}
+          <div ref={observerTarget} />
         </List>
       </Wrapper.Body>
     </Wrapper>

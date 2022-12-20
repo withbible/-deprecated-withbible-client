@@ -14,11 +14,6 @@
   padding: 0.5rem;
 }
 
-.listHistory {
-  background-color: var(--primary-color) !important;
-  border-radius: var(--border-radius);
-}
-
 .buttonContainer {
   display: flex;
   flex-direction: column;
