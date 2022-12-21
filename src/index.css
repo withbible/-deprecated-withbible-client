@@ -13,22 +13,19 @@ html {
   --border-radius: 1.2rem;
 }
 
-/* TODO: height: 100% 적용 */
 body {
   margin: 0;
   background-color: var(--shadow-color);
 }
 
 #root {
-  width: 100%;
-  padding-bottom: 75px;
+  width: 100%;    
 }
 
 .MuiInput-root,
 .MuiInputBase-root,
 .MuiInputLabel-root,
 .MuiTypography-root,
-.MuiListSubheader-root,
 .react-horizontal-scrolling-menu--item,
 .MuiChip-root {
   font-family: inherit;
@@ -62,4 +59,5 @@ body {
 
 .MuiListSubheader-root {
   box-shadow: var(--box-shadow);
+  background-color: var(--shadow-color);
 }

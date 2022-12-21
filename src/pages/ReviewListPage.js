@@ -5,59 +5,42 @@ import { useSnackbar } from "notistack";
 
 //INTERNAL IMPORT
 import { Wrapper, ActiveChapterList } from "../components";
-import { ACTIVE_CHAPTER_URI } from "../constants/api";
+import { ACTIVE_CHAPTER_PAGE_URI } from "../constants/api";
+
+const LIMIT = 7;
 
 const ReviewListPage = () => {
-  const [activeCategory, setActiveCategory] = useState([]);
   const [activeChapter, setActiveChapter] = useState([]);
-  const [hasNextCategory, setHasNextCategory] = useState(true);
-  const activeCategoryIndex = useRef(0);
+  const [hasNextPage, setHasNextPage] = useState(true);
+  const page = useRef(1);
   const observerTarget = useRef(null);
   const { enqueueSnackbar } = useSnackbar();
 
-  const fetchActiveCategory = async () => {
-    try {
-      const { data } = await axios.get("/history/categories/active");
-
-      setActiveCategory(data.result);
-    } catch (error) {
-      const message = error.response.data.message;
-      enqueueSnackbar(message, { variant: "error" });
-    }
-  };
-
   const fetchActiveChapter = async () => {
-    let isNext;
-
     try {
-      const categorySeq =
-        activeCategory[activeCategoryIndex.current]["category_seq"];
-      const queryParameter = `?categorySeq=${categorySeq}`;
-
+      const queryParameter = `?limit=${LIMIT}&page=${page.current}`;
       const { data } = await axios.get(
-        `${ACTIVE_CHAPTER_URI}${queryParameter}`
+        `${ACTIVE_CHAPTER_PAGE_URI}${queryParameter}`
       );
 
-      isNext = activeCategoryIndex.current < activeCategory.length - 1;
+      setActiveChapter((prevState) => [
+        ...prevState,
+        ...mergeWithCategory(data.result),
+      ]);
 
-      setActiveChapter((prevState) => [...prevState, ...data.result]);
-      setHasNextCategory(isNext);
+      setHasNextPage(data.result.length === LIMIT);
+
+      if (data.result.length) {
+        page.current += 1;
+      }
     } catch (error) {
       const message = error.response.data.message;
       enqueueSnackbar(message, { variant: "error" });
-    } finally {
-      if (isNext) {
-        activeCategoryIndex.current += 1;
-      }
     }
   };
 
   useEffect(() => {
-    fetchActiveCategory();
-  }, []);
-
-  useEffect(() => {
-    if (!observerTarget.current || !hasNextCategory) return;
+    if (!observerTarget.current || !hasNextPage) return;
 
     const observer = new IntersectionObserver(([entry]) => {
       if (entry.isIntersecting) {
@@ -70,7 +53,7 @@ const ReviewListPage = () => {
     return () => {
       observer.disconnect();
     };
-  }, [hasNextCategory]);
+  }, [hasNextPage]);
 
   return (
     <Wrapper>
@@ -80,7 +63,7 @@ const ReviewListPage = () => {
           {activeChapter?.map((each, index) => (
             <ActiveChapterList
               key={index}
-              iteratee={each["chapter_num_array"]}
+              iteratee={each["chapter_detail"]}
               category={each["category"]}
               categorySeq={each["category_seq"]}
             />
@@ -93,3 +76,24 @@ const ReviewListPage = () => {
 };
 
 export default ReviewListPage;
+
+function mergeWithCategory(arr) {
+  const result = [];
+
+  arr.forEach(function (each) {
+    const index = result.findIndex(function (exist) {
+      return exist.category === each.category;
+    });
+
+    if (index > -1) {
+      result[index]["chapter_detail"] = result[index]["chapter_detail"].concat(
+        each["chapter_detail"]
+      );
+    } else {
+      each["chapter_detail"] = [each["chapter_detail"]];
+      result.push(each);
+    }
+  });
+
+  return result;
+}

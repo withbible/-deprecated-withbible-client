@@ -4,9 +4,8 @@ import axios from "axios";
 import { useSnackbar } from "notistack";
 
 //INTERNAL IMPORT
-import Style from "./page.module.css";
 import { LeaderBoard, Wrapper } from "../components";
-import { LEADER_BOARD_URI } from "../constants/api";
+import { LEADER_BOARD_PAGE_URI } from "../constants/api";
 import { AuthContext } from "../context/AuthContext";
 
 const LIMIT = 7;
@@ -22,7 +21,10 @@ const LeaderBoardPage = () => {
   const fetchLeadrBoard = async () => {
     try {
       const queryParameter = `?limit=${LIMIT}&page=${page.current}`;
-      const { data } = await axios.get(`${LEADER_BOARD_URI}${queryParameter}`);
+      const { data } = await axios.get(
+        `${LEADER_BOARD_PAGE_URI}${queryParameter}`
+      );
+
       setLeaderBoards((prevState) => [...prevState, ...data.result]);
       setHasNextPage(data.result.length === LIMIT);
 

@@ -1,4 +1,4 @@
-import React, { forwardRef } from "react";
+import React from "react";
 import {
   ListSubheader,
   ListItem,
@@ -14,45 +14,42 @@ import { Link } from "react-router-dom";
 import Style from "./ActiveChapterList.module.css";
 import { REVIEW_PAGE_PATH } from "../../constants/route";
 
-const ActiveChapterList = forwardRef(
-  ({ iteratee, category, categorySeq }, ref) => {
-    return (
-      <>
-        <ListSubheader>{category}</ListSubheader>
+const ActiveChapterList = ({ iteratee, category, categorySeq }) => {
+  return (
+    <>
+      <ListSubheader>{category}</ListSubheader>
 
-        {iteratee.map((each, index) => {
-          const queryParameter = `
+      {iteratee.map((each, index) => {
+        const queryParameter = `
             ?categorySeq=${categorySeq}&chapterNum=${each["chapter_num"]}
           `;
-          const chipLabel = `
+        const chipLabel = `
             맞힌갯수 ${each["hit_question_count"]}/${each["question_count"]}
           `;
-          const isLastIndex = index + 1 === iteratee.length;
 
-          return (
-            <div key={index} ref={isLastIndex ? ref : undefined}>
-              <ListItem>
-                <ListItemButton
-                  component={Link}
-                  to={`${REVIEW_PAGE_PATH}${queryParameter}`}
-                  className={Style.listItemButton}
-                >
-                  <ListItemText primary={`Ch.${each["chapter_num"]}`} />
-                  <KeyboardArrowRightIcon className={Style.listItemIcon} />
-                  <Chip
-                    label={chipLabel}
-                    size="small"
-                    className={Style.listItemChip}
-                  />
-                </ListItemButton>
-              </ListItem>
-              <Divider variant="middle" />
-            </div>
-          );
-        })}
-      </>
-    );
-  }
-);
+        return (
+          <div key={index}>
+            <ListItem>
+              <ListItemButton
+                component={Link}
+                to={`${REVIEW_PAGE_PATH}${queryParameter}`}
+                className={Style.listItemButton}
+              >
+                <ListItemText primary={`Ch.${each["chapter_num"]}`} />
+                <KeyboardArrowRightIcon className={Style.listItemIcon} />
+                <Chip
+                  label={chipLabel}
+                  size="small"
+                  className={Style.listItemChip}
+                />
+              </ListItemButton>
+            </ListItem>
+            <Divider variant="middle" />
+          </div>
+        );
+      })}
+    </>
+  );
+};
 
 export default ActiveChapterList;

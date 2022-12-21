@@ -1,14 +1,13 @@
-import React, { forwardRef } from "react";
+import React from "react";
 import { ListItem, ListItemText, ListItemAvatar, Avatar } from "@mui/material";
 import { format } from "timeago.js";
 
 //INTERNAL IMPORT
 import Style from "./LeaderBoard.module.css";
 
-const LeaderBoard = forwardRef(({ isHistory, each }, ref) => {
+const LeaderBoard = ({ isHistory, each }) => {
   return (
     <ListItem
-      ref={ref}
       className={`${isHistory && Style.listHistory}`}
       secondaryAction={<ListItemText secondary={each["quiz_score"]} />}
     >
@@ -22,6 +21,6 @@ const LeaderBoard = forwardRef(({ isHistory, each }, ref) => {
       />
     </ListItem>
   );
-});
+};
 
 export default LeaderBoard;
