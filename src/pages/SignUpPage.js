@@ -31,7 +31,7 @@ const SignUpPage = () => {
     event.preventDefault();
 
     try {
-      await axios.post(SIGN_UP_URI, payload);
+      await axios.post(SIGN_UP_URI, payload, { withCredentials: true });
       history.push("/");
     } catch (error) {
       const message = error.response.data.message;
@@ -49,7 +49,7 @@ const SignUpPage = () => {
         onSubmit={handleSubmit}
       >
         <TextField
-          required          
+          required
           error={payloadValidity.userNameError}
           helperText={
             payloadValidity.userNameError ? "한글 또는 영어만 허용합니다." : ""

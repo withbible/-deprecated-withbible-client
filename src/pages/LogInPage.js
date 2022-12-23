@@ -39,7 +39,7 @@ const LogInPage = () => {
     event.preventDefault();
 
     try {
-      await axios.patch(LOG_IN_URI, payload);
+      await axios.patch(LOG_IN_URI, payload, { withCredentials: true });
       history.push("/");
     } catch (error) {
       const message = error.response.data.message;
@@ -57,7 +57,7 @@ const LogInPage = () => {
         onSubmit={handleSubmit}
       >
         <TextField
-          required          
+          required
           error={payloadValidity.userIDError}
           helperText={
             payloadValidity.userIDError ? "숫자와 문자 조합만 허용합니다." : ""

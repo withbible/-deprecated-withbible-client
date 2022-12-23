@@ -1,9 +1,9 @@
-import React, { useCallback, useState, useEffect } from "react";
-import axios from "axios";
+import React, { useState } from "react";
 import { useSnackbar } from "notistack";
+import axios from "axios";
 
 //INTERNAL IMPORT
-import { LOGIN_CHECK_URI } from "../constants/api";
+import { LOG_IN_CHECK_URI } from "../constants/api";
 
 export const AuthContext = React.createContext();
 
@@ -11,19 +11,15 @@ export const AuthProvider = ({ children }) => {
   const [userID, setUserID] = useState("");
   const { enqueueSnackbar } = useSnackbar();
 
-  const fetchLoginCheck = useCallback(async () => {
+  const fetchLoginCheck = async () => {
     try {
-      const { data } = await axios.get(LOGIN_CHECK_URI);
+      const { data } = await axios.get(LOG_IN_CHECK_URI);
       setUserID(data.result["userID"]);
     } catch (error) {
       const message = error.response.data.message;
       enqueueSnackbar(message, { variant: "error" });
     }
-  }, [userID]);
-
-  useEffect(() => {
-    fetchLoginCheck();
-  }, []);
+  };
 
   return (
     <AuthContext.Provider
