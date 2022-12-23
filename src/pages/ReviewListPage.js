@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { List } from "@mui/material";
 import axios from "axios";
 import { useSnackbar } from "notistack";
@@ -16,7 +16,7 @@ const ReviewListPage = () => {
   const observerTarget = useRef(null);
   const { enqueueSnackbar } = useSnackbar();
 
-  const fetchActiveChapter = async () => {
+  const fetchActiveChapter = useCallback(async () => {
     try {
       const queryParameter = `?limit=${LIMIT}&page=${page.current}`;
       const { data } = await axios.get(
@@ -37,7 +37,7 @@ const ReviewListPage = () => {
       const message = error.response.data.message;
       enqueueSnackbar(message, { variant: "error" });
     }
-  };
+  }, [page.current]);
 
   useEffect(() => {
     if (!observerTarget.current || !hasNextPage) return;

@@ -1,4 +1,10 @@
-import React, { useState, useEffect, useContext, useRef } from "react";
+import React, {
+  useState,
+  useEffect,
+  useContext,
+  useRef,
+  useCallback,
+} from "react";
 import { List } from "@mui/material";
 import axios from "axios";
 import { useSnackbar } from "notistack";
@@ -18,7 +24,7 @@ const LeaderBoardPage = () => {
   const observerTarget = useRef(null);
   const { enqueueSnackbar } = useSnackbar();
 
-  const fetchLeadrBoard = async () => {
+  const fetchLeadrBoard = useCallback(async () => {
     try {
       const queryParameter = `?limit=${LIMIT}&page=${page.current}`;
       const { data } = await axios.get(
@@ -35,7 +41,7 @@ const LeaderBoardPage = () => {
       const message = error.response.data.message;
       enqueueSnackbar(message, { variant: "error" });
     }
-  };
+  }, [page.current]);
 
   useEffect(() => {
     if (!observerTarget.current || !hasNextPage) return;
@@ -43,7 +49,7 @@ const LeaderBoardPage = () => {
     const observer = new IntersectionObserver(([entry]) => {
       if (entry.isIntersecting) {
         fetchLeadrBoard();
-      }
+      } 
     });
 
     observer.observe(observerTarget.current);
