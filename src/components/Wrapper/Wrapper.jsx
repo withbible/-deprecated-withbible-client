@@ -17,8 +17,15 @@ Wrapper.Header = ({ children }) => (
   <div className={Style.headerContainer}>{children}</div>
 );
 
-Wrapper.Body = ({ children }) => (
-  <div className={Style.bodyContainer}>{children}</div>
+Wrapper.Body = ({ className, children }) => (
+  <div
+    className={`
+    ${Style.bodyContainer}
+    ${className}
+  `}
+  >
+    {children}
+  </div>
 );
 
 export default Wrapper;

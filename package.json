@@ -43,6 +43,5 @@
   },
   "devDependencies": {
     "react-error-overlay": "^6.0.9"
-  },
-  "homepage": "https://port-0-withbible-server-3pblc2flby7o9b4.gksl2.cloudtype.app"
+  }  
 }
