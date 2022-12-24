@@ -21,6 +21,7 @@
     ]
   },
   "dependencies": {
+    "@emotion/styled": "^11.10.5",
     "@mui/icons-material": "^5.0.4",
     "@mui/material": "^5.0.4",
     "@mui/styles": "^5.0.1",
@@ -43,5 +44,5 @@
   },
   "devDependencies": {
     "react-error-overlay": "^6.0.9"
-  }  
+  }
 }
