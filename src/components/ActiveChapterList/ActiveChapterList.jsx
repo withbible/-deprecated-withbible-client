@@ -20,13 +20,9 @@ const ActiveChapterList = ({ iteratee, category, categorySeq }) => {
       <ListSubheader>{category}</ListSubheader>
 
       {iteratee.map((each, index) => {
-        const queryParameter = `
-            ?categorySeq=${categorySeq}&chapterNum=${each["chapter_num"]}
-          `;
-        const chipLabel = `
-            맞힌갯수 ${each["hit_question_count"]}/${each["question_count"]}
-          `;
-
+        const queryParameter = `?categorySeq=${categorySeq}&chapterNum=${each["chapter_num"]}`;
+        const chipLabel = `맞힌갯수 ${each["hit_question_count"]}/${each["question_count"]}`;
+                
         return (
           <div key={index}>
             <ListItem>

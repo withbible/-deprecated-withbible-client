@@ -2,6 +2,8 @@ import React, { useContext } from "react";
 import { Button, Box } from "@mui/material";
 import { debounce } from "lodash";
 import { Link } from "react-router-dom";
+import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
+import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 
 //INTERNAL IMPORT
 import Style from "./ButtonBox.module.css";
@@ -21,8 +23,8 @@ const ButtonBox = ({ isFirst, isLast, isReview, setActiveStep }) => {
 
   return (
     <Box className={Style.buttonContainer}>
-      <Button disabled={isFirst} onClick={() => handleBack()}>
-        이전
+      <Button disabled={isFirst} onClick={handleBack}>
+        <KeyboardArrowLeftIcon />
       </Button>
 
       {isReview && isLast ? (
@@ -33,9 +35,11 @@ const ButtonBox = ({ isFirst, isLast, isReview, setActiveStep }) => {
           결과
         </Button>
       ) : isLast ? (
-        <Button onClick={debounce(() => handleSubmit(), 250)}>제출</Button>
+        <Button onClick={debounce(handleSubmit, 250)}>제출</Button>
       ) : (
-        <Button onClick={() => handleNext()}>다음</Button>
+        <Button onClick={handleNext}>
+          <KeyboardArrowRightIcon />
+        </Button>
       )}
     </Box>
   );

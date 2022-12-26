@@ -19,7 +19,7 @@ body {
 }
 
 #root {
-  width: 100%;    
+  width: 100%;
 }
 
 .MuiInput-root,
@@ -27,7 +27,8 @@ body {
 .MuiInputLabel-root,
 .MuiTypography-root,
 .react-horizontal-scrolling-menu--item,
-.MuiChip-root {
+.MuiChip-root,
+.MuiButton-root {
   font-family: inherit;
 }
 

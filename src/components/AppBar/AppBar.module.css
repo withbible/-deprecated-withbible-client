@@ -1,5 +1,14 @@
 .container {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   padding-top: 1rem;
+}
+
+.authButton {
+  margin-left: auto;
+  align-self: flex-end;
+}
+
+.authButton>* {
+  padding: 0 1.2rem;
 }
