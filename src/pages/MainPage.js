@@ -2,11 +2,9 @@ import React, { useContext, useEffect, useRef } from "react";
 
 //INTERNAL IMPORT
 import { AppBar, Category, SearchBar, Wrapper } from "../components";
-import { AuthContext } from "../context/AuthContext";
 import { ChapterContext } from "../context/ChapterContext";
 
 const MainPage = (_) => {
-  const { fetchLoginCheck, userID } = useContext(AuthContext);
   const { fetchChapterSearch, fetchActiveChapter, searchKeyword } =
     useContext(ChapterContext);
   const isFirstRender = useRef(true);
@@ -23,10 +21,6 @@ const MainPage = (_) => {
   useEffect(() => {
     fetchActiveChapter();
   }, []);
-
-  useEffect(() => {
-    fetchLoginCheck();
-  }, [userID]);
 
   return (
     <Wrapper>

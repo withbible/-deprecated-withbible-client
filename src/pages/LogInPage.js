@@ -20,7 +20,7 @@ import { PasswordInput } from "../components";
 import { AuthContext } from "../context/AuthContext";
 
 const LogInPage = () => {
-  const { payLoadReducer, payLoadValidityReducer, isAllValid } =
+  const { payLoadReducer, payLoadValidityReducer, isAllValid, setUserID } =
     useContext(AuthContext);
   const [payload, setPayload] = useReducer(payLoadReducer, initialState);
   const [payloadValidity, setPayloadValidity] = useReducer(
@@ -39,7 +39,10 @@ const LogInPage = () => {
     event.preventDefault();
 
     try {
-      await axios.patch(LOG_IN_URI, payload, { withCredentials: true });
+      const { data } = await axios.patch(LOG_IN_URI, payload, {
+        withCredentials: true,
+      });
+      setUserID(data.result["userID"]);
       history.push("/");
     } catch (error) {
       const message = error.response.data.message;

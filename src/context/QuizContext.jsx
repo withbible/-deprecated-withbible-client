@@ -39,7 +39,9 @@ export const QuizProvider = ({ children }) => {
   const fetchQuiz = async ({ shuffle = true }) => {
     const [quizState, optionHistoryState] = await Promise.allSettled([
       axios.get(`${QUIZ_URI}${queryParameter}`),
-      axios.get(`${OPTION_HISTORY_URI}${queryParameter}`),
+      axios.get(`${OPTION_HISTORY_URI}${queryParameter}`, {
+        withCredentials: true,
+      }),
     ]);
 
     try {
@@ -91,9 +93,11 @@ export const QuizProvider = ({ children }) => {
 
     try {
       if (isNewUserOption) {
-        await axios.post(OPTION_HISTORY_URI, payload);
+        await axios.post(OPTION_HISTORY_URI, payload, {
+          withCredentials: true,
+        });
       } else {
-        await axios.put(OPTION_HISTORY_URI, payload);
+        await axios.put(OPTION_HISTORY_URI, payload, { withCredentials: true });
       }
 
       history.push(`${QUIZ_RESULT_PAGE_PATH}${queryParameter}`);

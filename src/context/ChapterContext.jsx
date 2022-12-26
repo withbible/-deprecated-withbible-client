@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useSnackbar } from "notistack";
 import axios from "axios";
 
 //INTERNAL IMPORT
@@ -12,7 +11,6 @@ export const ChapterProvider = ({ children }) => {
   const [searchKeyword, setSearchKeyword] = useState("");
   const [chapterSearch, setChapterSearch] = useState([]);
   const [activeChapter, setActiveChapter] = useState([]);
-  const { enqueueSnackbar } = useSnackbar();
 
   const fetchChapterSearch = async (searchKeyword) => {
     setSearchKeyword(searchKeyword);
@@ -31,12 +29,11 @@ export const ChapterProvider = ({ children }) => {
 
   const fetchActiveChapter = async () => {
     try {
-      const { data } = await axios.get(ACTIVE_CHAPTER_URI);
+      const { data } = await axios.get(ACTIVE_CHAPTER_URI, {
+        withCredentials: true,
+      });
       setActiveChapter(data.result);
-    } catch (error) {
-      const message = error.response.data.message;
-      enqueueSnackbar(message, { variant: "error" });
-    }
+    } catch (error) {}
   };
 
   return (

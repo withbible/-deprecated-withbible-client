@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useSnackbar } from "notistack";
 import axios from "axios";
 
@@ -13,7 +13,7 @@ export const AuthProvider = ({ children }) => {
 
   const fetchLoginCheck = async () => {
     try {
-      const { data } = await axios.get(LOG_IN_CHECK_URI);
+      const { data } = await axios.get(LOG_IN_CHECK_URI, { withCredentials: true});
       setUserID(data.result["userID"]);
     } catch (error) {
       const message = error.response.data.message;
@@ -21,11 +21,16 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  useEffect(() => {
+    fetchLoginCheck();
+  }, [userID]);
+
   return (
     <AuthContext.Provider
       value={{
         fetchLoginCheck,
         userID,
+        setUserID,
         payLoadReducer,
         payLoadValidityReducer,
         isAllValid,

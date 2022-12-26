@@ -12,7 +12,7 @@ import { PasswordInput } from "../components";
 import { AuthContext } from "../context/AuthContext";
 
 const SignUpPage = () => {
-  const { payLoadReducer, payLoadValidityReducer, isAllValid } =
+  const { payLoadReducer, payLoadValidityReducer, isAllValid, setUserID } =
     useContext(AuthContext);
   const [payload, setPayload] = useReducer(payLoadReducer, initialState);
   const [payloadValidity, setPayloadValidity] = useReducer(
@@ -32,6 +32,7 @@ const SignUpPage = () => {
 
     try {
       await axios.post(SIGN_UP_URI, payload, { withCredentials: true });
+      setUserID(data.result["userID"]);
       history.push("/");
     } catch (error) {
       const message = error.response.data.message;

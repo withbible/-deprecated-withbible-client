@@ -33,8 +33,10 @@ const QuizResultPage = () => {
   // RELATED HOOK
   const fetchQuizResult = async () => {
     const [hitCountState, activeCountState] = await Promise.all([
-      axios.get(`${HIT_COUNT_URI}${queryParameter}`),
-      axios.get(`${ACTIVE_CHAPTER_COUNT_URI}?categorySeq=${categorySeq}`),
+      axios.get(`${HIT_COUNT_URI}${queryParameter}`, { withCredentials: true }),
+      axios.get(`${ACTIVE_CHAPTER_COUNT_URI}?categorySeq=${categorySeq}`, {
+        withCredentials: true,
+      }),
     ]);
 
     const hitCount = hitCountState.data.result;

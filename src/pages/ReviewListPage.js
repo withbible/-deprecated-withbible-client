@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
-import { List } from "@mui/material";
+import { List, Typography } from "@mui/material";
 import axios from "axios";
 import { useSnackbar } from "notistack";
 
@@ -7,9 +7,11 @@ import { useSnackbar } from "notistack";
 import { Wrapper, ActiveChapterList } from "../components";
 import { ACTIVE_CHAPTER_PAGE_URI } from "../constants/api";
 
-const LIMIT = 7;
+const LIST_ITEM_HEIGHT = 64;
 
 const ReviewListPage = () => {
+  const [error, setError] = useState("");
+  const limit = Math.round(window.innerHeight / LIST_ITEM_HEIGHT);
   const [activeChapter, setActiveChapter] = useState([]);
   const [hasNextPage, setHasNextPage] = useState(true);
   const page = useRef(1);
@@ -18,9 +20,10 @@ const ReviewListPage = () => {
 
   const fetchActiveChapter = useCallback(async () => {
     try {
-      const queryParameter = `?limit=${LIMIT}&page=${page.current}`;
+      const queryParameter = `?limit=${limit}&page=${page.current}`;
       const { data } = await axios.get(
-        `${ACTIVE_CHAPTER_PAGE_URI}${queryParameter}`
+        `${ACTIVE_CHAPTER_PAGE_URI}${queryParameter}`,
+        { withCredentials: true }
       );
 
       setActiveChapter((prevState) => [
@@ -28,13 +31,20 @@ const ReviewListPage = () => {
         ...mergeWithCategory(data.result),
       ]);
 
-      setHasNextPage(data.result.length === LIMIT);
+      // TODO: 마지막 응답 데이터는 충족하되 다음 data는 없다면
+      setHasNextPage(data.result.length === limit);
 
       if (data.result.length) {
         page.current += 1;
       }
     } catch (error) {
       const message = error.response.data.message;
+
+      if (error.response.status === 401) {
+        setError(message);
+        return;
+      }
+
       enqueueSnackbar(message, { variant: "error" });
     }
   }, [page.current]);
@@ -59,17 +69,21 @@ const ReviewListPage = () => {
     <Wrapper>
       리뷰목록
       <Wrapper.Body>
-        <List>
-          {activeChapter?.map((each, index) => (
-            <ActiveChapterList
-              key={index}
-              iteratee={each["chapter_detail"]}
-              category={each["category"]}
-              categorySeq={each["category_seq"]}
-            />
-          ))}
-          <div ref={observerTarget} />
-        </List>
+        {error ? (
+          <Typography variant="h4">{error}</Typography>
+        ) : (
+          <List>
+            {activeChapter?.map((each, index) => (
+              <ActiveChapterList
+                key={index}
+                iteratee={each["chapter_detail"]}
+                category={each["category"]}
+                categorySeq={each["category_seq"]}
+              />
+            ))}
+            <div ref={observerTarget} />
+          </List>
+        )}
       </Wrapper.Body>
     </Wrapper>
   );

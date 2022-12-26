@@ -2,6 +2,10 @@
 
 # KBU BibleGraduationExam QuizApp
 
+<a href="https://nodejs.org/ko/download/">
+<img src="https://img.shields.io/badge/Node.js-16-339933?logo=Node.js&logoColor=white"/>
+</a>
+
 <a href="https://ko.reactjs.org/">
 <img src="https://img.shields.io/badge/React-17.0-61DAFB?logo=React&logoColor=white"/>
 </a>
@@ -31,5 +35,5 @@ Bootstrapped with [Create React App](https://github.com/facebook/create-react-ap
 # Install dependencies (only the first time)
 npm install
 # Run the local server at localhost:3000
-npm run dev
+npm run start
 ```

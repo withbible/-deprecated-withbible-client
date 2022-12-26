@@ -14,9 +14,10 @@ import { LeaderBoard, Wrapper } from "../components";
 import { LEADER_BOARD_PAGE_URI } from "../constants/api";
 import { AuthContext } from "../context/AuthContext";
 
-const LIMIT = 7;
+const LIST_ITEM_HEIGHT = 74;
 
 const LeaderBoardPage = () => {
+  const limit = Math.round(window.innerHeight / LIST_ITEM_HEIGHT);
   const { userID } = useContext(AuthContext);
   const [leaderBoards, setLeaderBoards] = useState([]);
   const [hasNextPage, setHasNextPage] = useState(true);
@@ -26,13 +27,13 @@ const LeaderBoardPage = () => {
 
   const fetchLeadrBoard = useCallback(async () => {
     try {
-      const queryParameter = `?limit=${LIMIT}&page=${page.current}`;
+      const queryParameter = `?limit=${limit}&page=${page.current}`;
       const { data } = await axios.get(
         `${LEADER_BOARD_PAGE_URI}${queryParameter}`
       );
 
       setLeaderBoards((prevState) => [...prevState, ...data.result]);
-      setHasNextPage(data.result.length === LIMIT);
+      setHasNextPage(data.result.length === limit);
 
       if (data.result.length) {
         page.current += 1;
@@ -49,7 +50,7 @@ const LeaderBoardPage = () => {
     const observer = new IntersectionObserver(([entry]) => {
       if (entry.isIntersecting) {
         fetchLeadrBoard();
-      } 
+      }
     });
 
     observer.observe(observerTarget.current);
