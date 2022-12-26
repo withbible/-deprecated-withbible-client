@@ -3,7 +3,6 @@ import { Typography } from "@mui/material";
 //INTERNAL IMPORT
 import Style from "./page.module.css";
 import { Wrapper } from "../components";
-import Spinner from "../images/spinner.gif";
 
 const NotFoundPage = ({
   title = "에러",
@@ -13,7 +12,7 @@ const NotFoundPage = ({
     <Wrapper>
       <Wrapper.Header>{title}</Wrapper.Header>
       <Wrapper.Body className={Style.container}>
-        <img src={Spinner} alt="로딩중"/>
+        <img src="/images/spinner.gif" alt="로딩중" />
         <Typography variant="h4">{message}</Typography>
       </Wrapper.Body>
     </Wrapper>
