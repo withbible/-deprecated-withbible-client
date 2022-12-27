@@ -43,7 +43,13 @@ const LoginPage = () => {
       const { data } = await axios({
         method: "patch",
         url: LOGIN_URI,
-        data: payload,
+        auth: {
+          username: payload.userID,
+          password: payload.password,
+        },
+        data: {
+          isAutoLogin: payload.isAutoLogin,
+        },
         ...AUTH_HEADER_CONFIG,
       });
       setUserID(data.result["userID"]);

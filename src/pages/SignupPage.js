@@ -35,7 +35,20 @@ const SignupPage = () => {
       await axios({
         method: "post",
         url: SIGNUP_URI,
-        data: payload,
+        auth: {
+          /**
+           * 본 서비스에서 사용되는
+           * userID(사용자ID)는 고유성을 가지는 필드이다.
+           * userName(사용자이름)은 중복될 수 있는 필드이다.
+           *
+           * 보안성을 고려하여 userID 필드가 username 키에 들어가는 것이 맞다고 판단한다.
+           */
+          username: payload.userID,
+          password: payload.password,
+        },
+        data: {
+          userName: payload.userName,
+        },
         ...AUTH_HEADER_CONFIG,
       });
       setUserID(data.result["userID"]);
