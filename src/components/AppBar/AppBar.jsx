@@ -7,12 +7,14 @@ import axios from "axios";
 //INTERNAL IMPORT
 import Style from "./AppBar.module.css";
 import { AuthContext } from "../../context/AuthContext";
+import { ChapterContext } from "../../context/ChapterContext";
 import { LOGIN_PATH } from "../../constants/route";
 import { LOGOUT_URI } from "../../constants/api";
 import { AUTH_HEADER_CONFIG } from "../../constants/config";
 
 const AppBar = () => {
   const { userID, setUserID } = useContext(AuthContext);
+  const { setActiveChapter } = useContext(ChapterContext);
   const { enqueueSnackbar } = useSnackbar();
   const history = useHistory();
 
@@ -24,6 +26,7 @@ const AppBar = () => {
         ...AUTH_HEADER_CONFIG,
       });
       setUserID("");
+      setActiveChapter([]);
       history.push(LOGIN_PATH);
     } catch (error) {
       const message = error.response.data.message;

@@ -43,6 +43,7 @@ export const ChapterProvider = ({ children }) => {
         searchKeyword,
         setSearchKeyword,
         activeChapter,
+        setActiveChapter,
         fetchActiveChapter,
         error,
       }}

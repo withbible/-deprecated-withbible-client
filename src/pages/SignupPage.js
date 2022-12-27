@@ -36,18 +36,12 @@ const SignupPage = () => {
         method: "post",
         url: SIGNUP_URI,
         auth: {
-          /**
-           * 본 서비스에서 사용되는
-           * userID(사용자ID)는 고유성을 가지는 필드이다.
-           * userName(사용자이름)은 중복될 수 있는 필드이다.
-           *
-           * 보안성을 고려하여 userID 필드가 username 키에 들어가는 것이 맞다고 판단한다.
-           */
           username: payload.userID,
           password: payload.password,
         },
         data: {
           userName: payload.userName,
+          userEmail: payload.userEmail,
         },
         ...AUTH_HEADER_CONFIG,
       });
@@ -81,7 +75,26 @@ const SignupPage = () => {
             onBlur: () =>
               setPayloadValidity({
                 type: "VALIDATE_USER_NAME",
-                payload,
+                value: payload.userName,
+              }),
+          }}
+          onChange={(event) => setPayload({ type: event.target })}
+        />
+
+        <TextField
+          required
+          error={payloadValidity.userEmailError}
+          helperText={
+            payloadValidity.userEmailError && "이메일 형식에 맞지 않습니다."
+          }
+          variant="standard"
+          label="이메일"
+          name="userEmail"
+          inputProps={{
+            onBlur: () =>
+              setPayloadValidity({
+                type: "VALIDATE_USER_EMAIL",
+                value: payload.userEmail,
               }),
           }}
           onChange={(event) => setPayload({ type: event.target })}
@@ -100,7 +113,7 @@ const SignupPage = () => {
             onBlur: () =>
               setPayloadValidity({
                 type: "VALIDATE_USER_ID",
-                payload,
+                value: payload.userID,
               }),
           }}
           onChange={(event) => setPayload({ type: event.target })}
@@ -129,12 +142,14 @@ export default SignupPage;
 
 const initialState = {
   userName: "",
+  userEmail: "",
   userID: "",
   password: "",
 };
 
 const initialValidityState = {
   userNameError: null,
+  userEmailError: null,
   userIDError: null,
   passwordError: null,
 };

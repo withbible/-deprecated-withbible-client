@@ -63,21 +63,29 @@ const payLoadValidityReducer = (state, action) => {
 
   switch (action.type) {
     case "VALIDATE_USER_NAME":
-      isValid = action.payload.userName.match(/^[ㄱ-ㅎ가-힇A-Z-a-z]+$/)
-        ? true
-        : false;
+      isValid = action.value.match(/^[ㄱ-ㅎ가-힇A-Z-a-z]+$/) ? true : false;
       return {
         ...state,
         userNameError: !isValid,
       };
     case "VALIDATE_USER_ID":
-      isValid = action.payload.userID.match(/^[a-zA-Z0-9]+$/) ? true : false;
+      isValid = action.value.match(/^[a-zA-Z0-9]+$/) ? true : false;
       return {
         ...state,
         userIDError: !isValid,
       };
+    case "VALIDATE_USER_EMAIL":
+      isValid = action.value.match(
+        /^[a-zA-Z0-9]*@[a-zA-Z0-9]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/
+      )
+        ? true
+        : false;
+      return {
+        ...state,
+        userEmailError: !isValid,
+      };
     case "VALIDATE_PASSWORD":
-      isValid = action.payload.password.length >= 6;
+      isValid = action.value.length >= 6;
       return {
         ...state,
         passwordError: !isValid,

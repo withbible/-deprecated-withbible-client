@@ -19,7 +19,7 @@ const PasswordInput = ({
 
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
-  };  
+  };
 
   return (
     <FormControl required error={isError} variant="standard">
@@ -31,7 +31,7 @@ const PasswordInput = ({
           onBlur: () =>
             setPayloadValidity({
               type: "VALIDATE_PASSWORD",
-              payload,
+              value: payload.password,
             }),
         }}
         onChange={(event) => setPayload({ type: event.target })}

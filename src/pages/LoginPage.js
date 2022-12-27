@@ -82,7 +82,7 @@ const LoginPage = () => {
             onBlur: () => {
               setPayloadValidity({
                 type: "VALIDATE_USER_ID",
-                payload,
+                value: payload.userID,
               });
               setIsValid(isAllValid(payloadValidity));
             },
