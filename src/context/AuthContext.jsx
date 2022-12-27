@@ -3,7 +3,7 @@ import { useSnackbar } from "notistack";
 import axios from "axios";
 
 //INTERNAL IMPORT
-import { LOG_IN_CHECK_URI } from "../constants/api";
+import { LOGIN_CHECK_URI } from "../constants/api";
 import { AUTH_HEADER_CONFIG } from "../constants/config";
 
 export const AuthContext = React.createContext();
@@ -14,7 +14,7 @@ export const AuthProvider = ({ children }) => {
 
   const fetchLoginCheck = async () => {
     try {
-      const { data } = await axios.get(LOG_IN_CHECK_URI, AUTH_HEADER_CONFIG);
+      const { data } = await axios.get(LOGIN_CHECK_URI, AUTH_HEADER_CONFIG);
       setUserID(data.result["userID"]);
     } catch (error) {
       const message = error.response.data.message;
@@ -44,6 +44,14 @@ export const AuthProvider = ({ children }) => {
 
 const payLoadReducer = (state, action) => {
   const { name, value } = action.type;
+
+  if (name === "isAutoLogin") {
+    return {
+      ...state,
+      [name]: action.type.checked,
+    };
+  }
+
   return {
     ...state,
     [name]: value,

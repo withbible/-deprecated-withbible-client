@@ -92,16 +92,18 @@ export const QuizProvider = ({ children }) => {
 
     try {
       if (isNewUserOption) {
-        await axios.post({
+        await axios({
+          method: "post",
           url: OPTION_HISTORY_URI,
           data: payload,
-          config: AUTH_HEADER_CONFIG,
+          ...AUTH_HEADER_CONFIG,
         });
       } else {
-        await axios.put({
+        await axios({
+          method: "put",
           url: OPTION_HISTORY_URI,
           data: payload,
-          config: AUTH_HEADER_CONFIG,
+          ...AUTH_HEADER_CONFIG,
         });
       }
 

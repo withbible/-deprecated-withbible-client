@@ -1,10 +1,10 @@
-export const SIGN_UP_URI = "/user";
+export const SIGNUP_URI = "/user";
 
-export const LOG_IN_URI = "/user/login";
+export const LOGIN_URI = "/user/login";
 
-export const LOG_IN_CHECK_URI = "/user/login-check";
+export const LOGIN_CHECK_URI = "/user/login-check";
 
-export const LOG_OUT_URI = "/user/logout";
+export const LOGOUT_URI = "/user/logout";
 
 export const CHAPTER_SEARCH_URI = "/quiz/categories/chapter";
 

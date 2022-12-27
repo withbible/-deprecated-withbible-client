@@ -3,8 +3,8 @@ import { Switch, Route } from "react-router-dom";
 
 //INTERNAL IMPORT
 import {
-  SIGN_UP_PATH,
-  LOG_IN_PATH,
+  SIGNUP_PATH,
+  LOGIN_PATH,
   QUIZ_PAGE_PATH,
   QUIZ_RESULT_PAGE_PATH,
   LEADER_BOARD_PAGE_PATH,
@@ -13,22 +13,22 @@ import {
 } from "./constants/route";
 import {
   LeaderBoardPage,
-  LogInPage,
+  LoginPage,
   MainPage,
   NotFoundPage,
   QuizPage,
   QuizResultPage,
   ReviewListPage,
   ReviewPage,
-  SignUpPage,
+  SignupPage,
 } from "./pages";
 
 const App = () => {
   return (
     <Switch>
       <Route exact path="/" component={MainPage} />
-      <Route path={SIGN_UP_PATH} component={SignUpPage} />
-      <Route path={LOG_IN_PATH} component={LogInPage} />
+      <Route path={SIGNUP_PATH} component={SignupPage} />
+      <Route path={LOGIN_PATH} component={LoginPage} />
       <Route exact path={QUIZ_PAGE_PATH} component={QuizPage} />
       <Route exact path={QUIZ_RESULT_PAGE_PATH} component={QuizResultPage} />
       <Route path={LEADER_BOARD_PAGE_PATH} component={LeaderBoardPage} />
