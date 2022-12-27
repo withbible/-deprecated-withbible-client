@@ -4,6 +4,7 @@ import axios from "axios";
 
 //INTERNAL IMPORT
 import { LOG_IN_CHECK_URI } from "../constants/api";
+import { AUTH_HEADER_CONFIG } from "../constants/config";
 
 export const AuthContext = React.createContext();
 
@@ -13,7 +14,7 @@ export const AuthProvider = ({ children }) => {
 
   const fetchLoginCheck = async () => {
     try {
-      const { data } = await axios.get(LOG_IN_CHECK_URI, { withCredentials: true});
+      const { data } = await axios.get(LOG_IN_CHECK_URI, AUTH_HEADER_CONFIG);
       setUserID(data.result["userID"]);
     } catch (error) {
       const message = error.response.data.message;

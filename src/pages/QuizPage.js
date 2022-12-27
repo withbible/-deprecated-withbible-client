@@ -12,6 +12,7 @@ import {
 } from "../components";
 import { QuizContext } from "../context/QuizContext";
 import NotFoundPage from "./NotFoundPage";
+import { CATEGORY } from "../constants/enum";
 
 const QuizPage = () => {
   const { quiz, fetchQuiz, totalStep } = useContext(QuizContext);
@@ -27,7 +28,7 @@ const QuizPage = () => {
   if (!quiz.length) {
     return (
       <NotFoundPage
-        title={`카테고리${categorySeq} ch. ${chapterNum}`}
+        title={`${CATEGORY[categorySeq]} ch.${chapterNum}`}
         message="데이터를 불러오는 중입니다..."
       />
     );
@@ -35,7 +36,7 @@ const QuizPage = () => {
 
   return (
     <Wrapper>
-      카테고리{categorySeq} ch. {chapterNum}
+      {CATEGORY[categorySeq]} ch.{chapterNum}
       <StepperBar
         iteratee={quiz}
         activeStep={activeStep}

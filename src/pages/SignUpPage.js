@@ -10,6 +10,7 @@ import { SIGN_UP_URI } from "../constants/api";
 import { LOG_IN_PATH } from "../constants/route";
 import { PasswordInput } from "../components";
 import { AuthContext } from "../context/AuthContext";
+import { AUTH_HEADER_CONFIG } from "../constants/config";
 
 const SignUpPage = () => {
   const { payLoadReducer, payLoadValidityReducer, isAllValid, setUserID } =
@@ -31,7 +32,11 @@ const SignUpPage = () => {
     event.preventDefault();
 
     try {
-      await axios.post(SIGN_UP_URI, payload, { withCredentials: true });
+      await axios.post({
+        url: SIGN_UP_URI,
+        data: payload,
+        config: AUTH_HEADER_CONFIG,
+      });
       setUserID(data.result["userID"]);
       history.push("/");
     } catch (error) {

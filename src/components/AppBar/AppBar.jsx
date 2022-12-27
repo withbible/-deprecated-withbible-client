@@ -9,6 +9,7 @@ import Style from "./AppBar.module.css";
 import { AuthContext } from "../../context/AuthContext";
 import { LOG_IN_PATH } from "../../constants/route";
 import { LOG_OUT_URI } from "../../constants/api";
+import { AUTH_HEADER_CONFIG } from "../../constants/config";
 
 const AppBar = () => {
   const { userID, setUserID } = useContext(AuthContext);
@@ -17,8 +18,9 @@ const AppBar = () => {
 
   const handleClick = async () => {
     try {
-      await axios.patch(LOG_OUT_URI, {
-        withCredentials: true,
+      await axios.patch({
+        url: LOG_OUT_URI,
+        config: AUTH_HEADER_CONFIG,
       });
       setUserID("");
       history.push(LOG_IN_PATH);

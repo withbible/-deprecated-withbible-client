@@ -7,6 +7,7 @@ import queryString from "query-string";
 //INTERNAL IMPORT
 import { QUIZ_URI, OPTION_HISTORY_URI } from "../constants/api";
 import { QUIZ_RESULT_PAGE_PATH } from "../constants/route";
+import { AUTH_HEADER_CONFIG } from "../constants/config";
 
 const MAX_QUESTION_COUNT = 3;
 
@@ -39,9 +40,7 @@ export const QuizProvider = ({ children }) => {
   const fetchQuiz = async ({ shuffle = true }) => {
     const [quizState, optionHistoryState] = await Promise.allSettled([
       axios.get(`${QUIZ_URI}${queryParameter}`),
-      axios.get(`${OPTION_HISTORY_URI}${queryParameter}`, {
-        withCredentials: true,
-      }),
+      axios.get(`${OPTION_HISTORY_URI}${queryParameter}`, AUTH_HEADER_CONFIG),
     ]);
 
     try {
@@ -93,11 +92,17 @@ export const QuizProvider = ({ children }) => {
 
     try {
       if (isNewUserOption) {
-        await axios.post(OPTION_HISTORY_URI, payload, {
-          withCredentials: true,
+        await axios.post({
+          url: OPTION_HISTORY_URI,
+          data: payload,
+          config: AUTH_HEADER_CONFIG,
         });
       } else {
-        await axios.put(OPTION_HISTORY_URI, payload, { withCredentials: true });
+        await axios.put({
+          url: OPTION_HISTORY_URI,
+          data: payload,
+          config: AUTH_HEADER_CONFIG,
+        });
       }
 
       history.push(`${QUIZ_RESULT_PAGE_PATH}${queryParameter}`);

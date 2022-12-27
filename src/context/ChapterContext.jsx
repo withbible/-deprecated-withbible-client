@@ -3,6 +3,7 @@ import axios from "axios";
 
 //INTERNAL IMPORT
 import { CHAPTER_SEARCH_URI, ACTIVE_CHAPTER_URI } from "../constants/api";
+import { AUTH_HEADER_CONFIG } from "../constants/config";
 
 export const ChapterContext = React.createContext();
 
@@ -29,9 +30,7 @@ export const ChapterProvider = ({ children }) => {
 
   const fetchActiveChapter = async () => {
     try {
-      const { data } = await axios.get(ACTIVE_CHAPTER_URI, {
-        withCredentials: true,
-      });
+      const { data } = await axios.get(ACTIVE_CHAPTER_URI, AUTH_HEADER_CONFIG);
       setActiveChapter(data.result);
     } catch (error) {}
   };

@@ -6,6 +6,7 @@ import { useSnackbar } from "notistack";
 //INTERNAL IMPORT
 import { Wrapper, ActiveChapterList } from "../components";
 import { ACTIVE_CHAPTER_PAGE_URI } from "../constants/api";
+import { AUTH_HEADER_CONFIG } from "../constants/config";
 
 const LIST_ITEM_HEIGHT = 64;
 
@@ -23,7 +24,7 @@ const ReviewListPage = () => {
       const queryParameter = `?limit=${limit}&page=${page.current}`;
       const { data } = await axios.get(
         `${ACTIVE_CHAPTER_PAGE_URI}${queryParameter}`,
-        { withCredentials: true }
+        AUTH_HEADER_CONFIG
       );
 
       setActiveChapter((prevState) => [

@@ -18,6 +18,7 @@ import { LOG_IN_URI } from "../constants/api";
 import { SIGN_UP_PATH } from "../constants/route";
 import { PasswordInput } from "../components";
 import { AuthContext } from "../context/AuthContext";
+import { AUTH_HEADER_CONFIG } from "../constants/config";
 
 const LogInPage = () => {
   const { payLoadReducer, payLoadValidityReducer, isAllValid, setUserID } =
@@ -39,8 +40,10 @@ const LogInPage = () => {
     event.preventDefault();
 
     try {
-      const { data } = await axios.patch(LOG_IN_URI, payload, {
-        withCredentials: true,
+      const { data } = await axios.patch({
+        url: LOG_IN_URI,
+        data: payload,
+        config: AUTH_HEADER_CONFIG
       });
       setUserID(data.result["userID"]);
       history.push("/");
