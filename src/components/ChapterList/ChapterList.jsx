@@ -2,10 +2,31 @@ import React from "react";
 import { ScrollMenu } from "react-horizontal-scrolling-menu";
 import { Typography } from "@mui/material";
 
-//INTERNAL IMPORT
+// INTERNAL IMPORT
 import Chapter from "./Chapter";
 
-const ChapterList = ({ iteratee, histories, title, categorySeq }) => {
+// HELPER FUNCTION
+function onWheel(apiObj, ev) {
+  const isThouchpad = Math.abs(ev.deltaX) !== 0 || Math.abs(ev.deltaY) < 15;
+
+  if (isThouchpad) {
+    ev.stopPropagation();
+    return;
+  }
+
+  if (ev.deltaY < 0) {
+    apiObj.scrollNext();
+  } else if (ev.deltaY > 0) {
+    apiObj.scrollPrev();
+  }
+}
+
+function findHistory(iteratee, target) {
+  return iteratee.find((each) => each.chapter_num === target);
+}
+
+// MAIN
+function ChapterList({ iteratee, histories, title, categorySeq }) {
   if (!histories) {
     return (
       <>
@@ -46,25 +67,6 @@ const ChapterList = ({ iteratee, histories, title, categorySeq }) => {
       </ScrollMenu>
     </>
   );
-};
+}
 
 export default ChapterList;
-
-function onWheel(apiObj, ev) {
-  const isThouchpad = Math.abs(ev.deltaX) !== 0 || Math.abs(ev.deltaY) < 15;
-
-  if (isThouchpad) {
-    ev.stopPropagation();
-    return;
-  }
-
-  if (ev.deltaY < 0) {
-    apiObj.scrollNext();
-  } else if (ev.deltaY > 0) {
-    apiObj.scrollPrev();
-  }
-}
-
-function findHistory(iteratee, target) {
-  return iteratee.find((each) => each["chapter_num"] === target);
-}

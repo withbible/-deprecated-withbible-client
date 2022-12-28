@@ -1,11 +1,17 @@
 import React, { useContext } from "react";
 import { Typography } from "@mui/material";
 
-//INTERNAL IMPORT
+// INTERNAL IMPORT
 import ChapterList from "../ChapterList/ChapterList";
 import { ChapterContext } from "../../context/ChapterContext";
 
-const Category = () => {
+// HELPER FUNCTION
+function findHistory(iteratee, target) {
+  return iteratee.find((each) => each.category_seq === target);
+}
+
+// MAIN
+function Category() {
   const { chapterSearch, activeChapter, error } = useContext(ChapterContext);
 
   if (error) {
@@ -15,24 +21,20 @@ const Category = () => {
   return (
     <>
       {chapterSearch.map((each, index) => {
-        const history = findHistory(activeChapter, each["category_seq"]);        
+        const history = findHistory(activeChapter, each.category_seq);
 
         return (
           <ChapterList
             key={index}
             title={each.category}
-            categorySeq={each["category_seq"]}
-            iteratee={each["chapter_num_array"]}
-            histories={history && history["chapter_num_array"]}
+            categorySeq={each.category_seq}
+            iteratee={each.chapter_num_array}
+            histories={history && history.chapter_num_array}
           />
         );
       })}
     </>
   );
-};
+}
 
 export default Category;
-
-function findHistory(iteratee, target) {
-  return iteratee.find((each) => each["category_seq"] === target);
-}

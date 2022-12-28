@@ -1,17 +1,42 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
-import { List, Typography } from "@mui/material";
 import axios from "axios";
 import { useSnackbar } from "notistack";
+import { List, Typography } from "@mui/material";
 
-//INTERNAL IMPORT
+// INTERNAL IMPORT
 import { Wrapper, ActiveChapterList } from "../components";
 import { ACTIVE_CHAPTER_PAGE_URI } from "../constants/api";
 import { AUTH_HEADER_CONFIG } from "../constants/config";
 
+// CONSTANT
 const LIST_ITEM_HEIGHT = 64;
 
-const ReviewListPage = () => {
-  const [error, setError] = useState("");
+// HELPER FUNCTION
+function mergeWithCategory(arr) {
+  const result = [];
+
+  arr.forEach((each) => {
+    const index = result.findIndex((exist) => {
+      return exist.category === each.category;
+    });
+
+    if (index > -1) {
+      result[index].chapter_detail = result[index].chapter_detail.concat(
+        each.chapter_detail
+      );
+    } else {
+      const newObj = {};
+      newObj.chapter_detail = [each.chapter_detail];
+      result.push(newObj);
+    }
+  });
+
+  return result;
+}
+
+// MAIN
+function ReviewListPage() {
+  const [errorMessage, setErrorMessage] = useState("");
   const limit = Math.round(window.innerHeight / LIST_ITEM_HEIGHT);
   const [activeChapter, setActiveChapter] = useState([]);
   const [hasNextPage, setHasNextPage] = useState(true);
@@ -39,10 +64,10 @@ const ReviewListPage = () => {
         page.current += 1;
       }
     } catch (error) {
-      const message = error.response.data.message;
+      const { message } = error.response.data;
 
       if (error.response.status === 401) {
-        setError(message);
+        setErrorMessage(message);
         return;
       }
 
@@ -51,7 +76,9 @@ const ReviewListPage = () => {
   }, [page.current]);
 
   useEffect(() => {
-    if (!observerTarget.current || !hasNextPage) return;
+    if (!observerTarget.current || !hasNextPage) {
+      return false;
+    }
 
     const observer = new IntersectionObserver(([entry]) => {
       if (entry.isIntersecting) {
@@ -60,26 +87,23 @@ const ReviewListPage = () => {
     });
 
     observer.observe(observerTarget.current);
-
-    return () => {
-      observer.disconnect();
-    };
+    return () => observer.disconnect();
   }, [hasNextPage]);
 
   return (
     <Wrapper>
       리뷰목록
       <Wrapper.Body>
-        {error ? (
-          <Typography variant="h4">{error}</Typography>
+        {errorMessage ? (
+          <Typography variant="h4">{errorMessage}</Typography>
         ) : (
           <List>
-            {activeChapter?.map((each, index) => (
+            {activeChapter.map((each, index) => (
               <ActiveChapterList
                 key={index}
-                iteratee={each["chapter_detail"]}
-                category={each["category"]}
-                categorySeq={each["category_seq"]}
+                iteratee={each.chapter_detail}
+                category={each.category}
+                categorySeq={each.category_seq}
               />
             ))}
             <div ref={observerTarget} />
@@ -88,27 +112,6 @@ const ReviewListPage = () => {
       </Wrapper.Body>
     </Wrapper>
   );
-};
+}
 
 export default ReviewListPage;
-
-function mergeWithCategory(arr) {
-  const result = [];
-
-  arr.forEach(function (each) {
-    const index = result.findIndex(function (exist) {
-      return exist.category === each.category;
-    });
-
-    if (index > -1) {
-      result[index]["chapter_detail"] = result[index]["chapter_detail"].concat(
-        each["chapter_detail"]
-      );
-    } else {
-      each["chapter_detail"] = [each["chapter_detail"]];
-      result.push(each);
-    }
-  });
-
-  return result;
-}

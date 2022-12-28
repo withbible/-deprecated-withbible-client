@@ -1,4 +1,7 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
+import axios from "axios";
+import queryString from "query-string";
 import {
   Typography,
   Grid,
@@ -8,31 +11,49 @@ import {
   Button,
 } from "@mui/material";
 import Confetti from "react-dom-confetti";
-import queryString from "query-string";
-import axios from "axios";
-import { Link } from "react-router-dom";
 
-//INTERNAL IMPORT
+// INTERNAL IMPORT
 import Style from "./page.module.css";
-import { HIT_COUNT_URI, ACTIVE_CHAPTER_COUNT_URI } from "../constants/api";
-import { QUIZ_PAGE_PATH, REVIEW_PAGE_PATH } from "../constants/route";
-import { QuizContext } from "../context/QuizContext";
 import { Wrapper } from "../components";
+import { HIT_COUNT_URI, ACTIVE_CHAPTER_COUNT_URI } from "../constants/api";
 import { AUTH_HEADER_CONFIG } from "../constants/config";
 import { CATEGORY } from "../constants/enum";
+import { QUIZ_PAGE_PATH, REVIEW_PAGE_PATH } from "../constants/route";
+import NotFoundPage from "./NotFoundPage";
 
-const QuizResultPage = () => {
+// CONFIG
+const confettiConfig = {
+  angle: 90,
+  spread: 200,
+  startVelocity: 30,
+  elementCount: 200,
+  dragFriction: 0.12,
+  duration: 3000,
+  width: "1rem",
+  height: "1rem",
+  perspective: "50rem",
+  colors: [
+    "var(--primary-color)",
+    "var(--accent-color)",
+    "var(--shadow-color)",
+  ],
+};
+
+// HELPER FUNCTION
+function getPercent(part, total) {
+  return Math.round((part / total) * 100);
+}
+
+// MAIN
+function QuizResultPage() {
   const [quizResult, setQuizResult] = useState({
     hitCount: {},
     activeCount: {},
   });
   const [activeState, setActiveState] = useState(false);
-  const { queryParameter } = useContext(QuizContext);
-
-  // ROUTING
+  const queryParameter = useLocation().search;
   const { categorySeq, chapterNum } = queryString.parse(queryParameter);
 
-  // RELATED HOOK
   const fetchQuizResult = async () => {
     const [hitCountState, activeCountState] = await Promise.all([
       axios.get(`${HIT_COUNT_URI}${queryParameter}`, AUTH_HEADER_CONFIG),
@@ -76,8 +97,8 @@ const QuizResultPage = () => {
                   ch.{chapterNum} 맞힌 갯수
                 </Typography>
                 <Typography variant="h5">
-                  {quizResult.hitCount["hit_question_count"]}/
-                  {quizResult.hitCount["question_count"]}
+                  {quizResult.hitCount.hit_question_count}/
+                  {quizResult.hitCount.question_count}
                 </Typography>
               </CardContent>
             </Card>
@@ -91,8 +112,8 @@ const QuizResultPage = () => {
                 </Typography>
                 <Typography variant="h5">
                   {getPercent(
-                    quizResult.activeCount["active_chapter_count"],
-                    quizResult.activeCount["max_chapter"]
+                    quizResult.activeCount.active_chapter_count,
+                    quizResult.activeCount.max_chapter
                   )}
                   %
                 </Typography>
@@ -112,27 +133,6 @@ const QuizResultPage = () => {
       </Wrapper.Body>
     </Wrapper>
   );
-};
+}
 
 export default QuizResultPage;
-
-const confettiConfig = {
-  angle: 90,
-  spread: 200,
-  startVelocity: 30,
-  elementCount: 200,
-  dragFriction: 0.12,
-  duration: 3000,
-  width: "1rem",
-  height: "1rem",
-  perspective: "50rem",
-  colors: [
-    "var(--primary-color)",
-    "var(--accent-color)",
-    "var(--shadow-color)",
-  ],
-};
-
-function getPercent(part, total) {
-  return Math.round((part / total) * 100);
-}

@@ -1,31 +1,33 @@
 import React from "react";
 
-//INTERNAL IMPORT
+// INTERNAL IMPORT
 import Style from "./Wrapper.module.css";
 import BottomBar from "../BottomBar/BottomBar";
 
-const Wrapper = ({ children }) => {
+function Wrapper({ children }) {
   return (
     <div className={Style.pageContainer}>
       {children}
       <BottomBar />
     </div>
   );
+}
+
+Wrapper.Header = function Header({ children }) {
+  return <div className={Style.headerContainer}>{children}</div>;
 };
 
-Wrapper.Header = ({ children }) => (
-  <div className={Style.headerContainer}>{children}</div>
-);
-
-Wrapper.Body = ({ className, children }) => (
-  <div
-    className={`
+Wrapper.Body = function Body({ className, children }) {
+  return (
+    <div
+      className={`
     ${Style.bodyContainer}
     ${className}
   `}
-  >
-    {children}
-  </div>
-);
+    >
+      {children}
+    </div>
+  );
+};
 
 export default Wrapper;

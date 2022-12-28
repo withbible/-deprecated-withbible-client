@@ -1,12 +1,13 @@
 import React from "react";
-import { Paper, Button } from "@mui/material";
 import { Link } from "react-router-dom";
+import { Paper, Button } from "@mui/material";
 
-//INTERNAL IMPORT
+// INTERNAL IMPORT
 import Style from "./Chapter.module.css";
 import { QUIZ_PAGE_PATH } from "../../constants/route";
 
-const Chapter = ({ itemId, isHistory, categorySeq, chapterNum }) => {
+// eslint-disable-next-line no-unused-vars
+function Chapter({ itemId, isHistory, categorySeq, chapterNum }) {
   const queryParameter = `?categorySeq=${categorySeq}&chapterNum=${chapterNum}`;
 
   return (
@@ -22,6 +23,6 @@ const Chapter = ({ itemId, isHistory, categorySeq, chapterNum }) => {
       </Paper>
     </Button>
   );
-};
+}
 
 export default Chapter;

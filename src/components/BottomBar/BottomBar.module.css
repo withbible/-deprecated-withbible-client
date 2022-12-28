@@ -7,4 +7,5 @@
   color: var(--primary-color);
   background-color: var(--shadow-color);
   box-shadow: var(--box-shadow);
+  z-index: 1;
 }

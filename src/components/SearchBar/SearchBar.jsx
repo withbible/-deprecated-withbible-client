@@ -9,11 +9,11 @@ import {
 import SearchIcon from "@mui/icons-material/Search";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 
-//INTERNAL IMPORT
+// INTERNAL IMPORT
 import Style from "./SearchBar.module.css";
 import { ChapterContext } from "../../context/ChapterContext";
 
-const SearchBar = () => {
+function SearchBar() {
   const [searchInputValue, setSearchInputValue] = useState("");
   const { fetchChapterSearch } = useContext(ChapterContext);
 
@@ -47,6 +47,6 @@ const SearchBar = () => {
       </Paper>
     </Box>
   );
-};
+}
 
 export default SearchBar;

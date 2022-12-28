@@ -1,31 +1,26 @@
-import React, {
-  useState,
-  useEffect,
-  useContext,
-  useRef,
-  useCallback,
-} from "react";
-import { List } from "@mui/material";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import axios from "axios";
 import { useSnackbar } from "notistack";
+import { List } from "@mui/material";
 
-//INTERNAL IMPORT
+// INTERNAL IMPORT
 import { LeaderBoard, Wrapper } from "../components";
-import { LEADER_BOARD_PAGE_URI } from "../constants/api";
 import { AuthContext } from "../context/AuthContext";
+import { LEADER_BOARD_PAGE_URI } from "../constants/api";
 
+// CONSTANT
 const LIST_ITEM_HEIGHT = 74;
 
-const LeaderBoardPage = () => {
-  const limit = Math.round(window.innerHeight / LIST_ITEM_HEIGHT);
+function LeaderBoardPage() {
   const { userID } = useContext(AuthContext);
   const [leaderBoards, setLeaderBoards] = useState([]);
   const [hasNextPage, setHasNextPage] = useState(true);
   const page = useRef(1);
   const observerTarget = useRef(null);
   const { enqueueSnackbar } = useSnackbar();
+  const limit = Math.round(window.innerHeight / LIST_ITEM_HEIGHT);
 
-  const fetchLeadrBoard = useCallback(async () => {
+  const fetchLeadrBoard = async () => {
     try {
       const queryParameter = `?limit=${limit}&page=${page.current}`;
       const { data } = await axios.get(
@@ -39,13 +34,15 @@ const LeaderBoardPage = () => {
         page.current += 1;
       }
     } catch (error) {
-      const message = error.response.data.message;
+      const { message } = error.response.data;
       enqueueSnackbar(message, { variant: "error" });
     }
-  }, [page.current]);
+  };
 
   useEffect(() => {
-    if (!observerTarget.current || !hasNextPage) return;
+    if (!observerTarget.current || !hasNextPage) {
+      return false;
+    }
 
     const observer = new IntersectionObserver(([entry]) => {
       if (entry.isIntersecting) {
@@ -54,10 +51,7 @@ const LeaderBoardPage = () => {
     });
 
     observer.observe(observerTarget.current);
-
-    return () => {
-      observer.disconnect();
-    };
+    return () => observer.disconnect();
   }, [hasNextPage]);
 
   return (
@@ -65,10 +59,10 @@ const LeaderBoardPage = () => {
       리더보드
       <Wrapper.Body>
         <List>
-          {leaderBoards?.map((each, index) => (
+          {leaderBoards.map((each, index) => (
             <LeaderBoard
               key={index}
-              isHistory={userID === each["user_id"]}
+              isHistory={userID === each.user_id}
               each={each}
             />
           ))}
@@ -77,6 +71,6 @@ const LeaderBoardPage = () => {
       </Wrapper.Body>
     </Wrapper>
   );
-};
+}
 
 export default LeaderBoardPage;

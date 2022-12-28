@@ -7,15 +7,19 @@
 </a>
 
 <a href="https://ko.reactjs.org/">
-<img src="https://img.shields.io/badge/React-17.0-61DAFB?logo=React&logoColor=white"/>
+<img src="https://img.shields.io/badge/React-17-61DAFB?logo=React&logoColor=white"/>
 </a>
 
 <a href="https://mui.com/material-ui/getting-started/installation/">
-<img src="https://img.shields.io/badge/MUI-5.0-007FFF?logo=MUI&logoColor=white"/>
+<img src="https://img.shields.io/badge/MUI-5-007FFF?logo=MUI&logoColor=white"/>
 </a>
 
 <a href="https://v5.reactrouter.com/web/api">
-<img src="https://img.shields.io/badge/React Router-5.0-CA4245?logo=React Router&logoColor=white"/>
+<img src="https://img.shields.io/badge/React Router-5-CA4245?logo=React Router&logoColor=white"/>
+</a>
+
+<a href="https://v5.reactrouter.com/web/api">
+<img src="https://img.shields.io/badge/ESLint-4B32C3?logo=ESLint&logoColor=white"/>
 </a>
 
 <a href="https://notistack.com/getting-started">

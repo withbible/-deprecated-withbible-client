@@ -1,10 +1,10 @@
 import React, { useContext } from "react";
-import { Typography, Avatar, Box, Button, Paper } from "@mui/material";
 import { useHistory, Link } from "react-router-dom";
-import { useSnackbar } from "notistack";
 import axios from "axios";
+import { useSnackbar } from "notistack";
+import { Typography, Avatar, Box, Button, Paper } from "@mui/material";
 
-//INTERNAL IMPORT
+// INTERNAL IMPORT
 import Style from "./AppBar.module.css";
 import { AuthContext } from "../../context/AuthContext";
 import { ChapterContext } from "../../context/ChapterContext";
@@ -12,7 +12,7 @@ import { LOGIN_PATH } from "../../constants/route";
 import { LOGOUT_URI } from "../../constants/api";
 import { AUTH_HEADER_CONFIG } from "../../constants/config";
 
-const AppBar = () => {
+function AppBar() {
   const { userID, setUserID } = useContext(AuthContext);
   const { setActiveChapter } = useContext(ChapterContext);
   const { enqueueSnackbar } = useSnackbar();
@@ -29,7 +29,7 @@ const AppBar = () => {
       setActiveChapter([]);
       history.push(LOGIN_PATH);
     } catch (error) {
-      const message = error.response.data.message;
+      const { message } = error.response.data;
       enqueueSnackbar(message, { variant: "error" });
     }
   };
@@ -71,6 +71,6 @@ const AppBar = () => {
       </Button>
     </div>
   );
-};
+}
 
 export default AppBar;

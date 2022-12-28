@@ -1,7 +1,7 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
 
-//INTERNAL IMPORT
+// INTERNAL IMPORT
 import {
   SIGNUP_PATH,
   LOGIN_PATH,
@@ -23,7 +23,7 @@ import {
   SignupPage,
 } from "./pages";
 
-const App = () => {
+function App() {
   return (
     <Switch>
       <Route exact path="/" component={MainPage} />
@@ -37,6 +37,6 @@ const App = () => {
       <Route component={NotFoundPage} />
     </Switch>
   );
-};
+}
 
 export default App;

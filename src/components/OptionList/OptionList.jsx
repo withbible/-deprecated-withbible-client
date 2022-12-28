@@ -1,11 +1,11 @@
 import React, { useState, useContext } from "react";
 import { ToggleButtonGroup, ToggleButton } from "@mui/material";
 
-//INTERNAL IMPORT
+// INTERNAL IMPORT
 import Style from "./OptionList.module.css";
 import { QuizContext } from "../../context/QuizContext";
 
-const OptionList = ({ questionSeq, iteratee }) => {
+function OptionList({ questionSeq, iteratee }) {
   const { userOption, setUserOption } = useContext(QuizContext);
   const [optionState, setOptionState] = useState(0);
 
@@ -13,7 +13,7 @@ const OptionList = ({ questionSeq, iteratee }) => {
     setOptionState(option);
     setUserOption((prevState) => {
       return { ...prevState, [questionSeq]: option };
-    });    
+    });
   };
 
   return (
@@ -25,25 +25,24 @@ const OptionList = ({ questionSeq, iteratee }) => {
       className={Style.optionContainer}
     >
       {iteratee.map((each, index) => {
-        const isHistory =
-          userOption[questionSeq] === each["question_option_seq"];
+        const isHistory = userOption[questionSeq] === each.question_option_seq;
 
         return (
           <ToggleButton
             key={index}
-            value={each["question_option_seq"]}
+            value={each.question_option_seq}
             selected={isHistory}
             className={`
               ${Style.option} 
               ${isHistory && Style.optionHistory}
             `}
           >
-            {each["question_option"]}
+            {each.question_option}
           </ToggleButton>
         );
       })}
     </ToggleButtonGroup>
   );
-};
+}
 
 export default OptionList;

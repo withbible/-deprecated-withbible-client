@@ -9,12 +9,7 @@ import {
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 
-const PasswordInput = ({
-  payload,
-  setPayload,
-  setPayloadValidity,
-  isError,
-}) => {
+function PasswordInput({ payload, setPayload, setPayloadValidity, isError }) {
   const [showPassword, setShowPassword] = useState(false);
 
   const handleClickShowPassword = () => {
@@ -48,6 +43,6 @@ const PasswordInput = ({
       </FormHelperText>
     </FormControl>
   );
-};
+}
 
 export default PasswordInput;

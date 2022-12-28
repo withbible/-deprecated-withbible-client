@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useRef } from "react";
 
-//INTERNAL IMPORT
+// INTERNAL IMPORT
 import { AppBar, Category, SearchBar, Wrapper } from "../components";
 import { ChapterContext } from "../context/ChapterContext";
 
-const MainPage = (_) => {
-  const { fetchChapterSearch, fetchActiveChapter, searchKeyword } =
+function MainPage() {
+  const { fetchChapterSearch, searchKeyword, fetchActiveChapter } =
     useContext(ChapterContext);
   const isFirstRender = useRef(true);
 
@@ -14,7 +14,6 @@ const MainPage = (_) => {
       fetchChapterSearch(searchKeyword);
 
       isFirstRender.current = false;
-      return;
     }
   }, [searchKeyword]);
 
@@ -34,6 +33,6 @@ const MainPage = (_) => {
       </Wrapper.Body>
     </Wrapper>
   );
-};
+}
 
 export default MainPage;

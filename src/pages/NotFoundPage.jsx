@@ -1,13 +1,14 @@
+import React from "react";
 import { Typography } from "@mui/material";
 
-//INTERNAL IMPORT
+// INTERNAL IMPORT
 import Style from "./page.module.css";
 import { Wrapper } from "../components";
 
-const NotFoundPage = ({
+function NotFoundPage({
   title = "에러",
   message = "페이지가 존재하지 않습니다.",
-}) => {
+}) {
   return (
     <Wrapper>
       <Wrapper.Header>{title}</Wrapper.Header>
@@ -17,6 +18,6 @@ const NotFoundPage = ({
       </Wrapper.Body>
     </Wrapper>
   );
-};
+}
 
 export default NotFoundPage;

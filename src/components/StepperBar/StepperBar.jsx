@@ -1,17 +1,17 @@
 import React from "react";
 import { Stepper, Step, StepButton } from "@mui/material";
 
-//INTERNAL IMPORT
+// INTERNAL IMPORT
 import "./StepperBar.css";
 
-const StepperBar = ({ iteratee, activeStep, setActiveStep }) => {
+function StepperBar({ iteratee, activeStep, setActiveStep }) {
   const handleStep = (step) => {
     setActiveStep(step);
   };
 
   return (
     <Stepper nonLinear activeStep={activeStep}>
-      {iteratee.map((_, index) => {
+      {iteratee.map((each, index) => {
         return (
           <Step key={index}>
             <StepButton onClick={() => handleStep(index)} />
@@ -20,6 +20,6 @@ const StepperBar = ({ iteratee, activeStep, setActiveStep }) => {
       })}
     </Stepper>
   );
-};
+}
 
 export default StepperBar;
