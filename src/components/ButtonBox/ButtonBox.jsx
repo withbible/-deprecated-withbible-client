@@ -10,14 +10,8 @@ import Style from "./ButtonBox.module.css";
 import { QUIZ_RESULT_PAGE_PATH } from "../../constants/route";
 import { QuizContext } from "../../context/QuizContext";
 
-function ButtonBox({
-  isFirst,
-  isLast,
-  isReview,
-  setActiveStep,
-  queryParameter,
-}) {
-  const { handleSubmit } = useContext(QuizContext);
+function ButtonBox({ isFirst, isLast, isReview = false, setActiveStep }) {
+  const { handleSubmit, queryParameter } = useContext(QuizContext);
 
   const handleBack = () => {
     setActiveStep((prevState) => prevState - 1);
@@ -27,27 +21,36 @@ function ButtonBox({
     setActiveStep((prevState) => prevState + 1);
   };
 
+  const renderRightSideButtonControl = () => {
+    if (isReview && isLast) {
+      return (
+        <Button
+          component={Link}
+          to={`${QUIZ_RESULT_PAGE_PATH}${queryParameter}`}
+        >
+          결과
+        </Button>
+      );
+    }
+
+    if (isLast) {
+      return <Button onClick={debounce(handleSubmit, 250)}>제출</Button>;
+    }
+
+    return (
+      <Button onClick={handleNext}>
+        <KeyboardArrowRightIcon />
+      </Button>
+    );
+  };
+
   return (
     <Box className={Style.buttonContainer}>
       <Button disabled={isFirst} onClick={handleBack}>
         <KeyboardArrowLeftIcon />
       </Button>
-      {{
-        [isReview && isLast]: (
-          <Button
-            component={Link}
-            to={`${QUIZ_RESULT_PAGE_PATH}${queryParameter}`}
-          >
-            결과
-          </Button>
-        ),
-        [isLast]: <Button onClick={debounce(handleSubmit, 250)}>제출</Button>,
-        [!isLast]: (
-          <Button onClick={handleNext}>
-            <KeyboardArrowRightIcon />
-          </Button>
-        ),
-      }}
+
+      {renderRightSideButtonControl()}
     </Box>
   );
 }

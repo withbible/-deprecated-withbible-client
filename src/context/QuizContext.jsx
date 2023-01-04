@@ -14,40 +14,34 @@ const MAX_QUESTION_COUNT = 3;
 
 // HELPER FUNCTION
 function shuffleArray(array) {
+  const result = [...array];
+
   for (let i = array.length - 1; i > 0; i -= 1) {
     const j = Math.floor(Math.random() * (i + 1));
-    // eslint-disable-next-line no-param-reassign
-    [array[i], array[j]] = [array[j], array[i]];
+    [result[i], result[j]] = [result[j], result[i]];
   }
 
-  return array;
+  return result;
 }
 
 /**
  * TODO: 해당 함수는 비동기로 동작해도 문제가 없다.
  * 다만 shuffleArray를 비동기로 변환하면 에러가 발생한다.
  */
-async function shuffleQuiz(quiz) {
-  const result = shuffleArray(quiz).map((each) => {
-    return {
-      ...each,
-      option_array: shuffleArray(each.option_array),
-    };
-  });
-
-  return result;
+function shuffleQuiz(quiz) {
+  return shuffleArray(quiz).map((each) => ({
+    ...each,
+    option_array: shuffleArray(each.option_array),
+  }));
 }
 
 // MAIN
 export const QuizContext = React.createContext();
 
 export function QuizProvider({ children }) {
-  // RELATED HOOK
   const [quiz, setQuiz] = useState([]);
   const [userOption, setUserOption] = useState({});
   const [isNewUserOption, setIsNewUserOption] = useState(true);
-
-  // RELATED ROUTING
   const { enqueueSnackbar } = useSnackbar();
   const history = useHistory();
   const queryParameter = useLocation().search;
@@ -68,11 +62,11 @@ export function QuizProvider({ children }) {
   };
 
   const totalStep = () => {
-    return Object.keys(quiz).length - 1;
+    return quiz.length - 1;
   };
 
   // API EVENT FUNCTION
-  const fetchQuiz = async ({ shuffle = true }) => {
+  const fetchQuiz = async ({ shuffle }) => {
     const [quizState, optionHistoryState] = await Promise.allSettled([
       axios.get(`${QUIZ_URI}${queryParameter}`),
       axios.get(`${OPTION_HISTORY_URI}${queryParameter}`, AUTH_HEADER_CONFIG),
@@ -86,11 +80,7 @@ export function QuizProvider({ children }) {
     }
 
     const quizResponse = quizState.value.data.result;
-    if (shuffle) {
-      setQuiz(await shuffleQuiz(quizResponse));
-    } else {
-      setQuiz(quizResponse);
-    }
+    setQuiz(shuffle ? shuffleQuiz(quizResponse) : quizResponse);
 
     if (optionHistoryState.status === "rejected") {
       setIsNewUserOption(true);
@@ -156,6 +146,7 @@ export function QuizProvider({ children }) {
       setUserOption,
       handleSubmit,
       totalStep,
+      queryParameter,
     }),
     [quiz, userOption, queryParameter]
   );

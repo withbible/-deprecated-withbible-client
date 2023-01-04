@@ -21,10 +21,9 @@ function QuizPage() {
   const { categorySeq, chapterNum } = queryString.parse(queryParameter);
 
   useEffect(() => {
-    fetchQuiz({});
+    fetchQuiz({ shuffle: true });
   }, [queryParameter]);
 
-  // LOADING UI
   if (!quiz.length) {
     return (
       <NotFoundPage
@@ -38,7 +37,7 @@ function QuizPage() {
     <Wrapper>
       {CATEGORY[categorySeq]} ch.{chapterNum}
       <StepperBar
-        iteratee={quiz}
+        iteratee={[...quiz.keys()]}
         activeStep={activeStep}
         setActiveStep={setActiveStep}
       />
@@ -54,7 +53,6 @@ function QuizPage() {
           isFirst={activeStep === 0}
           isLast={activeStep === totalStep()}
           setActiveStep={setActiveStep}
-          queryParameter={queryParameter}
         />
       </Wrapper.Body>
     </Wrapper>

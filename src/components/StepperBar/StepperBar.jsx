@@ -11,10 +11,10 @@ function StepperBar({ iteratee, activeStep, setActiveStep }) {
 
   return (
     <Stepper nonLinear activeStep={activeStep}>
-      {iteratee.map((each, index) => {
+      {iteratee.map((each) => {
         return (
-          <Step key={index}>
-            <StepButton onClick={() => handleStep(index)} />
+          <Step key={each}>
+            <StepButton onClick={() => handleStep(each)} />
           </Step>
         );
       })}
