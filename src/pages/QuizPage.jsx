@@ -14,15 +14,39 @@ import { CATEGORY } from "../constants/enum";
 import { QuizContext } from "../context/QuizContext";
 import NotFoundPage from "./NotFoundPage";
 
+// HELPER FUNCTION
+function getRandomNumber() {
+  const max = 9;
+  const min = 1;
+
+  return Math.floor(Math.random() * max + min);
+}
+
+function getIllustNumbers(length) {
+  const result = [];
+
+  for (let i = 0; i < length; i += 1) {
+    result.push(getRandomNumber());
+  }
+
+  return result;
+}
+
+// MAIN
 function QuizPage() {
   const { quiz, fetchQuiz, totalStep } = useContext(QuizContext);
   const [activeStep, setActiveStep] = useState(0);
+  const [illustNumbers, setIllustNumbers] = useState([]);
   const queryParameter = useLocation().search;
   const { categorySeq, chapterNum } = queryString.parse(queryParameter);
 
   useEffect(() => {
     fetchQuiz({ shuffle: true });
   }, [queryParameter]);
+
+  useEffect(() => {
+    setIllustNumbers(getIllustNumbers(quiz.length));
+  }, [quiz.length]);
 
   if (!quiz.length) {
     return (
@@ -42,7 +66,10 @@ function QuizPage() {
         setActiveStep={setActiveStep}
       />
       <Wrapper.Body>
-        <QuestionBox question={quiz[activeStep].question} />
+        <QuestionBox
+          question={quiz[activeStep].question}
+          illustNumber={illustNumbers[activeStep]}
+        />
 
         <OptionList
           questionSeq={quiz[activeStep].question_seq}
