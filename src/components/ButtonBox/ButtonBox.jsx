@@ -8,7 +8,7 @@ import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 // INTERNAL IMPORT
 import Style from "./ButtonBox.module.css";
 import { QUIZ_RESULT_PAGE_PATH } from "../../constants/route";
-import { QuizContext } from "../../context/QuizContext";
+import { QuizContext } from "../../contexts/QuizContext";
 
 function ButtonBox({ isFirst, isLast, isReview = false, setActiveStep }) {
   const { handleSubmit, queryParameter } = useContext(QuizContext);

@@ -85,7 +85,6 @@ export function AuthProvider({ children }) {
 
   const props = useMemo(
     () => ({
-      fetchLoginCheck,
       userID,
       setUserID,
       payLoadReducer,

@@ -16,18 +16,16 @@ function mergeWithCategory(arr) {
   const result = [];
 
   arr.forEach((each) => {
-    const index = result.findIndex((exist) => {
-      return exist.category === each.category;
-    });
+    const index = result.findIndex((exist) => exist.category === each.category);
 
     if (index > -1) {
       result[index].chapter_detail = result[index].chapter_detail.concat(
         each.chapter_detail
       );
     } else {
-      const newObj = {};
-      newObj.chapter_detail = [each.chapter_detail];
-      result.push(newObj);
+      // eslint-disable-next-line no-param-reassign
+      each.chapter_detail = [each.chapter_detail];
+      result.push(each);
     }
   });
 
@@ -57,7 +55,9 @@ function ReviewListPage() {
         ...mergeWithCategory(data.result),
       ]);
 
-      // TODO: 마지막 응답 데이터는 충족하되 다음 data는 없다면
+      /**
+       * @todo 마지막 응답 데이터는 충족하되 다음 data는 없다면?
+       */
       setHasNextPage(data.result.length === limit);
 
       if (data.result.length) {

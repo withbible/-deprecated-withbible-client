@@ -7,9 +7,9 @@ import { StyledEngineProvider } from "@mui/material/styles";
 
 // INTERNAL IMPORT
 import "./index.css";
-import { ChapterProvider } from "./context/ChapterContext";
-import { QuizProvider } from "./context/QuizContext";
-import { AuthProvider } from "./context/AuthContext";
+import { ChapterProvider } from "./contexts/ChapterContext";
+import { QuizProvider } from "./contexts/QuizContext";
+import { AuthProvider } from "./contexts/AuthContext";
 import App from "./App";
 
 axios.defaults.baseURL = process.env.REACT_APP_HOST;

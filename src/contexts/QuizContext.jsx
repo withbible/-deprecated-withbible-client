@@ -25,8 +25,7 @@ function shuffleArray(array) {
 }
 
 /**
- * TODO: 해당 함수는 비동기로 동작해도 문제가 없다.
- * 다만 shuffleArray를 비동기로 변환하면 에러가 발생한다.
+ * @todo 해당 함수는 비동기로 동작해도 문제가 없다. 다만 shuffleArray를 비동기로 변환하면 에러가 발생한다.
  */
 function shuffleQuiz(quiz) {
   return shuffleArray(quiz).map((each) => ({
@@ -59,10 +58,6 @@ export function QuizProvider({ children }) {
         };
       });
     });
-  };
-
-  const totalStep = () => {
-    return quiz.length - 1;
   };
 
   // API EVENT FUNCTION
@@ -106,7 +101,9 @@ export function QuizProvider({ children }) {
       bulk: userOption,
     };
 
-    // TODO: 이전 상태값 유지된 에러 핸들링. 삭제 예정
+    /**
+     * @todo 이전 상태값 유지된 에러 핸들링. 삭제 예정
+     */
     if (Object.keys(payload.bulk).length > MAX_QUESTION_COUNT) {
       enqueueSnackbar("에러가 발생했습니다. 새로고침해주세요.", {
         variant: "error",
@@ -145,7 +142,6 @@ export function QuizProvider({ children }) {
       userOption,
       setUserOption,
       handleSubmit,
-      totalStep,
       queryParameter,
     }),
     [quiz, userOption, queryParameter]

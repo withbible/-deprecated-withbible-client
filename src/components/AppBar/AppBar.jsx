@@ -6,8 +6,8 @@ import { Typography, Avatar, Box, Button, Paper } from "@mui/material";
 
 // INTERNAL IMPORT
 import Style from "./AppBar.module.css";
-import { AuthContext } from "../../context/AuthContext";
-import { ChapterContext } from "../../context/ChapterContext";
+import { AuthContext } from "../../contexts/AuthContext";
+import { ChapterContext } from "../../contexts/ChapterContext";
 import { LOGIN_PATH } from "../../constants/route";
 import { LOGOUT_URI } from "../../constants/api";
 import { AUTH_HEADER_CONFIG } from "../../constants/config";

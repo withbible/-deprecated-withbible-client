@@ -18,7 +18,7 @@
 <img src="https://img.shields.io/badge/React Router-5-CA4245?logo=React Router&logoColor=white"/>
 </a>
 
-<a href="https://v5.reactrouter.com/web/api">
+<a href="https://eslint.org/docs/latest/">
 <img src="https://img.shields.io/badge/ESLint-4B32C3?logo=ESLint&logoColor=white"/>
 </a>
 

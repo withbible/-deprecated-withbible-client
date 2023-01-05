@@ -47,8 +47,6 @@ function ChapterList({ iteratee, histories, title, categorySeq }) {
 
   return (
     <>
-      {/* TODO: viewport 스크롤과 구분되는 것인가
-       */}
       <Typography>{title}</Typography>
       <ScrollMenu onWheel={onWheel}>
         {iteratee.map((each, index) => {

@@ -11,7 +11,7 @@ import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 
 // INTERNAL IMPORT
 import Style from "./SearchBar.module.css";
-import { ChapterContext } from "../../context/ChapterContext";
+import { ChapterContext } from "../../contexts/ChapterContext";
 
 function SearchBar() {
   const [searchInputValue, setSearchInputValue] = useState("");

@@ -5,7 +5,7 @@ import { List } from "@mui/material";
 
 // INTERNAL IMPORT
 import { LeaderBoard, Wrapper } from "../components";
-import { AuthContext } from "../context/AuthContext";
+import { AuthContext } from "../contexts/AuthContext";
 import { LEADER_BOARD_PAGE_URI } from "../constants/api";
 
 // CONSTANT

@@ -3,7 +3,7 @@ import { Typography } from "@mui/material";
 
 // INTERNAL IMPORT
 import ChapterList from "../ChapterList/ChapterList";
-import { ChapterContext } from "../../context/ChapterContext";
+import { ChapterContext } from "../../contexts/ChapterContext";
 
 // HELPER FUNCTION
 function findHistory(iteratee, target) {

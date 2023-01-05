@@ -18,7 +18,7 @@ import { PasswordInput } from "../components";
 import { LOGIN_URI } from "../constants/api";
 import { SIGNUP_PATH } from "../constants/route";
 import { AUTH_HEADER_CONFIG } from "../constants/config";
-import { AuthContext } from "../context/AuthContext";
+import { AuthContext } from "../contexts/AuthContext";
 
 // VO
 const initialState = {

@@ -3,7 +3,7 @@ import { ToggleButtonGroup, ToggleButton, Typography } from "@mui/material";
 
 // INERTAL IMPORT
 import Style from "./OptionList.module.css";
-import { QuizContext } from "../../context/QuizContext";
+import { QuizContext } from "../../contexts/QuizContext";
 
 function ReviewOptionList({ questionSeq, iteratee }) {
   const { userOption } = useContext(QuizContext);

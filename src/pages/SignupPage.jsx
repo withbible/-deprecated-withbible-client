@@ -9,7 +9,7 @@ import Style from "./page.module.css";
 import { SIGNUP_URI } from "../constants/api";
 import { LOGIN_PATH } from "../constants/route";
 import { PasswordInput } from "../components";
-import { AuthContext } from "../context/AuthContext";
+import { AuthContext } from "../contexts/AuthContext";
 import { AUTH_HEADER_CONFIG } from "../constants/config";
 
 // VO
