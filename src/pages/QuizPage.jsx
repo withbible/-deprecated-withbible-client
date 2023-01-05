@@ -11,35 +11,20 @@ import {
   Wrapper,
 } from "../components";
 import { CATEGORY } from "../constants/enum";
-import { QuizContext } from "../context/QuizContext";
+import { QuizContext } from "../contexts/QuizContext";
+import { getIllustNumbers, getTotalStep } from "../utils/util";
 import NotFoundPage from "./NotFoundPage";
 
-// HELPER FUNCTION
-function getRandomNumber() {
-  const max = 9;
-  const min = 1;
-
-  return Math.floor(Math.random() * max + min);
-}
-
-function getIllustNumbers(length) {
-  const result = [];
-
-  for (let i = 0; i < length; i += 1) {
-    result.push(getRandomNumber());
-  }
-
-  return result;
-}
-
-// MAIN
 function QuizPage() {
-  const { quiz, fetchQuiz, totalStep } = useContext(QuizContext);
+  const { quiz, fetchQuiz } = useContext(QuizContext);
   const [activeStep, setActiveStep] = useState(0);
   const [illustNumbers, setIllustNumbers] = useState([]);
   const queryParameter = useLocation().search;
   const { categorySeq, chapterNum } = queryString.parse(queryParameter);
 
+  /**
+   * @todo 이전 퀴즈가 잠깐 보이는 이슈
+   */
   useEffect(() => {
     fetchQuiz({ shuffle: true });
   }, [queryParameter]);
@@ -78,7 +63,7 @@ function QuizPage() {
 
         <ButtonBox
           isFirst={activeStep === 0}
-          isLast={activeStep === totalStep()}
+          isLast={activeStep === getTotalStep(quiz.length)}
           setActiveStep={setActiveStep}
         />
       </Wrapper.Body>

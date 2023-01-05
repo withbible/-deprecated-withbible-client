@@ -12,19 +12,24 @@ import {
   Wrapper,
 } from "../components";
 import { CATEGORY } from "../constants/enum";
-import { QuizContext } from "../context/QuizContext";
+import { QuizContext } from "../contexts/QuizContext";
+import { getIllustNumbers, getTotalStep } from "../utils/util";
 import NotFoundPage from "./NotFoundPage";
 
 function ReviewPage() {
-  const { quiz, fetchQuiz, totalStep } = useContext(QuizContext);
+  const { quiz, fetchQuiz } = useContext(QuizContext);
   const [activeStep, setActiveStep] = useState(0);
+  const [illustNumbers, setIllustNumbers] = useState([]);
   const queryParameter = useLocation().search;
   const { categorySeq, chapterNum } = queryString.parse(queryParameter);
 
-  // TODO: 이전 퀴즈가 잠깐 보이는 이슈
   useEffect(() => {
     fetchQuiz({ shuffle: false });
   }, [categorySeq, chapterNum]);
+
+  useEffect(() => {
+    setIllustNumbers(getIllustNumbers(quiz.length));
+  }, [quiz.length]);
 
   if (!quiz.length) {
     return (
@@ -42,13 +47,16 @@ function ReviewPage() {
       </Typography>
 
       <StepperBar
-        iteratee={quiz}
+        iteratee={[...quiz.keys()]}
         activeStep={activeStep}
         setActiveStep={setActiveStep}
       />
 
       <Wrapper.Body>
-        <QuestionBox question={quiz[activeStep].question} />
+        <QuestionBox
+          question={quiz[activeStep].question}
+          illustNumber={illustNumbers[activeStep]}
+        />
 
         <ReviewOptionList
           questionSeq={quiz[activeStep].question_seq}
@@ -57,7 +65,7 @@ function ReviewPage() {
 
         <ButtonBox
           isFirst={activeStep === 0}
-          isLast={activeStep === totalStep()}
+          isLast={activeStep === getTotalStep(quiz.length)}
           isReview
           setActiveStep={setActiveStep}
         />
