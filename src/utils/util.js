@@ -18,3 +18,7 @@ export function getIllustNumbers(length) {
 export function getTotalStep(length) {
   return length - 1;
 }
+
+export function findHistory({ iteratee, key, target }) {
+  return iteratee?.find((each) => each[key] === target);
+}

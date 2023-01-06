@@ -4,15 +4,15 @@ import { Typography } from "@mui/material";
 // INTERNAL IMPORT
 import ChapterList from "../ChapterList/ChapterList";
 import { ChapterContext } from "../../contexts/ChapterContext";
-
-// HELPER FUNCTION
-function findHistory(iteratee, target) {
-  return iteratee.find((each) => each.category_seq === target);
-}
+import { findHistory } from "../../utils/util";
 
 // MAIN
 function Category() {
-  const { chapterSearch, activeChapter, error } = useContext(ChapterContext);
+  const {
+    chapterSearch,
+    activeChapter,
+    errorMessage: error,
+  } = useContext(ChapterContext);
 
   if (error) {
     return <Typography variant="h4">{error}</Typography>;
@@ -20,17 +20,23 @@ function Category() {
 
   return (
     <>
-      {chapterSearch.map((each, index) => {
-        const history = findHistory(activeChapter, each.category_seq);
+      {chapterSearch.map((each) => {
+        const histories = findHistory({
+          iteratee: activeChapter,
+          key: "categorySeq",
+          target: each.categorySeq,
+        });
 
         return (
-          <ChapterList
-            key={index}
-            title={each.category}
-            categorySeq={each.category_seq}
-            iteratee={each.chapter_num_array}
-            histories={history && history.chapter_num_array}
-          />
+          <div key={each.categorySeq}>
+            <Typography>{each.category}</Typography>
+
+            <ChapterList
+              iteratee={each.chapterNumArray}
+              histories={histories && histories.chapterNumArray}
+              categorySeq={each.categorySeq}
+            />
+          </div>
         );
       })}
     </>

@@ -1,8 +1,8 @@
 import React from "react";
 import { ScrollMenu } from "react-horizontal-scrolling-menu";
-import { Typography } from "@mui/material";
 
 // INTERNAL IMPORT
+import { findHistory } from "../../utils/util";
 import Chapter from "./Chapter";
 
 // HELPER FUNCTION
@@ -21,49 +21,27 @@ function onWheel(apiObj, ev) {
   }
 }
 
-function findHistory(iteratee, target) {
-  return iteratee.find((each) => each.chapter_num === target);
-}
-
 // MAIN
-function ChapterList({ iteratee, histories, title, categorySeq }) {
-  if (!histories) {
-    return (
-      <>
-        <Typography>{title}</Typography>
-        <ScrollMenu onWheel={onWheel}>
-          {iteratee.map((each, index) => (
-            <Chapter
-              key={index}
-              itemId={index}
-              categorySeq={categorySeq}
-              chapterNum={each}
-            />
-          ))}
-        </ScrollMenu>
-      </>
-    );
-  }
-
+function ChapterList({ iteratee, histories, categorySeq }) {
   return (
-    <>
-      <Typography>{title}</Typography>
-      <ScrollMenu onWheel={onWheel}>
-        {iteratee.map((each, index) => {
-          const isHistory = findHistory(histories, each);
+    <ScrollMenu onWheel={onWheel}>
+      {iteratee.map((each) => {
+        const history = findHistory({
+          iteratee: histories,
+          key: "chapterNum",
+          target: each,
+        });
 
-          return (
-            <Chapter
-              key={index}
-              itemId={index}
-              isHistory={isHistory}
-              categorySeq={categorySeq}
-              chapterNum={each}
-            />
-          );
-        })}
-      </ScrollMenu>
-    </>
+        return (
+          <Chapter
+            key={each}
+            itemId={each}
+            history={history}
+            categorySeq={categorySeq}
+          />
+        );
+      })}
+    </ScrollMenu>
   );
 }
 
