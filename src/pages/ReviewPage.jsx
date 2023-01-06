@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext } from "react";
-import { useLocation } from "react-router-dom";
 import queryString from "query-string";
 import { Typography } from "@mui/material";
 
@@ -17,10 +16,9 @@ import { getIllustNumbers, getTotalStep } from "../utils/util";
 import NotFoundPage from "./NotFoundPage";
 
 function ReviewPage() {
-  const { quiz, fetchQuiz } = useContext(QuizContext);
+  const { quiz, fetchQuiz, queryParameter } = useContext(QuizContext);
   const [activeStep, setActiveStep] = useState(0);
   const [illustNumbers, setIllustNumbers] = useState([]);
-  const queryParameter = useLocation().search;
   const { categorySeq, chapterNum } = queryString.parse(queryParameter);
 
   useEffect(() => {
@@ -59,8 +57,8 @@ function ReviewPage() {
         />
 
         <ReviewOptionList
-          questionSeq={quiz[activeStep].question_seq}
-          iteratee={quiz[activeStep].option_array}
+          questionSeq={quiz[activeStep].questionSeq}
+          iteratee={quiz[activeStep].optionArray}
         />
 
         <ButtonBox

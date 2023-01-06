@@ -9,15 +9,15 @@ function LeaderBoard({ isHistory, each }) {
   return (
     <ListItem
       className={`${isHistory && Style.listHistory}`}
-      secondaryAction={<ListItemText secondary={each.quiz_score} />}
+      secondaryAction={<ListItemText secondary={each.quizScore} />}
     >
       <ListItemAvatar>
         <Avatar src={each.image} />
       </ListItemAvatar>
 
       <ListItemText
-        primary={each.user_id}
-        secondary={format(each.updated_at, "ko_KR")}
+        primary={each.userID}
+        secondary={format(each.updatedAt, "ko_KR")}
       />
     </ListItem>
   );

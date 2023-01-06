@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import {
-  ListSubheader,
   ListItem,
   ListItemButton,
   ListItemText,
@@ -14,14 +13,12 @@ import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import Style from "./ActiveChapterList.module.css";
 import { REVIEW_PAGE_PATH } from "../../constants/route";
 
-function ActiveChapterList({ iteratee, category, categorySeq }) {
+function ActiveChapterList({ iteratee, categorySeq }) {
   return (
     <>
-      <ListSubheader>{category}</ListSubheader>
-
       {iteratee.map((each, index) => {
-        const queryParameter = `?categorySeq=${categorySeq}&chapterNum=${each.chapter_num}`;
-        const chipLabel = `맞힌갯수 ${each.hit_question_count}/${each.question_count}`;
+        const queryParameter = `?categorySeq=${categorySeq}&chapterNum=${each.chapterNum}`;
+        const chipLabel = `맞힌갯수 ${each.hitQuestionCount}/${each.questionCount}`;
 
         return (
           <div key={index}>
@@ -31,8 +28,10 @@ function ActiveChapterList({ iteratee, category, categorySeq }) {
                 to={`${REVIEW_PAGE_PATH}${queryParameter}`}
                 className={Style.listItemButton}
               >
-                <ListItemText primary={`Ch.${each.chapter_num}`} />
+                <ListItemText primary={`Ch.${each.chapterNum}`} />
+
                 <KeyboardArrowRightIcon className={Style.listItemIcon} />
+
                 <Chip
                   label={chipLabel}
                   size="small"

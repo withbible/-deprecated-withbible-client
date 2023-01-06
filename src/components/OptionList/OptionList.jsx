@@ -24,20 +24,20 @@ function OptionList({ questionSeq, iteratee }) {
       onChange={handleOption}
       className={Style.optionContainer}
     >
-      {iteratee.map((each, index) => {
-        const isHistory = userOption[questionSeq] === each.question_option_seq;
+      {iteratee.map((each) => {
+        const isHistory = userOption[questionSeq] === each.questionOptionSeq;
 
         return (
           <ToggleButton
-            key={index}
-            value={each.question_option_seq}
+            key={each.questionOptionSeq}
+            value={each.questionOptionSeq}
             selected={isHistory}
             className={`
               ${Style.option} 
               ${isHistory && Style.optionHistory}
             `}
           >
-            {each.question_option}
+            {each.questionOption}
           </ToggleButton>
         );
       })}

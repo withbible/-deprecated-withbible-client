@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link, useLocation } from "react-router-dom";
 import axios from "axios";
 import queryString from "query-string";
@@ -19,6 +19,7 @@ import { HIT_COUNT_URI, ACTIVE_CHAPTER_COUNT_URI } from "../constants/api";
 import { AUTH_HEADER_CONFIG } from "../constants/config";
 import { CATEGORY } from "../constants/enum";
 import { QUIZ_PAGE_PATH, REVIEW_PAGE_PATH } from "../constants/route";
+import { QuizContext } from "../contexts/QuizContext";
 import NotFoundPage from "./NotFoundPage";
 
 // CONFIG
@@ -46,12 +47,12 @@ function getPercent(part, total) {
 
 // MAIN
 function QuizResultPage() {
+  const { queryParameter } = useContext(QuizContext);
   const [quizResult, setQuizResult] = useState({
     hitCount: {},
     activeCount: {},
   });
   const [activeState, setActiveState] = useState(false);
-  const queryParameter = useLocation().search;
   const { categorySeq, chapterNum } = queryString.parse(queryParameter);
 
   const fetchQuizResult = async () => {
@@ -97,8 +98,8 @@ function QuizResultPage() {
                   ch.{chapterNum} 맞힌 갯수
                 </Typography>
                 <Typography variant="h5">
-                  {quizResult.hitCount.hit_question_count}/
-                  {quizResult.hitCount.question_count}
+                  {quizResult.hitCount.hitQuestionCount}/
+                  {quizResult.hitCount.questionCount}
                 </Typography>
               </CardContent>
             </Card>
@@ -112,8 +113,8 @@ function QuizResultPage() {
                 </Typography>
                 <Typography variant="h5">
                   {getPercent(
-                    quizResult.activeCount.active_chapter_count,
-                    quizResult.activeCount.max_chapter
+                    quizResult.activeCount.activeChapterCount,
+                    quizResult.activeCount.maxChapter
                   )}
                   %
                 </Typography>

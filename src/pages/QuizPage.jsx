@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
-import { useLocation } from "react-router-dom";
 import queryString from "query-string";
+import { Typography } from "@mui/material";
 
 // INTERNAL IMPORT
 import {
@@ -16,10 +16,9 @@ import { getIllustNumbers, getTotalStep } from "../utils/util";
 import NotFoundPage from "./NotFoundPage";
 
 function QuizPage() {
-  const { quiz, fetchQuiz } = useContext(QuizContext);
+  const { quiz, fetchQuiz, queryParameter } = useContext(QuizContext);
   const [activeStep, setActiveStep] = useState(0);
   const [illustNumbers, setIllustNumbers] = useState([]);
-  const queryParameter = useLocation().search;
   const { categorySeq, chapterNum } = queryString.parse(queryParameter);
 
   /**
@@ -44,12 +43,16 @@ function QuizPage() {
 
   return (
     <Wrapper>
-      {CATEGORY[categorySeq]} ch.{chapterNum}
+      <Typography>
+        {CATEGORY[categorySeq]} ch.{chapterNum}
+      </Typography>
+
       <StepperBar
         iteratee={[...quiz.keys()]}
         activeStep={activeStep}
         setActiveStep={setActiveStep}
       />
+
       <Wrapper.Body>
         <QuestionBox
           question={quiz[activeStep].question}
@@ -57,8 +60,8 @@ function QuizPage() {
         />
 
         <OptionList
-          questionSeq={quiz[activeStep].question_seq}
-          iteratee={quiz[activeStep].option_array}
+          questionSeq={quiz[activeStep].questionSeq}
+          iteratee={quiz[activeStep].optionArray}
         />
 
         <ButtonBox

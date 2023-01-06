@@ -14,14 +14,14 @@ function ReviewOptionList({ questionSeq, iteratee }) {
       orientation="vertical"
       className={Style.optionContainer}
     >
-      {iteratee.map((each, index) => {
-        const isCorrect = each.answer_yn;
-        const isHistory = userOption[questionSeq] === each.question_option_seq;
+      {iteratee.map((each) => {
+        const isCorrect = each.answerYN;
+        const isHistory = userOption[questionSeq] === each.questionOptionSeq;
 
         return (
           <ToggleButton
-            key={index}
-            value={each.question_option_seq}
+            key={each.questionOptionSeq}
+            value={each.questionOptionSeq}
             className={`
               ${Style.option} 
               ${isHistory && Style.optionHistory}
@@ -29,7 +29,7 @@ function ReviewOptionList({ questionSeq, iteratee }) {
             `}
           >
             <Typography variant="subtitle2" color="text.secondary">
-              {each.question_option}
+              {each.questionOption}
             </Typography>
           </ToggleButton>
         );

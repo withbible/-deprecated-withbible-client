@@ -2,7 +2,6 @@ import React, { useState, useMemo } from "react";
 import { useLocation, useHistory } from "react-router-dom";
 import axios from "axios";
 import { useSnackbar } from "notistack";
-import queryString from "query-string";
 
 // INTERNAL IMPORT
 import { QUIZ_URI, OPTION_HISTORY_URI } from "../constants/api";
@@ -30,7 +29,7 @@ function shuffleArray(array) {
 function shuffleQuiz(quiz) {
   return shuffleArray(quiz).map((each) => ({
     ...each,
-    option_array: shuffleArray(each.option_array),
+    optionArray: shuffleArray(each.optionArray),
   }));
 }
 
@@ -44,7 +43,6 @@ export function QuizProvider({ children }) {
   const { enqueueSnackbar } = useSnackbar();
   const history = useHistory();
   const queryParameter = useLocation().search;
-  const { categorySeq, chapterNum } = queryString.parse(queryParameter);
 
   // HELPER FUNCTION(INNER)
   const setUserOptionFunc = ({ iteratee, value }) => {
@@ -54,7 +52,7 @@ export function QuizProvider({ children }) {
       setUserOption((prevState) => {
         return {
           ...prevState,
-          [each.question_seq]: each[value] ?? value,
+          [each.questionSeq]: each[value] ?? value,
         };
       });
     });
@@ -90,14 +88,12 @@ export function QuizProvider({ children }) {
     setIsNewUserOption(false);
     setUserOptionFunc({
       iteratee: optionHistoryResponse,
-      value: "question_option_seq",
+      value: "questionOptionSeq",
     });
   };
 
   const handleSubmit = async () => {
     const payload = {
-      categorySeq,
-      chapterNum,
       bulk: userOption,
     };
 
@@ -115,14 +111,14 @@ export function QuizProvider({ children }) {
       if (isNewUserOption) {
         await axios({
           method: "post",
-          url: OPTION_HISTORY_URI,
+          url: `${OPTION_HISTORY_URI}${queryParameter}`,
           data: payload,
           ...AUTH_HEADER_CONFIG,
         });
       } else {
         await axios({
           method: "put",
-          url: OPTION_HISTORY_URI,
+          url: `${OPTION_HISTORY_URI}${queryParameter}`,
           data: payload,
           ...AUTH_HEADER_CONFIG,
         });

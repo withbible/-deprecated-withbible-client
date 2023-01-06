@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import axios from "axios";
 import { useSnackbar } from "notistack";
-import { List, Typography } from "@mui/material";
+import { List, ListSubheader, Typography } from "@mui/material";
 
 // INTERNAL IMPORT
 import { Wrapper, ActiveChapterList } from "../components";
+import { CATEGORY } from "../constants/enum";
 import { ACTIVE_CHAPTER_PAGE_URI } from "../constants/api";
 import { AUTH_HEADER_CONFIG } from "../constants/config";
 
@@ -16,15 +17,17 @@ function mergeWithCategory(arr) {
   const result = [];
 
   arr.forEach((each) => {
-    const index = result.findIndex((exist) => exist.category === each.category);
+    const index = result.findIndex(
+      (exist) => exist.categorySeq === each.categorySeq
+    );
 
     if (index > -1) {
-      result[index].chapter_detail = result[index].chapter_detail.concat(
-        each.chapter_detail
+      result[index].chapterDetail = result[index].chapterDetail.concat(
+        each.chapterDetail
       );
     } else {
       // eslint-disable-next-line no-param-reassign
-      each.chapter_detail = [each.chapter_detail];
+      each.chapterDetail = [each.chapterDetail];
       result.push(each);
     }
   });
@@ -98,13 +101,15 @@ function ReviewListPage() {
           <Typography variant="h4">{errorMessage}</Typography>
         ) : (
           <List>
-            {activeChapter.map((each, index) => (
-              <ActiveChapterList
-                key={index}
-                iteratee={each.chapter_detail}
-                category={each.category}
-                categorySeq={each.category_seq}
-              />
+            {activeChapter.map((each) => (
+              <div key={each.categorySeq}>
+                <ListSubheader>{CATEGORY[each.categorySeq]}</ListSubheader>
+
+                <ActiveChapterList
+                  iteratee={each.chapterDetail}
+                  categorySeq={each.categorySeq}
+                />
+              </div>
             ))}
             <div ref={observerTarget} />
           </List>

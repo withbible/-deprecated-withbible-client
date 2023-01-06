@@ -62,7 +62,7 @@ function LeaderBoardPage() {
           {leaderBoards.map((each, index) => (
             <LeaderBoard
               key={index}
-              isHistory={userID === each.user_id}
+              isHistory={userID === each.userID}
               each={each}
             />
           ))}

@@ -6,8 +6,7 @@ import { Paper, Button } from "@mui/material";
 import Style from "./Chapter.module.css";
 import { QUIZ_PAGE_PATH } from "../../constants/route";
 
-// eslint-disable-next-line no-unused-vars
-function Chapter({ itemId, isHistory, categorySeq, chapterNum }) {
+function Chapter({ itemId: chapterNum, history, categorySeq }) {
   const queryParameter = `?categorySeq=${categorySeq}&chapterNum=${chapterNum}`;
 
   return (
@@ -15,7 +14,7 @@ function Chapter({ itemId, isHistory, categorySeq, chapterNum }) {
       <Paper
         className={`
         ${Style.chapterPaper}
-        ${isHistory && Style.paperHistory}
+        ${history && Style.paperHistory}
       `}
         elevation={3}
       >
