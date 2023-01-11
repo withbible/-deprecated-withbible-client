@@ -3,8 +3,7 @@ node_modules/
 package-lock.json
 
 # env
-.env.development
-.env.production
+.env*
 
 # assets
 public/images/illusts/*

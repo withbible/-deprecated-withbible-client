@@ -30,6 +30,7 @@
     "@testing-library/user-event": "^12.8.3",
     "axios": "^0.21.1",
     "dotenv": "^16.0.3",
+    "firebase": "^9.15.0",
     "lodash": "^4.17.21",
     "notistack": "^2.0.8",
     "prop-types": "^15.8.1",
