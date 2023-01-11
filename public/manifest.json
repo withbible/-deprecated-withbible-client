@@ -1,0 +1,27 @@
+{
+  "background_color": "#fbfadd",
+  "description": "Web site created using create-react-app",
+  "dir": "ltr",
+  "display": "standalone",
+  "name": "위드바이블",
+  "orientation": "any",
+  "scope": "/",
+  "short_name": "위드바이블",
+  "start_url": "/",
+  "theme_color": "#000000",
+  "categories": [
+    "education"
+  ],
+  "screenshots": [],
+  "icons": [
+    {
+      "src": "/favicon.ico"
+    },
+    {
+      "src": "/favicon.ico",
+      "type": "image/x-icon"
+    }
+  ],
+  "shortcuts": [],
+  "lang": "ko"
+}

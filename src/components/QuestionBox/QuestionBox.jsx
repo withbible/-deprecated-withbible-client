@@ -9,7 +9,7 @@ function QuestionBox({ question, illustNumber }) {
     <div className={Style.questionContainer}>
       <img
         className={Style.illust}
-        src={`/images/illust0${illustNumber}.png`}
+        src={`/images/illusts/illust0${illustNumber}.png`}
         alt="퀴즈 일러스트"
       />
       <Typography className={Style.question}>{question}</Typography>

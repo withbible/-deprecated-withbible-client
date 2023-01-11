@@ -7,9 +7,8 @@ package-lock.json
 .env.production
 
 # assets
-public/images/*
-!public/images/illust*.png
-!public/images/spinner.gif
+public/images/illusts/*
+!public/images/illusts/illust*.png
 
 # development
 .vscode/
