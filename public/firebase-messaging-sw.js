@@ -1,13 +1,32 @@
-import { initializeApp } from "firebase/app";
+/* eslint-disable no-restricted-globals */
+self.addEventListener("install", () => {
+  self.skipWaiting();
+});
 
-const firebaseConfig = {
-  apiKey: process.env.REACT_APP_FCM_API_KEY,
-  authDomain: `${process.env.REACT_APP_FCM_PROJECT_ID}.firebaseapp.com`,
-  projectId: process.env.REACT_APP_FCM_PROJECT_ID,
-  storageBucket: `${process.env.REACT_APP_FCM_PROJECT_ID}.appspot.com`,
-  messagingSenderId: process.env.REACT_APP_FCM_SENDER_ID,
-  appId: process.env.REACT_APP_FCM_APP_ID,
-  measurementId: process.env.REACT_APP_FCM_MEASUREMENT_ID,
-};
+self.addEventListener("push", (event) => {
+  console.log("push: ", event.data.json());
 
-initializeApp(firebaseConfig);
+  if (!event.data.json()) {
+    return;
+  }
+
+  const resultData = event.data.json().notification;
+  const notificationTitle = resultData.title;
+  const notificationOptions = {
+    body: resultData.body,
+    icon: resultData.image,
+    tag: resultData.tag,
+    ...resultData,
+  };
+  console.log("push: ", { resultData, notificationTitle, notificationOptions });
+
+  self.registration.showNotification(notificationTitle, notificationOptions);
+});
+
+self.addEventListener("notificationclick", (event) => {
+  console.log("notification click");
+  const url = "/";
+  event.notification.close();
+  // eslint-disable-next-line no-undef
+  event.waitUntil(clients.openWindow(url));
+});
