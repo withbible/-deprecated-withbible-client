@@ -4,8 +4,6 @@ self.addEventListener("install", () => {
 });
 
 self.addEventListener("push", (event) => {
-  console.log("push: ", event.data.json());
-
   if (!event.data.json()) {
     return;
   }
@@ -15,10 +13,9 @@ self.addEventListener("push", (event) => {
   const notificationOptions = {
     body: resultData.body,
     icon: resultData.image,
-    tag: resultData.tag,
     ...resultData,
   };
-  console.log("push: ", { resultData, notificationTitle, notificationOptions });
+  console.log("push: ", resultData);
 
   self.registration.showNotification(notificationTitle, notificationOptions);
 });

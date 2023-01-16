@@ -43,9 +43,7 @@ const messaging = getMessaging();
         data: { token },
         ...AUTH_HEADER_CONFIG,
       });
-    }
-
-    if (token !== existedToken) {
+    } else if (token !== existedToken) {
       await axios({
         method: "put",
         url: TOEKN_URI,
