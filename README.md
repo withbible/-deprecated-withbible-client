@@ -18,8 +18,12 @@
 <img src="https://img.shields.io/badge/React Router-5-CA4245?logo=React Router&logoColor=white"/>
 </a>
 
-<a href="https://eslint.org/docs/latest/">
-<img src="https://img.shields.io/badge/ESLint-4B32C3?logo=ESLint&logoColor=white"/>
+<a href="https://www.pwabuilder.com/">
+<img src="https://img.shields.io/badge/PWA-5A0FC8?logo=PWA&logoColor=white"/>
+</a>
+
+<a href="https://firebase.google.com/docs/web/setup?authuser=0&hl=ko">
+<img src="https://img.shields.io/badge/Firebase-FFCA28?logo=Firebase&logoColor=white"/>
 </a>
 
 <a href="https://notistack.com/getting-started">
@@ -29,15 +33,8 @@
 </div>
 
 - [KBU BibleGraduationExam QuizApp](#kbu-biblegraduationexam-quizapp)
-  - [Setup (dev)](#setup-dev)
+  - [사용법](#사용법)
 
-## Setup (dev)
+## [사용법](https://github.com/WithBible/withbible-client/wiki/%EC%82%AC%EC%9A%A9%EB%B2%95)
 
-Bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-```bash
-# Install dependencies (only the first time)
-npm install
-# Run the local server at localhost:3000
-npm run start
-```
+링크를 확인해주세요.
