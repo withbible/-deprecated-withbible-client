@@ -22,7 +22,9 @@ jobs:
           stage: main
           yaml: >
             name: withbible-client
+            
             app: web
+            
             context:
               git:
                 url: git@github.com:${{ github.repository }}.git
