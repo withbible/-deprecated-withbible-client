@@ -8,14 +8,11 @@ import { findHistory } from "../../utils/util";
 
 // MAIN
 function Category() {
-  const {
-    chapterSearch,
-    activeChapter,
-    errorMessage: error,
-  } = useContext(ChapterContext);
+  const { chapterSearch, activeChapter, errorMessage } =
+    useContext(ChapterContext);
 
-  if (error) {
-    return <Typography variant="h4">{error}</Typography>;
+  if (errorMessage) {
+    return <Typography variant="h4">{errorMessage}</Typography>;
   }
 
   return (

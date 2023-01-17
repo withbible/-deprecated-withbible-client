@@ -22,9 +22,10 @@ export function ChapterProvider({ children }) {
       const { data } = await axios.get(
         `${CHAPTER_SEARCH_URI}?keyword=${keyword}`
       );
+
       setChapterSearch(data.result);
     } catch (error) {
-      const { message } = error.response.data;
+      const { message } = error || error.response.data;
       setErrorMessage(message);
     }
   };

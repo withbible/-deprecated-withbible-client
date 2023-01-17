@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import axios from "axios";
-import { useSnackbar } from "notistack";
-import { List, ListSubheader, Typography } from "@mui/material";
+import { List, ListSubheader } from "@mui/material";
 
 // INTERNAL IMPORT
 import { Wrapper, ActiveChapterList } from "../components";
 import { CATEGORY } from "../constants/enum";
 import { ACTIVE_CHAPTER_PAGE_URI } from "../constants/api";
 import { AUTH_HEADER_CONFIG } from "../constants/config";
+import NotFoundPage from "./NotFoundPage";
 
 // CONSTANT
 const LIST_ITEM_HEIGHT = 64;
@@ -43,7 +43,6 @@ function ReviewListPage() {
   const [hasNextPage, setHasNextPage] = useState(true);
   const page = useRef(1);
   const observerTarget = useRef(null);
-  const { enqueueSnackbar } = useSnackbar();
 
   const fetchActiveChapter = useCallback(async () => {
     try {
@@ -67,14 +66,8 @@ function ReviewListPage() {
         page.current += 1;
       }
     } catch (error) {
-      const { message } = error.response.data;
-
-      if (error.response.status === 401) {
-        setErrorMessage(message);
-        return;
-      }
-
-      enqueueSnackbar(message, { variant: "error" });
+      const { message } = error || error.response.data;
+      setErrorMessage(message);
     }
   }, [page.current]);
 
@@ -93,27 +86,27 @@ function ReviewListPage() {
     return () => observer.disconnect();
   }, [hasNextPage]);
 
+  if (errorMessage) {
+    return <NotFoundPage title="리뷰목록" message={errorMessage} />;
+  }
+
   return (
     <Wrapper>
       리뷰목록
       <Wrapper.Body>
-        {errorMessage ? (
-          <Typography variant="h4">{errorMessage}</Typography>
-        ) : (
-          <List>
-            {activeChapter.map((each) => (
-              <div key={each.categorySeq}>
-                <ListSubheader>{CATEGORY[each.categorySeq]}</ListSubheader>
+        <List>
+          {activeChapter.map((each) => (
+            <div key={each.categorySeq}>
+              <ListSubheader>{CATEGORY[each.categorySeq]}</ListSubheader>
 
-                <ActiveChapterList
-                  iteratee={each.chapterDetail}
-                  categorySeq={each.categorySeq}
-                />
-              </div>
-            ))}
-            <div ref={observerTarget} />
-          </List>
-        )}
+              <ActiveChapterList
+                iteratee={each.chapterDetail}
+                categorySeq={each.categorySeq}
+              />
+            </div>
+          ))}
+          <div ref={observerTarget} />
+        </List>
       </Wrapper.Body>
     </Wrapper>
   );

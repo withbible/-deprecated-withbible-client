@@ -1,23 +1,23 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
 import axios from "axios";
-import { useSnackbar } from "notistack";
 import { List } from "@mui/material";
 
 // INTERNAL IMPORT
 import { LeaderBoard, Wrapper } from "../components";
 import { AuthContext } from "../contexts/AuthContext";
 import { LEADER_BOARD_PAGE_URI } from "../constants/api";
+import NotFoundPage from "./NotFoundPage";
 
 // CONSTANT
 const LIST_ITEM_HEIGHT = 74;
 
 function LeaderBoardPage() {
   const { userID } = useContext(AuthContext);
+  const [errorMessage, setErrorMessage] = useState("");
   const [leaderBoards, setLeaderBoards] = useState([]);
   const [hasNextPage, setHasNextPage] = useState(true);
   const page = useRef(1);
   const observerTarget = useRef(null);
-  const { enqueueSnackbar } = useSnackbar();
   const limit = Math.round(window.innerHeight / LIST_ITEM_HEIGHT);
 
   const fetchLeadrBoard = async () => {
@@ -34,8 +34,8 @@ function LeaderBoardPage() {
         page.current += 1;
       }
     } catch (error) {
-      const { message } = error.response.data;
-      enqueueSnackbar(message, { variant: "error" });
+      const { message } = error || error.response.data;
+      setErrorMessage(message);
     }
   };
 
@@ -53,6 +53,10 @@ function LeaderBoardPage() {
     observer.observe(observerTarget.current);
     return () => observer.disconnect();
   }, [hasNextPage]);
+
+  if (errorMessage) {
+    return <NotFoundPage title="리더보드" message={errorMessage} />;
+  }
 
   return (
     <Wrapper>

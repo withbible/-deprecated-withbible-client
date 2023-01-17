@@ -25,6 +25,7 @@ function AppBar() {
         url: LOGOUT_URI,
         ...AUTH_HEADER_CONFIG,
       });
+
       setUserID("");
       setActiveChapter([]);
       history.push(LOGIN_PATH);
