@@ -3,14 +3,15 @@ import { useHistory, Link } from "react-router-dom";
 import axios from "axios";
 import { useSnackbar } from "notistack";
 import { Container, Typography, Box, TextField, Button } from "@mui/material";
+import { getMessaging, getToken } from "firebase/messaging";
 
 // INTERNAL IMPORT
 import Style from "./page.module.css";
-import { SIGNUP_URI } from "../constants/api";
-import { LOGIN_PATH } from "../constants/route";
 import { PasswordInput } from "../components";
-import { AuthContext } from "../contexts/AuthContext";
+import { SIGNUP_URI } from "../constants/api";
 import { AUTH_HEADER_CONFIG } from "../constants/config";
+import { LOGIN_PATH } from "../constants/route";
+import { AuthContext } from "../contexts/AuthContext";
 
 // VO
 const initialState = {
@@ -46,8 +47,13 @@ function SignupPage() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    const permission = await Notification.requestPermission();
 
     try {
+      const token = await getToken(getMessaging(), {
+        vapidKey: process.env.REACT_APP_FCM_VAPID_KEY,
+      });
+
       const { data } = await axios({
         method: "post",
         url: SIGNUP_URI,
@@ -58,9 +64,11 @@ function SignupPage() {
         data: {
           userName: payload.userName,
           userEmail: payload.userEmail,
+          fcmToken: permission === "granted" ? token : null,
         },
         ...AUTH_HEADER_CONFIG,
       });
+
       setUserID(data.result.userID);
       history.push("/");
     } catch (error) {

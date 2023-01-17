@@ -11,13 +11,14 @@ import {
   Checkbox,
   Button,
 } from "@mui/material";
+import { getMessaging, getToken } from "firebase/messaging";
 
 // INTERNAL IMPORT
 import Style from "./page.module.css";
 import { PasswordInput } from "../components";
 import { LOGIN_URI } from "../constants/api";
-import { SIGNUP_PATH } from "../constants/route";
 import { AUTH_HEADER_CONFIG } from "../constants/config";
+import { SIGNUP_PATH } from "../constants/route";
 import { AuthContext } from "../contexts/AuthContext";
 
 // VO
@@ -51,8 +52,13 @@ function LoginPage() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    const permission = await Notification.requestPermission();
 
     try {
+      const token = await getToken(getMessaging(), {
+        vapidKey: process.env.REACT_APP_FCM_VAPID_KEY,
+      });
+
       const { data } = await axios({
         method: "patch",
         url: LOGIN_URI,
@@ -62,9 +68,11 @@ function LoginPage() {
         },
         data: {
           isAutoLogin: payload.isAutoLogin,
+          fcmToken: permission === "granted" ? token : null,
         },
         ...AUTH_HEADER_CONFIG,
       });
+
       setUserID(data.result.userID);
       history.push("/");
     } catch (error) {

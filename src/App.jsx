@@ -2,7 +2,6 @@ import React from "react";
 import { Switch, Route } from "react-router-dom";
 
 // INTERNAL IMPORT
-import "./firebase-messaging-get-token";
 import {
   SIGNUP_PATH,
   LOGIN_PATH,

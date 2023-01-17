@@ -23,5 +23,3 @@ export const ACTIVE_CHAPTER_PAGE_URI =
 export const OPTION_HISTORY_URI = "/history/chapter/user-option";
 
 export const LEADER_BOARD_PAGE_URI = "/leader-board/page";
-
-export const TOEKN_URI = "/notice/token";
