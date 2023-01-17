@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
 import queryString from "query-string";
-import { Typography } from "@mui/material";
 
 // INTERNAL IMPORT
 import {
@@ -43,9 +42,9 @@ function QuizPage() {
 
   return (
     <Wrapper>
-      <Typography>
+      <Wrapper.Header>
         {CATEGORY[categorySeq]} ch.{chapterNum}
-      </Typography>
+      </Wrapper.Header>
 
       <StepperBar
         iteratee={[...quiz.keys()]}

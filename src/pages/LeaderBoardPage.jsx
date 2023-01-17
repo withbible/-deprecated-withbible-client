@@ -21,6 +21,8 @@ function LeaderBoardPage() {
   const limit = Math.round(window.innerHeight / LIST_ITEM_HEIGHT);
 
   const fetchLeadrBoard = async () => {
+    setErrorMessage("");
+
     try {
       const queryParameter = `?limit=${limit}&page=${page.current}`;
       const { data } = await axios.get(
@@ -60,7 +62,7 @@ function LeaderBoardPage() {
 
   return (
     <Wrapper>
-      리더보드
+      <Wrapper.Header>리더보드</Wrapper.Header>
       <Wrapper.Body>
         <List>
           {leaderBoards.map((each, index) => (

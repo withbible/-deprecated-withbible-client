@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import queryString from "query-string";
 import {
@@ -86,7 +86,7 @@ function QuizResultPage() {
 
   return (
     <Wrapper>
-      <Typography>퀴즈결과</Typography>
+      <Wrapper.Header>퀴즈결과</Wrapper.Header>
       <Confetti active={activeState} config={confettiConfig} />
 
       <Wrapper.Body>

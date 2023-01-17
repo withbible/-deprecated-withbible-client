@@ -37,7 +37,7 @@ function AppBar() {
 
   if (userID) {
     return (
-      <div className={Style.container}>
+      <>
         <Avatar src={`https://avatars.dicebear.com/api/micah/${userID}.svg`} />
 
         <Box>
@@ -51,12 +51,12 @@ function AppBar() {
         <Button className={Style.authButton} onClick={handleClick}>
           <Paper elevation={3}>로그아웃</Paper>
         </Button>
-      </div>
+      </>
     );
   }
 
   return (
-    <div className={Style.container}>
+    <>
       <Avatar />
 
       <Box>
@@ -70,7 +70,7 @@ function AppBar() {
       <Button className={Style.authButton} component={Link} to={LOGIN_PATH}>
         <Paper elevation={3}>로그인</Paper>
       </Button>
-    </div>
+    </>
   );
 }
 

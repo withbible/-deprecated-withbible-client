@@ -45,6 +45,8 @@ function ReviewListPage() {
   const observerTarget = useRef(null);
 
   const fetchActiveChapter = useCallback(async () => {
+    setErrorMessage("");
+
     try {
       const queryParameter = `?limit=${limit}&page=${page.current}`;
       const { data } = await axios.get(
@@ -92,7 +94,7 @@ function ReviewListPage() {
 
   return (
     <Wrapper>
-      리뷰목록
+      <Wrapper.Header>리뷰목록</Wrapper.Header>
       <Wrapper.Body>
         <List>
           {activeChapter.map((each) => (

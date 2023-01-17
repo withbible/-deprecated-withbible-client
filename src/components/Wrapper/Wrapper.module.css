@@ -3,6 +3,12 @@
   background-color: var(--primary-color);
 }
 
+.headerContainer{
+  display: flex;
+  align-items: flex-start;
+  padding-top: 1rem;
+}
+
 .bodyContainer {
   height: inherit;
   padding: 1rem 0.5rem 56px;  
