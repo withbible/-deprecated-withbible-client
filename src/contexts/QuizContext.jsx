@@ -126,7 +126,7 @@ export function QuizProvider({ children }) {
 
       history.push(`${QUIZ_RESULT_PAGE_PATH}${queryParameter}`);
     } catch (error) {
-      const { message } = error.response.data;
+      const { message } = error || error.response.data;
       enqueueSnackbar(message, { variant: "error" });
     }
   };
