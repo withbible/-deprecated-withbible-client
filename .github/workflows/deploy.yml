@@ -31,7 +31,7 @@ jobs:
               spa: true
               buildenv:
                 - name: REACT_APP_HOST
-                  value: ${{ secrets.REACT_APP_HOST }}
+                  value: ${{ vars.REACT_APP_HOST }}
                 - name: REACT_APP_FCM_VAPID_KEY
                   value: ${{ secrets.REACT_APP_FCM_VAPID_KEY }}
                 - name: REACT_APP_FCM_API_KEY
