@@ -25,6 +25,25 @@ jobs:
             
             app: web
             
+            options:
+              docbase: /build
+              nodeversion: "16"
+              spa: true
+              buildenv:
+                - name: REACT_APP_HOST
+                  value: ${{ secrets.REACT_APP_HOST }}
+                - name: REACT_APP_FCM_VAPID_KEY
+                  value: ${{ secrets.REACT_APP_FCM_VAPID_KEY }}
+                - name: REACT_APP_FCM_API_KEY
+                  value: ${{ secrets.REACT_APP_FCM_API_KEY }}
+                - name: REACT_APP_FCM_PROJECT_ID
+                  value: ${{ secrets.REACT_APP_FCM_PROJECT_ID }}
+                - name: REACT_APP_FCM_SENDER_ID
+                  value: ${{ secrets.REACT_APP_FCM_SENDER_ID }}
+                - name: REACT_APP_FCM_APP_ID
+                  value: ${{ secrets.REACT_APP_FCM_APP_ID }}
+                - name: REACT_APP_FCM_MEASUREMENT_ID
+                  value: ${{ secrets.REACT_APP_FCM_MEASUREMENT_ID }}
             context:
               git:
                 url: git@github.com:${{ github.repository }}.git
