@@ -4,7 +4,7 @@
   "dir": "ltr",
   "display": "standalone",
   "name": "위드바이블",
-  "orientation": "any",
+  "orientation": "portrait",
   "scope": "/",
   "short_name": "위드바이블",
   "start_url": "/",
@@ -336,7 +336,8 @@
     },
     {
       "src": "images/AppImages/android/android-launchericon-512-512.png",
-      "sizes": "512x512"
+      "sizes": "512x512",
+      "purpose": "any maskable"
     },
     {
       "src": "images/AppImages/android/android-launchericon-192-192.png",
@@ -456,7 +457,8 @@
     },
     {
       "src": "images/AppImages/ios/512.png",
-      "sizes": "512x512"
+      "sizes": "512x512",
+      "purpose": "any maskable"
     },
     {
       "src": "images/AppImages/ios/1024.png",
