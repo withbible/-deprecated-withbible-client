@@ -1,18 +1,18 @@
 {
   "background_color": "#fbfadd",
+  "categories": ["education"],
   "description": "Web site created using create-react-app",
   "dir": "ltr",
   "display": "standalone",
+  "display_override": ["window-control-overlay", "standalone", "browser"],
+  "lang": "ko",
   "name": "위드바이블",
   "orientation": "portrait",
+  "prefer_related_applications": true,
   "scope": "/",
   "short_name": "위드바이블",
   "start_url": "/",
   "theme_color": "#000000",
-  "categories": ["education"],
-  "shortcuts": [],
-  "lang": "ko",
-  "screenshots": [],
   "icons": [
     {
       "src": "images/AppImages/windows11/SmallTile.scale-100.png",
@@ -337,7 +337,7 @@
     {
       "src": "images/AppImages/android/android-launchericon-512-512.png",
       "sizes": "512x512",
-      "purpose": "any maskable"
+      "purpose": "any"
     },
     {
       "src": "images/AppImages/android/android-launchericon-192-192.png",
@@ -458,7 +458,7 @@
     {
       "src": "images/AppImages/ios/512.png",
       "sizes": "512x512",
-      "purpose": "any maskable"
+      "purpose": "any"
     },
     {
       "src": "images/AppImages/ios/1024.png",
