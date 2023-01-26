@@ -11,5 +11,10 @@
 }
 
 .questionContainer {
-  text-align: center;
+  text-align: center;  
+}
+
+.questionSub{
+  border: 3px dashed rgba(0, 0, 0, 0.38);
+  border-radius: 4px;
 }

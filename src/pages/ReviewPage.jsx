@@ -52,6 +52,7 @@ function ReviewPage() {
       <Wrapper.Body>
         <QuestionBox
           question={quiz[activeStep].question}
+          questionSub={quiz[activeStep].questionSub}
           illustNumber={illustNumbers[activeStep]}
         />
 
