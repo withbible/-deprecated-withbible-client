@@ -1,23 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
   <head>
-    <meta charset="utf-8" />
-    <link
-      rel="icon"
-      href="images/AppImages/android/android-launchericon-512-512.png"
-    />
-    <link rel="manifest" href="manifest.json" />
+    <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
     <meta
       name="description"
       content="Web site created using create-react-app"
     />
+
+    <link
+      rel="icon"
+      href="./images/AppImages/android/android-launchericon-512-512.png"
+    />
+    <link rel="manifest" href="manifest.json" />
+
     <title>위드바이블</title>
+
     <script type="module">
       import "https://cdn.jsdelivr.net/npm/@pwabuilder/pwaupdate";
-      const el = document.createElement("pwa-update");
-      document.body.appendChild(el);
+      const element = document.createElement("pwa-update");
+      document.body.appendChild(element);
     </script>
   </head>
   <body>
