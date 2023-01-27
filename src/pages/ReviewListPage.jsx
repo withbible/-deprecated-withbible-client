@@ -68,7 +68,7 @@ function ReviewListPage() {
         page.current += 1;
       }
     } catch (error) {
-      const { message } = error || error.response.data;
+      const { message } = error.response?.data || error;
       setErrorMessage(message);
     }
   }, [page.current]);

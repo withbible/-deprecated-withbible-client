@@ -76,7 +76,7 @@ function LoginPage() {
       setUserID(data.result.userID);
       history.push("/");
     } catch (error) {
-      const { message } = error || error.response.data;
+      const { message } = error.response?.data || error;
       enqueueSnackbar(message, { variant: "error" });
     }
   };

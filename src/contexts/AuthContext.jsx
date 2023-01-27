@@ -74,7 +74,7 @@ export function AuthProvider({ children }) {
       const { data } = await axios.get(LOGIN_CHECK_URI, AUTH_HEADER_CONFIG);
       setUserID(data.result.userID);
     } catch (error) {
-      const { message } = error || error.response.data;
+      const { message } = error.response?.data || error;
       enqueueSnackbar(message, { variant: "error" });
     }
   };

@@ -20,12 +20,13 @@ export function ChapterProvider({ children }) {
 
     try {
       const { data } = await axios.get(
-        `${CHAPTER_SEARCH_URI}?keyword=${keyword}`
+        `${CHAPTER_SEARCH_URI}?keyword=${keyword}`,
+        AUTH_HEADER_CONFIG
       );
 
       setChapterSearch(data.result);
     } catch (error) {
-      const { message } = error || error.response.data;
+      const { message } = error.response?.data || error;
       setErrorMessage(message);
     }
   };
