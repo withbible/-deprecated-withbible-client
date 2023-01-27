@@ -13,8 +13,10 @@ function Wrapper({ children }) {
   );
 }
 
-Wrapper.Header = function Header({ children }) {
-  return <div className={Style.headerContainer}>{children}</div>;
+Wrapper.Header = function Header({ className, children }) {
+  return (
+    <div className={`${Style.headerContainer} ${className}`}>{children}</div>
+  );
 };
 
 Wrapper.Body = function Body({ className, children }) {

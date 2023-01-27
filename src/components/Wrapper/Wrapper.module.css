@@ -4,8 +4,8 @@
 }
 
 .headerContainer{
-  display: flex;
-  align-items: flex-start;
+  display: flex;  
+  align-content: flex-start;
   padding-top: 1rem;
 }
 

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import queryString from "query-string";
 
 // INTERNAL IMPORT
+import Style from "./page.module.css";
 import {
   ButtonBox,
   OptionList,
@@ -42,15 +43,14 @@ function QuizPage() {
 
   return (
     <Wrapper>
-      <Wrapper.Header>
+      <Wrapper.Header className={Style.flexDirection}>
         {CATEGORY[categorySeq]} ch.{chapterNum}
+        <StepperBar
+          iteratee={[...quiz.keys()]}
+          activeStep={activeStep}
+          setActiveStep={setActiveStep}
+        />
       </Wrapper.Header>
-
-      <StepperBar
-        iteratee={[...quiz.keys()]}
-        activeStep={activeStep}
-        setActiveStep={setActiveStep}
-      />
 
       <Wrapper.Body>
         <QuestionBox

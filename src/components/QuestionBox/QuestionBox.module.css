@@ -1,12 +1,12 @@
-.illust {
-  width: 30%;
+.illust {  
   margin: 0 auto;
-  display: block;
+  height: 15rem;
+  object-fit: contain;
 }
 
 @media (max-width: 35rem) {
   .illust {
-    width: 60%;
+    height: 10rem;
   }
 }
 
