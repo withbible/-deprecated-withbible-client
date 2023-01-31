@@ -7,6 +7,7 @@ import QuizResultPage from "./QuizResultPage";
 import ReviewListPage from "./ReviewListPage";
 import ReviewPage from "./ReviewPage";
 import SignupPage from "./SignupPage";
+import HitCountPage from "./HitCountPage";
 
 export {
   LeaderBoardPage,
@@ -18,4 +19,5 @@ export {
   ReviewListPage,
   ReviewPage,
   SignupPage,
+  HitCountPage,
 };
