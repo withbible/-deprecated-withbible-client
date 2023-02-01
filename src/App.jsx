@@ -3,6 +3,7 @@ import { Switch, Route } from "react-router-dom";
 
 // INTERNAL IMPORT
 import "./firebase-messaging-get-token";
+import "./pusher-subscribe";
 import {
   SIGNUP_PATH,
   LOGIN_PATH,

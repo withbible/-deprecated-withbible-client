@@ -8,7 +8,6 @@ import {
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
-  Legend,
 } from "recharts";
 
 // INTERNAL IMPORT
@@ -18,7 +17,9 @@ import { AVG_HIT_COUNT_URI } from "../constants/api";
 import { AUTH_HEADER_CONFIG } from "../constants/config";
 import { ChapterContext } from "../contexts/ChapterContext";
 import NotFoundPage from "./NotFoundPage";
+import pusher from "../pusher-subscribe";
 
+// HELPER FUNCTION
 function mergeWithCategory(avgHitCountList, hitCountList) {
   const result = [...avgHitCountList];
 
@@ -65,6 +66,15 @@ function ChartPage() {
 
   useEffect(() => {
     fetchHitCount();
+
+    const channel = pusher.subscribe("quiz-interaction-channel");
+    channel.bind("quiz-interaction-event", (data) => {
+      setChartData(mergeWithCategory(data.result, activeChapter));
+    });
+
+    return () => {
+      channel.unbind("quiz-interaction-channel");
+    };
   }, []);
 
   if (errorMessage) {
