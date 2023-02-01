@@ -11,7 +11,7 @@ import Style from "./BottomBar.module.css";
 import {
   LEADER_BOARD_PAGE_PATH,
   REVIEW_LIST_PAGE_PATH,
-  HIT_COUNT_PAGE_PATH,
+  CHART_PAGE_PATH,
 } from "../../constants/route";
 
 function BottomBar() {
@@ -40,9 +40,9 @@ function BottomBar() {
       />
       <BottomNavigationAction
         component={Link}
-        to={HIT_COUNT_PAGE_PATH}
+        to={CHART_PAGE_PATH}
         label="통계"
-        value="hitCount"
+        value="chart"
         icon={<TimelineIcon />}
       />
     </BottomNavigation>

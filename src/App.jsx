@@ -11,7 +11,7 @@ import {
   LEADER_BOARD_PAGE_PATH,
   REVIEW_LIST_PAGE_PATH,
   REVIEW_PAGE_PATH,
-  HIT_COUNT_PAGE_PATH,
+  CHART_PAGE_PATH,
 } from "./constants/route";
 import {
   LeaderBoardPage,
@@ -23,7 +23,7 @@ import {
   ReviewListPage,
   ReviewPage,
   SignupPage,
-  HitCountPage,
+  ChartPage,
 } from "./pages";
 
 function App() {
@@ -37,7 +37,7 @@ function App() {
       <Route path={LEADER_BOARD_PAGE_PATH} component={LeaderBoardPage} />
       <Route exact path={REVIEW_LIST_PAGE_PATH} component={ReviewListPage} />
       <Route exact path={REVIEW_PAGE_PATH} component={ReviewPage} />
-      <Route exact path={HIT_COUNT_PAGE_PATH} component={HitCountPage} />
+      <Route exact path={CHART_PAGE_PATH} component={ChartPage} />
       <Route component={NotFoundPage} />
     </Switch>
   );

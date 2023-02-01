@@ -24,4 +24,4 @@ export const OPTION_HISTORY_URI = "/history/chapter/user-option";
 
 export const LEADER_BOARD_PAGE_URI = "/leader-board/page";
 
-export const CATEGORIES_HIT_COUNT_URI = "/history/categories/hit-count";
+export const AVG_HIT_COUNT_URI = "/history/categories/avg-hit-count";

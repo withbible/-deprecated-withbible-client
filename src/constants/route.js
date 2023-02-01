@@ -12,4 +12,4 @@ export const REVIEW_LIST_PAGE_PATH = "/review-list";
 
 export const REVIEW_PAGE_PATH = "/review-list/review";
 
-export const HIT_COUNT_PAGE_PATH = "/hit-count";
+export const CHART_PAGE_PATH = "/chart";
