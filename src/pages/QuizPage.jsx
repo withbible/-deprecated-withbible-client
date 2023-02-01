@@ -35,7 +35,7 @@ function QuizPage() {
   if (!quiz.length) {
     return (
       <NotFoundPage
-        title={`${CATEGORY[categorySeq]} ch.${chapterNum}`}
+        title={`${CATEGORY[categorySeq]} Ch.${chapterNum}`}
         message="데이터를 불러오는 중입니다..."
       />
     );
@@ -44,7 +44,7 @@ function QuizPage() {
   return (
     <Wrapper>
       <Wrapper.Header className={Style.flexDirection}>
-        {CATEGORY[categorySeq]} ch.{chapterNum}
+        {CATEGORY[categorySeq]} Ch.{chapterNum}
         <StepperBar
           iteratee={[...quiz.keys()]}
           activeStep={activeStep}

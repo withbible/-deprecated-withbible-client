@@ -22,13 +22,14 @@ function mergeWithCategory(arr) {
     );
 
     if (index > -1) {
-      result[index].chapterDetail = result[index].chapterDetail.concat(
+      result[index].chapterNumArray = result[index].chapterNumArray.concat(
         each.chapterDetail
       );
     } else {
-      // eslint-disable-next-line no-param-reassign
-      each.chapterDetail = [each.chapterDetail];
-      result.push(each);
+      result.push({
+        categorySeq: each.categorySeq,
+        chapterNumArray: [each.chapterDetail],
+      });
     }
   });
 
@@ -102,7 +103,7 @@ function ReviewListPage() {
               <ListSubheader>{CATEGORY[each.categorySeq]}</ListSubheader>
 
               <ActiveChapterList
-                iteratee={each.chapterDetail}
+                iteratee={each.chapterNumArray}
                 categorySeq={each.categorySeq}
               />
             </div>

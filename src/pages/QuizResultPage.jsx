@@ -95,7 +95,7 @@ function QuizResultPage() {
             <Card className={Style.gridItem}>
               <CardContent>
                 <Typography variant="inherit" color="text.secondary">
-                  ch.{chapterNum} 맞힌 갯수
+                  Ch.{chapterNum} 맞힌 갯수
                 </Typography>
                 <Typography variant="h5">
                   {quizResult.hitCount.hitQuestionCount}/

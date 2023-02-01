@@ -31,7 +31,7 @@ function ReviewPage() {
   if (!quiz.length) {
     return (
       <NotFoundPage
-        title={`${CATEGORY[categorySeq]} ch.${chapterNum} 리뷰`}
+        title={`${CATEGORY[categorySeq]} Ch.${chapterNum} 리뷰`}
         message="데이터를 불러오는 중입니다..."
       />
     );
@@ -40,7 +40,7 @@ function ReviewPage() {
   return (
     <Wrapper>
       <Wrapper.Header>
-        {CATEGORY[categorySeq]} ch.{chapterNum} 리뷰
+        {CATEGORY[categorySeq]} Ch.{chapterNum} 리뷰
       </Wrapper.Header>
 
       <StepperBar
