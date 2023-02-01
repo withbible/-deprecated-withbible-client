@@ -1,14 +1,14 @@
 import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import {
-  LineChart,
-  Line,
-  Label,
+  BarChart,
+  Bar,
   XAxis,
   YAxis,
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
+  Legend,
 } from "recharts";
 
 // INTERNAL IMPORT
@@ -19,10 +19,36 @@ import { AUTH_HEADER_CONFIG } from "../constants/config";
 import { ChapterContext } from "../contexts/ChapterContext";
 import NotFoundPage from "./NotFoundPage";
 
+function mergeWithCategory(avgHitCountList, hitCountList) {
+  const result = [...avgHitCountList];
+
+  hitCountList.forEach((hitCount) => {
+    const categoryIdx = hitCount.categorySeq - 1;
+
+    if (hitCount.categorySeq === avgHitCountList[categoryIdx].categorySeq) {
+      hitCount.chapterNumArray.forEach((each) => {
+        const chapterIdx = each.chapterNum - 1;
+
+        if (
+          each.chapterNum ===
+          avgHitCountList[categoryIdx].chapterNumArray[chapterIdx].chapterNum
+        ) {
+          result[categoryIdx].chapterNumArray[chapterIdx] = {
+            ...result[categoryIdx].chapterNumArray[chapterIdx],
+            ...each,
+          };
+        }
+      });
+    }
+  });
+
+  return result;
+}
+
 function ChartPage() {
   const { activeChapter } = useContext(ChapterContext);
   const [errorMessage, setErrorMessage] = useState("");
-  const [hitCount, setHitCount] = useState([]);
+  const [chartData, setChartData] = useState([]);
 
   const fetchHitCount = async () => {
     setErrorMessage("");
@@ -30,7 +56,7 @@ function ChartPage() {
     try {
       const { data } = await axios.get(AVG_HIT_COUNT_URI, AUTH_HEADER_CONFIG);
 
-      setHitCount(data.result);
+      setChartData(mergeWithCategory(data.result, activeChapter));
     } catch (error) {
       const { message } = error.response?.data || error;
       setErrorMessage(message);
@@ -49,36 +75,46 @@ function ChartPage() {
     <Wrapper>
       <Wrapper.Header>평균 맞힌갯수 통계</Wrapper.Header>
       <Wrapper.Body>
-        {hitCount.map((each) => (
-          <div key={each.categorySeq}>
-            {CATEGORY[each.categorySeq]}
+        {chartData.map((each) => {
+          return (
+            <div key={each.categorySeq}>
+              {CATEGORY[each.categorySeq]}
 
-            <ResponsiveContainer width="100%" height={300}>
-              <LineChart
-                data={each.chapterNumArray}
-                margin={{
-                  top: 10,
-                  right: 30,
-                  left: 0,
-                  bottom: 0,
-                }}
-              >
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="chapterNum">
-                  <Label value="챕터번호" offset={0} position="insideBottom" />
-                </XAxis>
-                <YAxis />
-                <Tooltip />
+              <ResponsiveContainer width="100%" height={240}>
+                <BarChart
+                  margin={{
+                    top: 10,
+                    right: 30,
+                    left: 0,
+                    bottom: 0,
+                  }}
+                  data={each.chapterNumArray}
+                >
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="chapterNum" />
+                  <YAxis dataKey="questionCount" />
+                  <Tooltip
+                    labelFormatter={(value) => {
+                      return `Ch.${value}`;
+                    }}
+                  />
 
-                <Line
-                  type="monotone"
-                  dataKey="avgHitQuestionCount"
-                  stroke="#FBCE7B"
-                />
-              </LineChart>
-            </ResponsiveContainer>
-          </div>
-        ))}
+                  <Bar
+                    fill="#444"
+                    name="평균 맞힌갯수"
+                    dataKey="avgHitQuestionCount"
+                  />
+
+                  <Bar
+                    fill="#FBCE7B"
+                    name="내가 맞힌갯수"
+                    dataKey="hitQuestionCount"
+                  />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          );
+        })}
       </Wrapper.Body>
     </Wrapper>
   );

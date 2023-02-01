@@ -2,9 +2,9 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { BottomNavigation, BottomNavigationAction } from "@mui/material";
 import HomeIcon from "@mui/icons-material/Home";
-import LeaderboardIcon from "@mui/icons-material/Leaderboard";
+import EmojiEventsIcon from "@mui/icons-material/EmojiEvents";
 import HistoryIcon from "@mui/icons-material/History";
-import TimelineIcon from "@mui/icons-material/Timeline";
+import BarChartIcon from "@mui/icons-material/BarChart";
 
 // INTERNAL IMPORT
 import Style from "./BottomBar.module.css";
@@ -29,7 +29,7 @@ function BottomBar() {
         to={LEADER_BOARD_PAGE_PATH}
         label="리더보드"
         value="leaderBoard"
-        icon={<LeaderboardIcon />}
+        icon={<EmojiEventsIcon />}
       />
       <BottomNavigationAction
         component={Link}
@@ -43,7 +43,7 @@ function BottomBar() {
         to={CHART_PAGE_PATH}
         label="통계"
         value="chart"
-        icon={<TimelineIcon />}
+        icon={<BarChartIcon />}
       />
     </BottomNavigation>
   );
