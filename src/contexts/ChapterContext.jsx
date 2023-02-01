@@ -20,8 +20,7 @@ export function ChapterProvider({ children }) {
 
     try {
       const { data } = await axios.get(
-        `${CHAPTER_SEARCH_URI}?keyword=${keyword}`,
-        AUTH_HEADER_CONFIG
+        `${CHAPTER_SEARCH_URI}?keyword=${keyword}`
       );
 
       setChapterSearch(data.result);
