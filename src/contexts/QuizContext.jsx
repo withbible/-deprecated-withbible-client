@@ -93,19 +93,24 @@ export function QuizProvider({ children }) {
   };
 
   const handleSubmit = async () => {
-    const payload = {
-      bulk: userOption,
-    };
+    if (!Object.keys(userOption).length) {
+      enqueueSnackbar("제출할 데이터가 없습니다.", {
+        variant: "error",
+      });
+      history.goBack();
+      return;
+    }
 
-    /**
-     * @todo 이전 상태값 유지된 에러 핸들링. 삭제 예정
-     */
-    if (Object.keys(payload.bulk).length > MAX_QUESTION_COUNT) {
+    if (Object.keys(userOption).length > MAX_QUESTION_COUNT) {
       enqueueSnackbar("에러가 발생했습니다. 새로고침해주세요.", {
         variant: "error",
       });
       return;
     }
+
+    const payload = {
+      bulk: userOption,
+    };
 
     try {
       if (isNewUserOption) {
