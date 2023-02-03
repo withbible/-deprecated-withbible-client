@@ -55,6 +55,10 @@ function LoginPage() {
     const permission = await Notification.requestPermission();
 
     try {
+      if (permission === "denied") {
+        throw new Error("알림 허용을 해주세요.");
+      }
+
       const token = await getToken(getMessaging(), {
         vapidKey: process.env.REACT_APP_FCM_VAPID_KEY,
       });
@@ -68,7 +72,7 @@ function LoginPage() {
         },
         data: {
           isAutoLogin: payload.isAutoLogin,
-          fcmToken: permission === "granted" ? token : null,
+          fcmToken: token,
         },
         ...AUTH_HEADER_CONFIG,
       });
