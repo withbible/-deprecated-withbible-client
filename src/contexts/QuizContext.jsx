@@ -93,7 +93,12 @@ export function QuizProvider({ children }) {
   };
 
   const handleSubmit = async () => {
-    if (!Object.values(userOption).length) {
+    const userOptionValues = Object.values(userOption);
+    const isDeleteUserOption = userOptionValues.every((each) => !each);
+
+    console.log(userOption);
+
+    if (!userOptionValues.length) {
       enqueueSnackbar("제출할 데이터가 없습니다.", {
         variant: "error",
       });
@@ -101,7 +106,7 @@ export function QuizProvider({ children }) {
       return;
     }
 
-    if (Object.keys(userOption).length > MAX_QUESTION_COUNT) {
+    if (userOptionValues.length > MAX_QUESTION_COUNT) {
       enqueueSnackbar("에러가 발생했습니다. 새로고침해주세요.", {
         variant: "error",
       });
@@ -113,7 +118,12 @@ export function QuizProvider({ children }) {
     };
 
     try {
-      if (isNewUserOption) {
+      if (isDeleteUserOption) {
+        await axios.delete(
+          `${OPTION_HISTORY_URI}${queryParameter}`,
+          AUTH_HEADER_CONFIG
+        );
+      } else if (isNewUserOption) {
         await axios({
           method: "post",
           url: `${OPTION_HISTORY_URI}${queryParameter}`,
