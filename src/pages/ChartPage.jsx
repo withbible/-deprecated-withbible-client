@@ -68,13 +68,15 @@ function ChartPage() {
     fetchHitCount();
 
     const channel = pusher.subscribe("quiz-interaction-channel");
+
     channel.bind("quiz-interaction-event", (data) => {
       setChartData(mergeWithCategory(data.result, activeChapter));
     });
 
-    return () => {
-      channel.unbind("quiz-interaction-channel");
-    };
+    channel.bind("error", (error) => {
+      const { message } = error.response?.data || error;
+      setErrorMessage(message);
+    });
   }, []);
 
   if (errorMessage) {

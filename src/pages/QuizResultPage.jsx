@@ -87,9 +87,9 @@ function QuizResultPage() {
   return (
     <Wrapper>
       <Wrapper.Header>퀴즈결과</Wrapper.Header>
-      <Confetti active={activeState} config={confettiConfig} />
 
       <Wrapper.Body>
+        <Confetti active={activeState} config={confettiConfig} />
         <Grid container spacing={1}>
           <Grid item xs={6}>
             <Card className={Style.gridItem}>

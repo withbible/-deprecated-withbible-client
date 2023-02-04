@@ -45,7 +45,7 @@ export function QuizProvider({ children }) {
   const queryParameter = useLocation().search;
 
   // HELPER FUNCTION(INNER)
-  const setUserOptionFunc = ({ iteratee, value }) => {
+  const setUserOptionWithLoop = ({ iteratee, value }) => {
     setUserOption({});
 
     iteratee.forEach((each) => {
@@ -77,7 +77,7 @@ export function QuizProvider({ children }) {
 
     if (optionHistoryState.status === "rejected") {
       setIsNewUserOption(true);
-      setUserOptionFunc({
+      setUserOptionWithLoop({
         iteratee: quiz,
         value: null,
       });
@@ -86,14 +86,14 @@ export function QuizProvider({ children }) {
 
     const optionHistoryResponse = optionHistoryState.value.data.result;
     setIsNewUserOption(false);
-    setUserOptionFunc({
+    setUserOptionWithLoop({
       iteratee: optionHistoryResponse,
       value: "questionOptionSeq",
     });
   };
 
   const handleSubmit = async () => {
-    if (!Object.keys(userOption).length) {
+    if (!Object.values(userOption).length) {
       enqueueSnackbar("제출할 데이터가 없습니다.", {
         variant: "error",
       });

@@ -1,5 +1,7 @@
+const MAX_ILLUST_NUMBER = 9;
+
 export function getRandomNumber() {
-  const max = 9;
+  const max = MAX_ILLUST_NUMBER;
   const min = 1;
 
   return Math.floor(Math.random() * max + min);
