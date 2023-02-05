@@ -12,7 +12,7 @@ function NotFoundPage({
   return (
     <Wrapper>
       <Wrapper.Header>{title}</Wrapper.Header>
-      <Wrapper.Body className={Style.notFoundContainer}>
+      <Wrapper.Body className={Style.container}>
         <img src="/images/spinner.gif" alt="로딩중" />
         <Typography variant="h4">{message}</Typography>
       </Wrapper.Body>
