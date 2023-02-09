@@ -72,17 +72,10 @@ function AppBar() {
             <Box className={Style.modal}>
               <Typography variant="h5">FAQ</Typography>
 
-              <Typography>
-                Q. 자동로그인을 선택하고 로그인했는데, 다음 방문시 왜 로그인
-                해제가 되있나요?
-              </Typography>
-
+              <Typography>Q.</Typography>
               <Divider variant="fullWidth" />
-
               <Typography variant="subtitle2" color="text.secondary">
-                A. 서버를 배포하는 플랫폼의 특성상, 배포시 서버의 자동로그인을
-                유지하는 데이터가 리셋됩니다. 때문에 배포된 서버로 수정사항을
-                가하지 않을 때 자동로그인을 보장합니다.
+                A.
               </Typography>
             </Box>
           </Modal>
