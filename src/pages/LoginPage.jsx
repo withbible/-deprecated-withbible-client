@@ -1,5 +1,6 @@
 import React, { useContext, useReducer, useState, useEffect } from "react";
 import { useHistory, Link } from "react-router-dom";
+import { debounce } from "lodash";
 import axios from "axios";
 import { useSnackbar } from "notistack";
 import {
@@ -17,7 +18,10 @@ import { getMessaging, getToken } from "firebase/messaging";
 import Style from "./page.module.css";
 import { PasswordInput } from "../components";
 import { LOGIN_URI } from "../constants/api";
-import { AUTH_HEADER_CONFIG } from "../constants/config";
+import {
+  AUTH_HEADER_CONFIG,
+  CLICK_INTERVAL_MILLISECOND,
+} from "../constants/config";
 import { SIGNUP_PATH } from "../constants/route";
 import { AuthContext } from "../contexts/AuthContext";
 
@@ -50,8 +54,7 @@ function LoginPage() {
     setIsValid(isAllValid(payloadValidity));
   }, [payloadValidity]);
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  const handleSubmit = async () => {
     const permission = await Notification.requestPermission();
 
     try {
@@ -89,11 +92,7 @@ function LoginPage() {
     <Container className={Style.container}>
       <Typography variant="h5">로그인</Typography>
 
-      <Box
-        component="form"
-        className={Style.formContainer}
-        onSubmit={handleSubmit}
-      >
+      <Box className={Style.formContainer}>
         <TextField
           required
           error={payloadValidity.userIDError}
@@ -129,7 +128,10 @@ function LoginPage() {
           onChange={(event) => setPayload({ type: event.target })}
         />
 
-        <Button disabled={!isValid} type="submit">
+        <Button
+          disabled={!isValid}
+          onClick={debounce(handleSubmit, CLICK_INTERVAL_MILLISECOND)}
+        >
           제출
         </Button>
       </Box>

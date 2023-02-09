@@ -96,8 +96,6 @@ export function QuizProvider({ children }) {
     const userOptionValues = Object.values(userOption);
     const isDeleteUserOption = userOptionValues.every((each) => !each);
 
-    console.log(userOption);
-
     if (!userOptionValues.length) {
       enqueueSnackbar("제출할 데이터가 없습니다.", {
         variant: "error",

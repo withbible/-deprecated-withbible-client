@@ -1,5 +1,6 @@
 import React, { useContext, useReducer, useState, useEffect } from "react";
 import { useHistory, Link } from "react-router-dom";
+import { debounce } from "lodash";
 import axios from "axios";
 import { useSnackbar } from "notistack";
 import { Container, Typography, Box, TextField, Button } from "@mui/material";
@@ -9,7 +10,10 @@ import { getMessaging, getToken } from "firebase/messaging";
 import Style from "./page.module.css";
 import { PasswordInput } from "../components";
 import { SIGNUP_URI } from "../constants/api";
-import { AUTH_HEADER_CONFIG } from "../constants/config";
+import {
+  AUTH_HEADER_CONFIG,
+  CLICK_INTERVAL_MILLISECOND,
+} from "../constants/config";
 import { LOGIN_PATH } from "../constants/route";
 import { AuthContext } from "../contexts/AuthContext";
 
@@ -45,8 +49,7 @@ function SignupPage() {
     setIsValid(isAllValid(payloadValidity));
   }, [payloadValidity]);
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  const handleSubmit = async () => {
     const permission = await Notification.requestPermission();
 
     try {
@@ -85,11 +88,7 @@ function SignupPage() {
     <Container className={Style.container}>
       <Typography variant="h5">회원가입</Typography>
 
-      <Box
-        component="form"
-        className={Style.formContainer}
-        onSubmit={handleSubmit}
-      >
+      <Box className={Style.formContainer}>
         <TextField
           required
           error={payloadValidity.userNameError}
@@ -154,7 +153,10 @@ function SignupPage() {
           isError={payloadValidity.passwordError}
         />
 
-        <Button disabled={!isValid} type="submit">
+        <Button
+          disabled={!isValid}
+          onClick={debounce(handleSubmit, CLICK_INTERVAL_MILLISECOND)}
+        >
           제출
         </Button>
       </Box>

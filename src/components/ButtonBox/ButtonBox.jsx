@@ -7,6 +7,7 @@ import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 
 // INTERNAL IMPORT
 import Style from "./ButtonBox.module.css";
+import { CLICK_INTERVAL_MILLISECOND } from "../../constants/config";
 import { QUIZ_RESULT_PAGE_PATH } from "../../constants/route";
 import { QuizContext } from "../../contexts/QuizContext";
 
@@ -34,7 +35,11 @@ function ButtonBox({ isFirst, isLast, isReview = false, setActiveStep }) {
     }
 
     if (isLast) {
-      return <Button onClick={debounce(handleSubmit, 250)}>제출</Button>;
+      return (
+        <Button onClick={debounce(handleSubmit, CLICK_INTERVAL_MILLISECOND)}>
+          제출
+        </Button>
+      );
     }
 
     return (
