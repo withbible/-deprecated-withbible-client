@@ -27,12 +27,6 @@ function payLoadValidityReducer(state, action) {
   let isValid = false;
 
   switch (action.type) {
-    case "VALIDATE_USER_NAME":
-      isValid = !!action.value.match(/^[ㄱ-ㅎ가-힇A-Z-a-z]+$/);
-      return {
-        ...state,
-        userNameError: !isValid,
-      };
     case "VALIDATE_USER_ID":
       isValid = !!action.value.match(/^[a-zA-Z0-9]+$/);
       return {

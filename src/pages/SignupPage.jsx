@@ -19,14 +19,12 @@ import { AuthContext } from "../contexts/AuthContext";
 
 // VO
 const initialState = {
-  userName: "",
   userEmail: "",
   userID: "",
   password: "",
 };
 
 const initialValidityState = {
-  userNameError: null,
   userEmailError: null,
   userIDError: null,
   passwordError: null,
@@ -69,7 +67,6 @@ function SignupPage() {
           password: payload.password,
         },
         data: {
-          userName: payload.userName,
           userEmail: payload.userEmail,
           fcmToken: token,
         },
@@ -89,25 +86,6 @@ function SignupPage() {
       <Typography variant="h5">회원가입</Typography>
 
       <Box className={Style.formContainer}>
-        <TextField
-          required
-          error={payloadValidity.userNameError}
-          helperText={
-            payloadValidity.userNameError && "한글 또는 영어만 허용합니다."
-          }
-          variant="standard"
-          label="이름"
-          name="userName"
-          inputProps={{
-            onBlur: () =>
-              setPayloadValidity({
-                type: "VALIDATE_USER_NAME",
-                value: payload.userName,
-              }),
-          }}
-          onChange={(event) => setPayload({ type: event.target })}
-        />
-
         <TextField
           required
           error={payloadValidity.userEmailError}
