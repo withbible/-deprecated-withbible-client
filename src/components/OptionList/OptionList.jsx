@@ -7,7 +7,7 @@ import { QuizContext } from "../../contexts/QuizContext";
 
 function OptionList({ questionSeq, iteratee }) {
   const { userOption, setUserOption } = useContext(QuizContext);
-  const [optionState, setOptionState] = useState(0);
+  const [optionState, setOptionState] = useState(userOption[questionSeq]);
 
   const handleOption = (_, option) => {
     setOptionState(option);

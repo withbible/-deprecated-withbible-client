@@ -1,5 +1,9 @@
-.flexDirection{
+.flexDirectionColumn{
   flex-direction: column;
+}
+
+.editModeContainer{
+  display: flex;
 }
 
 .container {
@@ -26,4 +30,8 @@
 .gridItem {
   background-color: inherit;
   box-shadow: var(--box-shadow);
+}
+
+.rightSideButtonContainer {  
+  margin-left: auto;    
 }

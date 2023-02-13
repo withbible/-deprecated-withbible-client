@@ -17,16 +17,12 @@ import NotFoundPage from "./NotFoundPage";
 function ReviewPage() {
   const { quiz, fetchQuiz, queryParameter } = useContext(QuizContext);
   const [activeStep, setActiveStep] = useState(0);
-  const [illustNumbers, setIllustNumbers] = useState([]);
+  const [illustNumbers] = useState(() => getIllustNumbers(quiz.length));
   const { categorySeq, chapterNum } = queryString.parse(queryParameter);
 
   useEffect(() => {
     fetchQuiz({ shuffle: false });
   }, [categorySeq, chapterNum]);
-
-  useEffect(() => {
-    setIllustNumbers(getIllustNumbers(quiz.length));
-  }, [quiz.length]);
 
   if (!quiz.length) {
     return (

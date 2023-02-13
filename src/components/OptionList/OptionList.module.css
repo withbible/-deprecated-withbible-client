@@ -14,3 +14,7 @@
 .optionCorrect {
   background-color: var(--correct-color) !important
 }
+
+.editOptionList{
+  width: 50%;
+}

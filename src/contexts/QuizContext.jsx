@@ -111,10 +111,6 @@ export function QuizProvider({ children }) {
       return;
     }
 
-    const payload = {
-      bulk: userOption,
-    };
-
     try {
       if (isDeleteUserOption) {
         await axios.delete(
@@ -125,14 +121,18 @@ export function QuizProvider({ children }) {
         await axios({
           method: "post",
           url: `${OPTION_HISTORY_URI}${queryParameter}`,
-          data: payload,
+          data: {
+            userOption,
+          },
           ...AUTH_HEADER_CONFIG,
         });
       } else {
         await axios({
           method: "put",
           url: `${OPTION_HISTORY_URI}${queryParameter}`,
-          data: payload,
+          data: {
+            userOption,
+          },
           ...AUTH_HEADER_CONFIG,
         });
       }

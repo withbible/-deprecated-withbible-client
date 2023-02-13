@@ -6,7 +6,7 @@ import Style from "./QuestionBox.module.css";
 
 function QuestionBox({ question, questionSub, illustNumber }) {
   return (
-    <div className={Style.questionContainer}>
+    <div className={Style.questionBox}>
       <img
         className={Style.illust}
         src={`/images/illusts/illust0${illustNumber}.png`}

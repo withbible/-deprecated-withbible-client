@@ -16,11 +16,11 @@ import HelpIcon from "@mui/icons-material/Help";
 
 // INTERNAL IMPORT
 import Style from "./AppBar.module.css";
+import { LOGOUT_URI } from "../../constants/api";
+import { ADMIN_USER_ID, AUTH_HEADER_CONFIG } from "../../constants/config";
+import { LOGIN_PATH } from "../../constants/route";
 import { AuthContext } from "../../contexts/AuthContext";
 import { ChapterContext } from "../../contexts/ChapterContext";
-import { LOGIN_PATH } from "../../constants/route";
-import { LOGOUT_URI } from "../../constants/api";
-import { AUTH_HEADER_CONFIG } from "../../constants/config";
 
 function AppBar() {
   const [open, setOpen] = useState(false);
@@ -57,7 +57,7 @@ function AppBar() {
 
         <Box>
           <Typography variant="subtitle2" color="text.secondary">
-            {userID}님
+            {userID}님{userID === ADMIN_USER_ID ? "(관리자)" : null}
           </Typography>
 
           <Typography>성경졸업고사 패스를 기원합니다!</Typography>

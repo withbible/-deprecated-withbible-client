@@ -50,7 +50,7 @@ function ButtonBox({ isFirst, isLast, isReview = false, setActiveStep }) {
   };
 
   return (
-    <Box className={Style.buttonContainer}>
+    <Box className={Style.buttonBox}>
       <Button disabled={isFirst} onClick={handleBack}>
         <KeyboardArrowLeftIcon />
       </Button>

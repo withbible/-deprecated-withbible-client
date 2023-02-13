@@ -35,8 +35,12 @@ body {
 }
 
 .MuiButton-root,
-.MuiInputLabel-root.Mui-focused {
+.MuiInputLabel-root.Mui-focused{
   color: inherit;
+}
+
+.MuiInputBase-root.Mui-focused .MuiOutlinedInput-notchedOutline{
+  border-color: var(--primary-color);
 }
 
 .MuiInputLabel-root.Mui-error {
@@ -53,6 +57,14 @@ body {
 
 .MuiCheckbox-root.Mui-checked {
   color: var(--primary-color);
+}
+
+.MuiSwitch-switchBase.Mui-checked{
+  color: var(--shadow-color);
+}
+
+.MuiSwitch-switchBase.Mui-checked+.MuiSwitch-track{
+  background-color: var(--shadow-color);
 }
 
 .MuiPaper-root,
