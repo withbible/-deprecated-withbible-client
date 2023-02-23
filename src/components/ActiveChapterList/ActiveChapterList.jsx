@@ -18,7 +18,7 @@ function ActiveChapterList({ iteratee, categorySeq }) {
     <>
       {iteratee.map((each, index) => {
         const queryParameter = `?categorySeq=${categorySeq}&chapterNum=${each.chapterNum}`;
-        const chipLabel = `맞힌갯수 ${each.hitQuestionCount}/${each.questionCount}`;
+        const chipLabel = `맞힌개수 ${each.hitQuestionCount}/${each.questionCount}`;
 
         return (
           <div key={index}>

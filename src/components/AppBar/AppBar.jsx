@@ -45,7 +45,7 @@ function AppBar() {
       setActiveChapter([]);
       history.push(LOGIN_PATH);
     } catch (error) {
-      const { message } = error.response.data;
+      const { message } = error.response?.data || error;
       enqueueSnackbar(message, { variant: "error" });
     }
   };

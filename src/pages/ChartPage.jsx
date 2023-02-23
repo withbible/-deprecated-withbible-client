@@ -80,12 +80,12 @@ function ChartPage() {
   }, []);
 
   if (errorMessage) {
-    return <NotFoundPage title="평균 맞힌갯수 통계" message={errorMessage} />;
+    return <NotFoundPage title="평균 맞힌개수 통계" message={errorMessage} />;
   }
 
   return (
     <Wrapper>
-      <Wrapper.Header>평균 맞힌갯수 통계</Wrapper.Header>
+      <Wrapper.Header>평균 맞힌개수 통계</Wrapper.Header>
       <Wrapper.Body>
         {chartData.map((each) => {
           return (
@@ -113,13 +113,13 @@ function ChartPage() {
 
                   <Bar
                     fill="#444"
-                    name="평균 맞힌갯수"
+                    name="평균 맞힌개수"
                     dataKey="avgHitQuestionCount"
                   />
 
                   <Bar
                     fill="#FBCE7B"
-                    name="내가 맞힌갯수"
+                    name="내가 맞힌개수"
                     dataKey="hitQuestionCount"
                   />
                 </BarChart>
