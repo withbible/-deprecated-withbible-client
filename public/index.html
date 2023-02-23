@@ -4,15 +4,30 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
+
+    <meta name="og:title" content="위드바이블" />
     <meta
-      name="description"
-      content="Web site created using create-react-app"
+      name="og:description"
+      content="한국성서대학교 재학생들의 성경 졸업고사를 사전에 대비하고자 만든 퀴즈 형태의 모바일 애플리케이션입니다."
+    />
+    <meta
+      name="og:url"
+      content="https://web-withbible-client-3pblc2flby7o9b4.gksl2.cloudtype.app"
+    />
+    <meta
+      name="og:image"
+      content="https://web-withbible-client-3pblc2flby7o9b4.gksl2.cloudtype.app/images/logo.png"
     />
 
+    <!-- IOS -->
+    <link rel="apple-touch-icon" href="./images/AppImages/ios/512.png" />
+
+    <!-- ANDROID -->
     <link
-      rel="icon"
+      rel="shortcut icon"
       href="./images/AppImages/android/android-launchericon-512-512.png"
     />
+
     <link rel="manifest" href="manifest.json" />
 
     <title>위드바이블</title>
@@ -22,6 +37,11 @@
       const element = document.createElement("pwa-update");
       document.body.appendChild(element);
     </script>
+
+    <script
+      defer
+      src="https://cdn.swygbro.com/public/widget/swyg-widget.js"
+    ></script>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
