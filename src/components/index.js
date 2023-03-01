@@ -1,4 +1,5 @@
 import ActiveChapterList from "./ActiveChapterList/ActiveChapterList";
+import AdvertisingBanner from "./AdvertisingBanner/AdvertisingBanner";
 import AppBar from "./AppBar/AppBar";
 import BottomBar from "./BottomBar/BottomBar";
 import ButtonBox from "./ButtonBox/ButtonBox";
@@ -17,6 +18,7 @@ import Wrapper from "./Wrapper/Wrapper";
 
 export {
   ActiveChapterList,
+  AdvertisingBanner,
   AppBar,
   BottomBar,
   ButtonBox,

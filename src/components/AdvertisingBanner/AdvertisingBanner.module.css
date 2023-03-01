@@ -1,0 +1,13 @@
+.bannerContainer,
+.bannerDevelopment{
+  text-align: center;  
+}
+
+.bannerDevelopment{
+  margin: 0 auto;
+}
+
+.banner{    
+  width: 320px; 
+  height: 50px;
+}

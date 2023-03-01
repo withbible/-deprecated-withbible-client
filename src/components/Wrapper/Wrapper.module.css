@@ -16,7 +16,7 @@
   border-top-left-radius: var(--border-radius);
   border-top-right-radius: var(--border-radius);
   background-color: var(--shadow-color);
-  box-shadow: 0px -4px 0px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px -4px 0px rgba(0, 0, 0, 0.2);  
 }
 
 @media (max-width: 35rem) {
