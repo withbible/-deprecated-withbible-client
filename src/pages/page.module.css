@@ -35,3 +35,9 @@
 .rightSideButtonContainer {  
   margin-left: auto;    
 }
+
+.ads{
+  display: inline-block; 
+  width: 320px; 
+  height: 50px;
+}
