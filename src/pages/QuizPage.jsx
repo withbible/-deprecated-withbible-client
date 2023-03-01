@@ -27,7 +27,7 @@ function QuizPage() {
   const [activeStep, setActiveStep] = useState(0);
   const [isEdit, setIsEdit] = useState(false);
   const [editQuiz, setEditQuiz] = useState(quiz[activeStep]);
-  const [illustNumbers] = useState(() => getIllustNumbers(quiz.length));
+  const [illustNumbers, setIllustNumbers] = useState([]);
   const { categorySeq, chapterNum } = queryString.parse(queryParameter);
 
   /**
@@ -40,6 +40,10 @@ function QuizPage() {
   useEffect(() => {
     setEditQuiz(quiz[activeStep]);
   }, [quiz, activeStep]);
+
+  useEffect(() => {
+    setIllustNumbers(getIllustNumbers(quiz.length));
+  }, [quiz.length]);
 
   if (!quiz.length) {
     return (
