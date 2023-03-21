@@ -17,7 +17,7 @@ import { getMessaging, getToken } from "firebase/messaging";
 // INTERNAL IMPORT
 import Style from "./page.module.css";
 import { PasswordInput } from "../components";
-import { LOGIN_URI } from "../constants/api";
+import { LOGIN_PATH } from "../constants/api";
 import {
   AUTH_HEADER_CONFIG,
   CLICK_INTERVAL_MILLISECOND,
@@ -68,7 +68,7 @@ function LoginPage() {
 
       const { data } = await axios({
         method: "patch",
-        url: LOGIN_URI,
+        url: LOGIN_PATH,
         auth: {
           username: payload.userID,
           password: payload.password,

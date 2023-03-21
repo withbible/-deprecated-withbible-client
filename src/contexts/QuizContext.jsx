@@ -4,7 +4,7 @@ import axios from "axios";
 import { useSnackbar } from "notistack";
 
 // INTERNAL IMPORT
-import { QUIZ_URI, OPTION_HISTORY_URI } from "../constants/api";
+import { QUIZ_PATH, OPTION_HISTORY_PATH } from "../constants/api";
 import { QUIZ_RESULT_PAGE_PATH } from "../constants/route";
 import { AUTH_HEADER_CONFIG } from "../constants/config";
 
@@ -61,8 +61,8 @@ export function QuizProvider({ children }) {
   // API EVENT FUNCTION
   const fetchQuiz = async ({ shuffle }) => {
     const [quizState, optionHistoryState] = await Promise.allSettled([
-      axios.get(`${QUIZ_URI}${queryParameter}`),
-      axios.get(`${OPTION_HISTORY_URI}${queryParameter}`, AUTH_HEADER_CONFIG),
+      axios.get(`${QUIZ_PATH}${queryParameter}`),
+      axios.get(`${OPTION_HISTORY_PATH}${queryParameter}`, AUTH_HEADER_CONFIG),
     ]);
 
     if (quizState.status === "rejected") {
@@ -114,13 +114,13 @@ export function QuizProvider({ children }) {
     try {
       if (isDeleteUserOption) {
         await axios.delete(
-          `${OPTION_HISTORY_URI}${queryParameter}`,
+          `${OPTION_HISTORY_PATH}${queryParameter}`,
           AUTH_HEADER_CONFIG
         );
       } else if (isNewUserOption) {
         await axios({
           method: "post",
-          url: `${OPTION_HISTORY_URI}${queryParameter}`,
+          url: `${OPTION_HISTORY_PATH}${queryParameter}`,
           data: {
             userOption,
           },
@@ -129,7 +129,7 @@ export function QuizProvider({ children }) {
       } else {
         await axios({
           method: "put",
-          url: `${OPTION_HISTORY_URI}${queryParameter}`,
+          url: `${OPTION_HISTORY_PATH}${queryParameter}`,
           data: {
             userOption,
           },

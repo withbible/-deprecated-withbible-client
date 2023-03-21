@@ -5,7 +5,7 @@ import { List } from "@mui/material";
 // INTERNAL IMPORT
 import { LeaderBoard, Wrapper } from "../components";
 import { AuthContext } from "../contexts/AuthContext";
-import { LEADER_BOARD_PAGE_URI } from "../constants/api";
+import { LEADER_BOARD_PAGE_PATH } from "../constants/api";
 import NotFoundPage from "./NotFoundPage";
 
 // CONSTANT
@@ -26,7 +26,7 @@ function LeaderBoardPage() {
     try {
       const queryParameter = `?limit=${limit}&page=${page.current}`;
       const { data } = await axios.get(
-        `${LEADER_BOARD_PAGE_URI}${queryParameter}`
+        `${LEADER_BOARD_PAGE_PATH}${queryParameter}`
       );
 
       setLeaderBoards((prevState) => [...prevState, ...data.result]);

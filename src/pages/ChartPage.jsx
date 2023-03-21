@@ -13,7 +13,7 @@ import {
 // INTERNAL IMPORT
 import { Wrapper } from "../components";
 import { CATEGORY } from "../constants/enum";
-import { AVG_HIT_COUNT_URI } from "../constants/api";
+import { AVG_HIT_COUNT_PATH } from "../constants/api";
 import { AUTH_HEADER_CONFIG } from "../constants/config";
 import { ChapterContext } from "../contexts/ChapterContext";
 import NotFoundPage from "./NotFoundPage";
@@ -55,7 +55,7 @@ function ChartPage() {
     setErrorMessage("");
 
     try {
-      const { data } = await axios.get(AVG_HIT_COUNT_URI, AUTH_HEADER_CONFIG);
+      const { data } = await axios.get(AVG_HIT_COUNT_PATH, AUTH_HEADER_CONFIG);
 
       setChartData(mergeWithCategory(data.result, activeChapter));
     } catch (error) {
@@ -80,12 +80,12 @@ function ChartPage() {
   }, []);
 
   if (errorMessage) {
-    return <NotFoundPage title="평균 맞힌개수 통계" message={errorMessage} />;
+    return <NotFoundPage title="맞힌 평균개수 통계" message={errorMessage} />;
   }
 
   return (
     <Wrapper>
-      <Wrapper.Header>평균 맞힌개수 통계</Wrapper.Header>
+      <Wrapper.Header>맞힌 평균개수 통계</Wrapper.Header>
       <Wrapper.Body>
         {chartData.map((each) => {
           return (
@@ -113,7 +113,7 @@ function ChartPage() {
 
                   <Bar
                     fill="#444"
-                    name="평균 맞힌개수"
+                    name="맞힌 평균개수"
                     dataKey="avgHitQuestionCount"
                   />
 

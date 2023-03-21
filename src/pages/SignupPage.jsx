@@ -9,7 +9,7 @@ import { getMessaging, getToken } from "firebase/messaging";
 // INTERNAL IMPORT
 import Style from "./page.module.css";
 import { PasswordInput } from "../components";
-import { SIGNUP_URI } from "../constants/api";
+import { SIGNUP_PATH } from "../constants/api";
 import {
   AUTH_HEADER_CONFIG,
   CLICK_INTERVAL_MILLISECOND,
@@ -61,7 +61,7 @@ function SignupPage() {
 
       const { data } = await axios({
         method: "post",
-        url: SIGNUP_URI,
+        url: SIGNUP_PATH,
         auth: {
           username: payload.userID,
           password: payload.password,

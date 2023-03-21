@@ -15,7 +15,7 @@ import Confetti from "react-dom-confetti";
 // INTERNAL IMPORT
 import Style from "./page.module.css";
 import { Wrapper } from "../components";
-import { HIT_COUNT_URI, ACTIVE_CHAPTER_COUNT_URI } from "../constants/api";
+import { HIT_COUNT_PATH, ACTIVE_CHAPTER_COUNT_PATH } from "../constants/api";
 import { AUTH_HEADER_CONFIG } from "../constants/config";
 import { CATEGORY } from "../constants/enum";
 import { QUIZ_PAGE_PATH, REVIEW_PAGE_PATH } from "../constants/route";
@@ -57,9 +57,9 @@ function QuizResultPage() {
 
   const fetchQuizResult = async () => {
     const [hitCountState, activeCountState] = await Promise.all([
-      axios.get(`${HIT_COUNT_URI}${queryParameter}`, AUTH_HEADER_CONFIG),
+      axios.get(`${HIT_COUNT_PATH}${queryParameter}`, AUTH_HEADER_CONFIG),
       axios.get(
-        `${ACTIVE_CHAPTER_COUNT_URI}?categorySeq=${categorySeq}`,
+        `${ACTIVE_CHAPTER_COUNT_PATH}?categorySeq=${categorySeq}`,
         AUTH_HEADER_CONFIG
       ),
     ]);

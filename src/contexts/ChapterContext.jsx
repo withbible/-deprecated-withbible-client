@@ -2,7 +2,7 @@ import React, { useState, useMemo, useEffect } from "react";
 import axios from "axios";
 
 // INTERNAL IMPORT
-import { CHAPTER_SEARCH_URI, ACTIVE_CHAPTER_URI } from "../constants/api";
+import { CHAPTER_SEARCH_PATH, ACTIVE_CHAPTER_PATH } from "../constants/api";
 import { AUTH_HEADER_CONFIG } from "../constants/config";
 
 // MAIN
@@ -20,7 +20,7 @@ export function ChapterProvider({ children }) {
 
     try {
       const { data } = await axios.get(
-        `${CHAPTER_SEARCH_URI}?keyword=${keyword}`
+        `${CHAPTER_SEARCH_PATH}?keyword=${keyword}`
       );
 
       setChapterSearch(data.result);
@@ -31,7 +31,7 @@ export function ChapterProvider({ children }) {
   };
 
   const fetchActiveChapter = async () => {
-    const { data } = await axios.get(ACTIVE_CHAPTER_URI, AUTH_HEADER_CONFIG);
+    const { data } = await axios.get(ACTIVE_CHAPTER_PATH, AUTH_HEADER_CONFIG);
     setActiveChapter(data.result);
   };
 

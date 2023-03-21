@@ -1,27 +1,27 @@
-export const SIGNUP_URI = "/user";
+export const SIGNUP_PATH = "/user";
 
-export const LOGIN_URI = "/user/login";
+export const LOGIN_PATH = "/user/login";
 
-export const LOGIN_CHECK_URI = "/user/login-check";
+export const LOGIN_CHECK_PATH = "/user/login-check";
 
-export const LOGOUT_URI = "/user/logout";
+export const LOGOUT_PATH = "/user/logout";
 
-export const CHAPTER_SEARCH_URI = "/quiz/categories/chapter";
+export const CHAPTER_SEARCH_PATH = "/quiz/categories/chapter";
 
-export const QUIZ_URI = "/quiz/chapter";
+export const QUIZ_PATH = "/quiz/chapter";
 
-export const HIT_COUNT_URI = "/history/chapter/hit-count";
+export const HIT_COUNT_PATH = "/history/chapter/hit-count";
 
-export const ACTIVE_CHAPTER_COUNT_URI =
+export const ACTIVE_CHAPTER_COUNT_PATH =
   "/history/category/active-chapter-count";
 
-export const ACTIVE_CHAPTER_URI = "/history/categories/active-chapter";
+export const ACTIVE_CHAPTER_PATH = "/history/categories/active-chapter";
 
-export const ACTIVE_CHAPTER_PAGE_URI =
+export const ACTIVE_CHAPTER_PAGE_PATH =
   "/history/categories/active-chapter/page";
 
-export const OPTION_HISTORY_URI = "/history/chapter/user-option";
+export const OPTION_HISTORY_PATH = "/history/chapter/user-option";
 
-export const LEADER_BOARD_PAGE_URI = "/leader-board/page";
+export const LEADER_BOARD_PAGE_PATH = "/leader-board/page";
 
-export const AVG_HIT_COUNT_URI = "/history/categories/avg-hit-count";
+export const AVG_HIT_COUNT_PATH = "/history/categories/avg-hit-count";

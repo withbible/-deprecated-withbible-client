@@ -5,7 +5,7 @@ import { List, ListSubheader } from "@mui/material";
 // INTERNAL IMPORT
 import { Wrapper, ActiveChapterList } from "../components";
 import { CATEGORY } from "../constants/enum";
-import { ACTIVE_CHAPTER_PAGE_URI } from "../constants/api";
+import { ACTIVE_CHAPTER_PAGE_PATH } from "../constants/api";
 import { AUTH_HEADER_CONFIG } from "../constants/config";
 import NotFoundPage from "./NotFoundPage";
 
@@ -51,7 +51,7 @@ function ReviewListPage() {
     try {
       const queryParameter = `?limit=${limit}&page=${page.current}`;
       const { data } = await axios.get(
-        `${ACTIVE_CHAPTER_PAGE_URI}${queryParameter}`,
+        `${ACTIVE_CHAPTER_PAGE_PATH}${queryParameter}`,
         AUTH_HEADER_CONFIG
       );
 

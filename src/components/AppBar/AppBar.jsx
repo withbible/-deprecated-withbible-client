@@ -16,7 +16,7 @@ import HelpIcon from "@mui/icons-material/Help";
 
 // INTERNAL IMPORT
 import Style from "./AppBar.module.css";
-import { LOGOUT_URI } from "../../constants/api";
+import { LOGOUT_PATH } from "../../constants/api";
 import { ADMIN_USER_ID, AUTH_HEADER_CONFIG } from "../../constants/config";
 import { LOGIN_PATH } from "../../constants/route";
 import { AuthContext } from "../../contexts/AuthContext";
@@ -37,7 +37,7 @@ function AppBar() {
     try {
       await axios({
         method: "patch",
-        url: LOGOUT_URI,
+        url: LOGOUT_PATH,
         ...AUTH_HEADER_CONFIG,
       });
 

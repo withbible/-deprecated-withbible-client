@@ -3,7 +3,7 @@ import axios from "axios";
 import { useSnackbar } from "notistack";
 
 // INTERNAL IMPORT
-import { LOGIN_CHECK_URI } from "../constants/api";
+import { LOGIN_CHECK_PATH } from "../constants/api";
 import { AUTH_HEADER_CONFIG } from "../constants/config";
 
 // HELPER FUNCTION
@@ -65,7 +65,7 @@ export function AuthProvider({ children }) {
 
   const fetchLoginCheck = async () => {
     try {
-      const { data } = await axios.get(LOGIN_CHECK_URI, AUTH_HEADER_CONFIG);
+      const { data } = await axios.get(LOGIN_CHECK_PATH, AUTH_HEADER_CONFIG);
       setUserID(data.result.userID);
     } catch (error) {
       const { message } = error.response?.data || error;
