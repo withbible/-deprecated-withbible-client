@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from "react";
+import React, { useState, useMemo } from "react";
 import axios from "axios";
 
 // INTERNAL IMPORT
@@ -35,10 +35,6 @@ export function ChapterProvider({ children }) {
     setActiveChapter(data.result);
   };
 
-  useEffect(() => {
-    fetchActiveChapter();
-  }, []);
-
   const props = useMemo(
     () => ({
       chapterSearch,
@@ -47,6 +43,7 @@ export function ChapterProvider({ children }) {
       setSearchKeyword,
       activeChapter,
       setActiveChapter,
+      fetchActiveChapter,
       errorMessage,
     }),
     [chapterSearch, searchKeyword, activeChapter, errorMessage]

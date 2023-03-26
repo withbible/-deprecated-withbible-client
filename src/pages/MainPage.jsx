@@ -11,7 +11,8 @@ import {
 import { ChapterContext } from "../contexts/ChapterContext";
 
 function MainPage() {
-  const { fetchChapterSearch, searchKeyword } = useContext(ChapterContext);
+  const { fetchChapterSearch, searchKeyword, fetchActiveChapter } =
+    useContext(ChapterContext);
   const isFirstRender = useRef(true);
 
   useEffect(() => {
@@ -21,6 +22,10 @@ function MainPage() {
       isFirstRender.current = false;
     }
   }, [searchKeyword]);
+
+  useEffect(() => {
+    fetchActiveChapter();
+  }, []);
 
   return (
     <Wrapper>
