@@ -7,6 +7,7 @@
 - [KBU BibleGraduationExam QuizApp](#kbu-biblegraduationexam-quizapp)
   - [화면](#화면)
   - [사용법](#사용법)
+  - [커밋메시지 컨벤션](#커밋메시지-컨벤션)
 
 ## 화면
 
@@ -43,5 +44,9 @@
 </table>
 
 ## [사용법](https://github.com/WithBible/withbible-client/wiki/%EC%82%AC%EC%9A%A9%EB%B2%95)
+
+링크를 확인해주세요.
+
+## [커밋메시지 컨벤션](https://gitmoji.dev/)
 
 링크를 확인해주세요.
