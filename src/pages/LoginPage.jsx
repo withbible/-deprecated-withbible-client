@@ -12,7 +12,6 @@ import {
   Checkbox,
   Button,
 } from "@mui/material";
-import { getMessaging, getToken } from "firebase/messaging";
 
 // INTERNAL IMPORT
 import Style from "./page.module.css";
@@ -62,10 +61,6 @@ function LoginPage() {
         throw new Error("알림 허용을 해주세요.");
       }
 
-      const token = await getToken(getMessaging(), {
-        vapidKey: process.env.REACT_APP_FCM_VAPID_KEY,
-      });
-
       const { data } = await axios({
         method: "patch",
         url: LOGIN_PATH,
@@ -75,7 +70,6 @@ function LoginPage() {
         },
         data: {
           isAutoLogin: payload.isAutoLogin,
-          fcmToken: token,
         },
         ...AUTH_HEADER_CONFIG,
       });

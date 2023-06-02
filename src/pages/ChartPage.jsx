@@ -17,7 +17,7 @@ import { AVG_HIT_COUNT_PATH } from "../constants/api";
 import { AUTH_HEADER_CONFIG } from "../constants/config";
 import { ChapterContext } from "../contexts/ChapterContext";
 import NotFoundPage from "./NotFoundPage";
-import pusher from "../pusher-subscribe";
+import { pusher } from "../pusher";
 
 // HELPER FUNCTION
 function mergeWithCategory(avgHitCountList, hitCountList) {

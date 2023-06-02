@@ -31,23 +31,13 @@ jobs:
               spa: true
               buildenv:
                 - name: REACT_APP_HOST
-                  value: ${{ vars.REACT_APP_HOST }}
-                - name: REACT_APP_FCM_VAPID_KEY
-                  value: ${{ secrets.REACT_APP_FCM_VAPID_KEY }}
-                - name: REACT_APP_FCM_API_KEY
-                  value: ${{ secrets.REACT_APP_FCM_API_KEY }}
-                - name: REACT_APP_FCM_PROJECT_ID
-                  value: ${{ secrets.REACT_APP_FCM_PROJECT_ID }}
-                - name: REACT_APP_FCM_SENDER_ID
-                  value: ${{ secrets.REACT_APP_FCM_SENDER_ID }}
-                - name: REACT_APP_FCM_APP_ID
-                  value: ${{ secrets.REACT_APP_FCM_APP_ID }}
-                - name: REACT_APP_FCM_MEASUREMENT_ID
-                  value: ${{ secrets.REACT_APP_FCM_MEASUREMENT_ID }}
+                  value: ${{ vars.REACT_APP_HOST }}                
                 - name: REACT_APP_PUSHER_APP_KEY
                   value: ${{ secrets.REACT_APP_PUSHER_APP_KEY }}
                 - name: REACT_APP_PUSHER_CLUSTER
                   value: ${{ secrets.REACT_APP_PUSHER_CLUSTER }}
+                - name: REACT_APP_PUSHER_BEAMS_INSTANCE_ID
+                  value: ${{ secrets.REACT_APP_PUSHER_BEAMS_INSTANCE_ID }}
             context:
               git:
                 url: git@github.com:${{ github.repository }}.git
