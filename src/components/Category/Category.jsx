@@ -4,7 +4,7 @@ import { Typography } from "@mui/material";
 // INTERNAL IMPORT
 import ChapterList from "../ChapterList/ChapterList";
 import { ChapterContext } from "../../contexts/ChapterContext";
-import { findHistory } from "../../utils/util";
+import { findHistory } from "../../utils";
 
 // MAIN
 function Category() {

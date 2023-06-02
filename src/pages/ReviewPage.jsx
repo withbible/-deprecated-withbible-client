@@ -11,7 +11,7 @@ import {
 } from "../components";
 import { CATEGORY } from "../constants/enum";
 import { QuizContext } from "../contexts/QuizContext";
-import { getIllustNumbers, getTotalStep } from "../utils/util";
+import { getIllustNumbers, getTotalStep } from "../utils";
 import NotFoundPage from "./NotFoundPage";
 
 function ReviewPage() {

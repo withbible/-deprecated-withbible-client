@@ -21,6 +21,7 @@ import { ADMIN_USER_ID, AUTH_HEADER_CONFIG } from "../../constants/config";
 import { LOGIN_PATH } from "../../constants/route";
 import { AuthContext } from "../../contexts/AuthContext";
 import { ChapterContext } from "../../contexts/ChapterContext";
+import { beamsClient } from "../../pusher";
 
 function AppBar() {
   const [open, setOpen] = useState(false);
@@ -43,6 +44,16 @@ function AppBar() {
 
       setUserID("");
       setActiveChapter([]);
+
+      beamsClient
+        .start()
+        .then(() =>
+          beamsClient.removeDeviceInterest("quizCreatedCountByPrevMonth")
+        )
+        .catch((error) =>
+          console.error("Could not remove device interest", error)
+        );
+
       history.push(LOGIN_PATH);
     } catch (error) {
       const { message } = error.response?.data || error;

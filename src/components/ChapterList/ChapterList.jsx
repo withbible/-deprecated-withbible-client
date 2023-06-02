@@ -2,7 +2,7 @@ import React from "react";
 import { ScrollMenu } from "react-horizontal-scrolling-menu";
 
 // INTERNAL IMPORT
-import { findHistory } from "../../utils/util";
+import { findHistory } from "../../utils";
 import Chapter from "./Chapter";
 
 // HELPER FUNCTION

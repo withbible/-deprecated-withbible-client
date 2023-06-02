@@ -18,7 +18,7 @@ import { ADMIN_USER_ID } from "../constants/config";
 import { CATEGORY } from "../constants/enum";
 import { AuthContext } from "../contexts/AuthContext";
 import { QuizContext } from "../contexts/QuizContext";
-import { getIllustNumbers, getTotalStep } from "../utils/util";
+import { getIllustNumbers, getTotalStep } from "../utils";
 import NotFoundPage from "./NotFoundPage";
 
 function QuizPage() {

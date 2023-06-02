@@ -1,5 +1,3 @@
-// This is the "Offline page" service worker
-
 /* eslint-disable no-undef */
 /* eslint-disable no-restricted-globals */
 
