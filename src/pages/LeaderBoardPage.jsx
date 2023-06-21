@@ -24,15 +24,15 @@ function LeaderBoardPage() {
     setErrorMessage("");
 
     try {
-      const queryParameter = `?limit=${limit}&page=${page.current}`;
-      const { data } = await axios.get(
-        `${LEADER_BOARD_PAGE_PATH}${queryParameter}`
-      );
+      const path = `${LEADER_BOARD_PAGE_PATH}?limit=${limit}&page=${page.current}`;
+      const { data } = await axios.get(path);
 
       setLeaderBoards((prevState) => [...prevState, ...data.result]);
-      setHasNextPage(data.result.length === limit);
 
-      if (data.result.length) {
+      if (data.meta.links.at(-1).link === path) {
+        setHasNextPage(false);
+      } else {
+        setHasNextPage(true);
         page.current += 1;
       }
     } catch (error) {

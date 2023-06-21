@@ -49,23 +49,18 @@ function ReviewListPage() {
     setErrorMessage("");
 
     try {
-      const queryParameter = `?limit=${limit}&page=${page.current}`;
-      const { data } = await axios.get(
-        `${ACTIVE_CHAPTER_PAGE_PATH}${queryParameter}`,
-        AUTH_HEADER_CONFIG
-      );
+      const path = `${ACTIVE_CHAPTER_PAGE_PATH}?limit=${limit}&page=${page.current}`;
+      const { data } = await axios.get(path, AUTH_HEADER_CONFIG);
 
       setActiveChapter((prevState) => [
         ...prevState,
         ...mergeWithCategory(data.result),
       ]);
 
-      /**
-       * @todo 마지막 응답 데이터는 충족하되 다음 data는 없다면?
-       */
-      setHasNextPage(data.result.length === limit);
-
-      if (data.result.length) {
+      if (data.meta.links.at(-1).link === path) {
+        setHasNextPage(false);
+      } else {
+        setHasNextPage(true);
         page.current += 1;
       }
     } catch (error) {
