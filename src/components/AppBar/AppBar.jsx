@@ -64,7 +64,7 @@ function AppBar() {
   if (userID) {
     return (
       <>
-        <Avatar src={`https://avatars.dicebear.com/api/micah/${userID}.svg`} />
+        <Avatar src={`https://api.dicebear.com/7.x/micah/svg?seed=${userID}`} />
 
         <Box>
           <Typography variant="subtitle2" color="text.secondary">
